@@ -59,7 +59,7 @@ while True:
 
     choice = input("> ")
 
-    ui.clear()
+    os.system("clear")
     time.sleep(0.05)
     if page == "main":
         if choice == "":
