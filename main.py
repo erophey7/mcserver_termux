@@ -1,8 +1,13 @@
+from operator import le
 import colorama
 import os
+import time
 
 
+page = ""
 
+rowAni = (">", " ")
+rowAniFrame = 0
 
 colorama.init()
 
@@ -10,9 +15,16 @@ colorama.init()
 class ui():
 
     def clear():
-        os.system("clear")
+
+        if os.name == 'nt':
+             _ = os.system('cls')
+
+
+        else:
+             _ = os.system('clear')
 
     def main_menu():
+        page = "main"
         print()
         print(colorama.Fore.GREEN + "                  _________                                 ")
         print(colorama.Fore.GREEN + "   _____   ____  /   _____/ ______________  __ ___________  ")
@@ -26,12 +38,32 @@ class ui():
         print("3 - Delete server")
         print("4 - Settings")
         print("5 - Setup required packages")
+        print("0 - exit")
         print(f"\n\n\n\n\n")
+
+
+class functions():
+    
+
+    def exit():
+        exit
         
-
-
 
 
 ui.main_menu()
 
-input()
+
+
+while True:
+    choice = ""
+    print(colorama.Fore.GREEN)
+    choice = input("> ")
+    print(colorama.Style.RESET_ALL)
+    ui.clear()
+    time.sleep(0.05)
+    if page == "main":
+        if choice == "":
+            ui.main_menu
+        
+        elif choice == "0":
+            exit()
