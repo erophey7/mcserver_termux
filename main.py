@@ -66,5 +66,5 @@ while True:
             ui.main_menu
         
         elif choice == "0":
-            exit()
+            exit(0)
 
