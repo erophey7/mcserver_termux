@@ -56,14 +56,14 @@ ui.main_menu()
 
 while True:
     choice = ""
-
+    print(colorama.Fore.GREEN)
     choice = input("> ")
-
-    os.system("clear")
+    print(colorama.Style.RESET_ALL)
+    ui.clear()
     time.sleep(0.05)
     if page == "main":
         if choice == "":
-            ui.main_menu
+            ui.main_menu()
         
         elif choice == "0":
             exit(0)
