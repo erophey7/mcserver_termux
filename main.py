@@ -1,12 +1,10 @@
-
 import colorama
 import os
 import time
 
 
-page = ""
+page = "main"
 
-clear = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
 
 rowAni = (">", " ")
 rowAniFrame = 0
@@ -15,6 +13,10 @@ colorama.init()
 
 
 class ui():
+
+
+
+
 
     def clear():
 
@@ -26,22 +28,21 @@ class ui():
              _ = os.system('clear')
 
     def main_menu():
-        page = "main"
         print()
-        print(colorama.Fore.GREEN + "                  _________                                 ")
-        print(colorama.Fore.GREEN + "   _____   ____  /   _____/ ______________  __ ___________  ")
-        print(colorama.Fore.GREEN + "  /     \_/ ___\ \_____  \_/ __ \_  __ \  \/ // __ \_  __ \ ")
-        print(colorama.Fore.GREEN + " |  Y Y  \  \___ /        \  ___/|  | \/\   /\  ___/|  | \/ ")
-        print(colorama.Fore.GREEN + " |__|_|  /\___  >_______  /\___  >__|    \_/  \___  >__|    ")
-        print(colorama.Fore.GREEN + "       \/     \/        \/     \/                 \/        ")
+        print(colorama.Fore.GREEN + "                  _________                                 \n",
+                                    "   _____   ____  /   _____/ ______________  __ ___________  \n",
+                                    "  /     \_/ ___\ \_____  \_/ __ \_  __ \  \/ // __ \_  __ \ \n",
+                                    " |  Y Y  \  \___ /        \  ___/|  | \/\   /\  ___/|  | \/ \n",
+                                    " |__|_|  /\___  >_______  /\___  >__|    \_/  \___  >__|    \n",
+                                    "       \/     \/        \/     \/                 \/        \n")
         print(colorama.Style.RESET_ALL)
-        print("1 - My servers")
-        print("2 - Create server")
-        print("3 - Delete server")
-        print("4 - Settings")
-        print("5 - Setup required packages")
-        print("0 - exit")
-        print(f"\n\n\n\n\n")
+        print(" 1 - My servers\n",
+              "2 - Create server\n",
+              "3 - Delete server\n",
+              "4 - Settings\n",
+              "5 - Setup required packages\n",
+              "0 - exit \n\n\n\n\n\n")
+
 
 
 class functions():
@@ -61,10 +62,12 @@ while True:
     print(colorama.Fore.GREEN)
     choice = input("> ")
     print(colorama.Style.RESET_ALL)
-    print(clear)
+    ui.clear()
     time.sleep(0.05)
+
     if page == "main":
         if choice == "":
+            page = "main"
             ui.main_menu()
         
         elif choice == "0":
