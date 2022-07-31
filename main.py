@@ -1,4 +1,4 @@
-#!$PREFIX/bin/python
+
 import colorama
 import os
 import time
@@ -94,10 +94,14 @@ while True:
             ui.main_menu()
 
         elif choice == "4":
+            page = "settings"
             ui.clear()
-            install_pkg = subprocess.check_output("apt search ssh")
-            print(install_pkg.decode("utf-8"))
-            ui.main_menu()
+            print(f"1 - Standart minecraft server port: {settings['Standart_server_port']}")
+            print(f"2 - Auto start FTP server after start minecraft server: {settings['Auto_start_FTP_server']}")
+            print(f"3 - FTP port: {settings['FTP_port']}")
+            print(f"4 - Servers dir: {settings['Servers_dir']}")
+            print(f"5 - Server eula: {settings['Server_eula']}")
+            print(f"0 - Back")
 
 
         elif choice == "6":
