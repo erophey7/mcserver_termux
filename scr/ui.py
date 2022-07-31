@@ -3,7 +3,13 @@ import os
 
 
 def clear():
-    os.system('clear')
+    # for windows
+    if os.name == 'nt':
+        os.system('cls')
+
+    # for mac and linux(here, os.name is 'posix')
+    else:
+        os.system('clear')
 
 
 def main_menu():
