@@ -88,9 +88,11 @@ while True:
                 print(f"6 - Min server RAM: {settings['Xms']} in megabytes")
                 print(f"7 - Max server RAM: {settings['Xmx']} in megabytes")
                 print(f"0 - Back\n\n\n\n")
+
                 print(colorama.Fore.GREEN)
                 choice = input("> ")
                 print(colorama.Style.RESET_ALL)
+
                 if choice == "0":
                     os.system('del settings.json')
                     with open("settings.json", "rw") as f:
@@ -99,8 +101,10 @@ while True:
                     page = "main"
                     ui.main_menu()
                     break
+
                 elif choice not in "1234567" or choice == "":
                     continue
+
                 else:
                     print(colorama.Fore.GREEN)
                     variable = input("> ")
@@ -131,4 +135,3 @@ while True:
 
         elif choice == "0":
             exit(0)
-
