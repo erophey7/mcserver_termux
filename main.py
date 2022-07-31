@@ -19,7 +19,7 @@ rowAniFrame = 0
 colorama.init()
 
 
-class ui():
+class ui:
 
 
     def clear():
@@ -47,9 +47,18 @@ class ui():
               "5 - Check version\n",
               "0 - Exit \n\n\n\n\n\n")
 
+    def settings_menu():
+        print("")
+        print(colorama.Fore.GREEN + "   _________       __    __  .__                       \n",
+                                    "  /   _____/ _____/  |__/  |_|__| ____    ____  ______ \n"
+                                    "  \_____  \_/ __ \   __\   __\  |/    \  / ___\/  ___/ \n",
+                                    "  /        \  ___/|  |  |  | |  |   |  \/ /_/  >___ \  \n",
+                                    " /_______  /\___  >__|  |__| |__|___|  /\___  /____  > \n",
+                                    "         \/     \/                   \//_____/     \/  \n")
+        print(colorama.Style.RESET_ALL)
 
 
-class func():
+class func:
 
     def vanilaParser():
         pass
@@ -82,7 +91,6 @@ while True:
     choice = input("> ")
     print(colorama.Style.RESET_ALL)
     ui.clear()
-    time.sleep(0.05)
 
     if page == "main":
         if choice == "":
@@ -91,13 +99,48 @@ while True:
 
         elif choice == "4":
             page = "settings"
-            ui.clear()
-            print(f"1 - Standart minecraft server port: {settings['Standart_server_port']}")
-            print(f"2 - Auto start FTP server after start minecraft server: {settings['Auto_start_FTP_server']}")
-            print(f"3 - FTP port: {settings['FTP_port']}")
-            print(f"4 - Servers dir: {settings['Servers_dir']}")
-            print(f"5 - Server eula: {settings['Server_eula']}")
-            print(f"0 - Back")
+            while True:
+                ui.settings_menu()
+                ui.clear()
+                print(f"1 - Standart minecraft server port: {settings['Standart_server_port']}")
+                print(f"2 - Auto start FTP server after start minecraft server: {settings['Auto_start_FTP_server']}")
+                print(f"3 - FTP port: {settings['FTP_port']}")
+                print(f"4 - Servers dir: {settings['Servers_dir']}")
+                print(f"5 - Server eula: {settings['Server_eula']}")
+                print(f"0 - Back\n\n\n\n")
+                print(colorama.Fore.GREEN)
+                choice = input("> ")
+                print(colorama.Style.RESET_ALL)
+                if choice == "0":
+                    ui.clear()
+                    page = "main"
+                    ui.main_menu()
+                    break
+                elif choice not in "12345" or choice == "":
+                    continue
+                else:
+                    print(colorama.Fore.GREEN)
+                    variable = input("> ")
+                    print(colorama.Style.RESET_ALL)
+                    if choice in '12345':
+                        match choice:
+                            case "1":
+                                settings['Standart_server_port'] = variable
+                            case "2":
+                                settings['Auto_start_FTP_server'] = variable
+                            case "3":
+                                settings['FTP_port'] = variable
+                            case "4":
+                                settings['Servers_dir'] = variable
+                            case "5":
+                                settings['Server_eula'] = variable
+                        ui.clear()
+                        continue
+
+
+
+
+
 
 
         elif choice == "6":
