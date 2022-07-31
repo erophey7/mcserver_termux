@@ -95,7 +95,7 @@ while True:
             ui.main_menu()
 
         elif choice == "4":
-            os.system('apt search ftp')
+            os.system('yes')
         
         elif choice == "0":
             exit(0)
