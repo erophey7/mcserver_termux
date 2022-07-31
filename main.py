@@ -62,6 +62,9 @@ while True:
             page = "main"
             ui.main_menu()
 
+        elif choice == "1":
+            pass
+
         elif choice == "2":
             page = "choice version"
             ui.clear()
@@ -116,7 +119,8 @@ while True:
             ui.clear()
             ui.main_menu()
 
-
+        elif choice == "3":
+            pass
 
         elif choice == "4":
             page = "settings"
@@ -171,7 +175,7 @@ while True:
                         ui.clear()
                         continue
 
-        elif choice == "6":
+        elif choice == "5":
             page = "main"
             ui.main_menu()
             print(f"Version: {settings['App_version']}")
