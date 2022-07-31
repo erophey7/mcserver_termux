@@ -58,7 +58,7 @@ class func():
 
 
     def getLocalIP():
-        hostname = socket.gethostname()
+        hostname = socket.gethostname("wlan0")
         ip = socket.gethostbyname(hostname)
         return ip
 
