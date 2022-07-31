@@ -1,10 +1,11 @@
-
+import scr.parsers as parsers
 import colorama
 import os
 import time
 import json
 import socket
 import subprocess
+import asyncio
 
 
 soft_version = 0.1
@@ -57,6 +58,15 @@ class ui:
                                     "         \/     \/                   \//_____/     \/  \n")
         print(colorama.Style.RESET_ALL)
 
+    def VersionMenu():
+        print(colorama.Fore.GREEN + "\n ____   ____                  .__                      \n",
+                                    "\   \ /   /___________  _____|__| ____   ____   ______\n"
+                                    "  \   Y   // __ \_  __ \/  ___/  |/  _ \ /    \ /  ___/\n",
+                                    "  \     /\  ___/|  | \/\___ \|  (  <_> )   |  \\\\___ \ \n",
+                                    "   \___/  \___  >__|  /____  >__|\____/|___|  /____  >\n",
+                                    "              \/           \/               \/     \/ \n")
+        print(colorama.Style.RESET_ALL)
+
 
 class func:
 
@@ -97,6 +107,13 @@ while True:
             page = "main"
             ui.main_menu()
 
+        elif choice == "2":
+            ui.clear()
+            ui.VersionMenu()
+            vanila = asyncio.run(parsers.vanilaParser())
+            for i in vanila:
+                print(i[0])
+
         elif choice == "4":
             page = "settings"
             while True:
@@ -112,6 +129,8 @@ while True:
                 choice = input("> ")
                 print(colorama.Style.RESET_ALL)
                 if choice == "0":
+                    with open("settings.json", "rw") as f:
+                        json.dump(settings, f)
                     ui.clear()
                     page = "main"
                     ui.main_menu()
@@ -136,12 +155,6 @@ while True:
                                 settings['Server_eula'] = variable
                         ui.clear()
                         continue
-
-
-
-
-
-
 
         elif choice == "6":
             page = "main"

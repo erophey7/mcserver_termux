@@ -39,7 +39,3 @@ async def main():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(levelname)-12s %(asctime)s %(message)s')
-    try:
-        asyncio.run(main())
-    finally:
-        logging.info('finished')
