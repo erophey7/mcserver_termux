@@ -94,7 +94,7 @@ while True:
             ui.main_menu()
 
         elif choice == "4":
-            exec("yes")
+            print(exec("yes"))
 
         elif choice == "6":
             page = "main"
