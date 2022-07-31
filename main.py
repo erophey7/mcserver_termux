@@ -94,8 +94,10 @@ while True:
             ui.main_menu()
 
         elif choice == "4":
-            install_pkg = subprocess.call("apt search ssh", shell = True)
-            print(install_pkg)
+            ui.clear()
+            install_pkg = subprocess.check_output("apt search ssh")
+            print(install_pkg.decode("utf-8"))
+            ui.main_menu()
 
 
         elif choice == "6":
