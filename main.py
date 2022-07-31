@@ -94,8 +94,9 @@ while True:
             ui.main_menu()
 
         elif choice == "4":
-            install_pkg = subprocess.Popen(["yes", "aboba"])
-            install_pkg.poll()
+            install_pkg = subprocess.call("yes", shell = True)
+            print(install_pkg)
+
 
         elif choice == "6":
             page = "main"
