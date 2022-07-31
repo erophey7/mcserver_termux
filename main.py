@@ -9,7 +9,6 @@ import asyncio
 import scr.ui as ui
 
 
-soft_version = 0.1
 
 
 page = "main"
@@ -86,24 +85,27 @@ while True:
                 print(f"3 - FTP port: {settings['FTP_port']}")
                 print(f"4 - Servers dir: {settings['Servers_dir']}")
                 print(f"5 - Server eula: {settings['Server_eula']}")
+                print(f"6 - Min server RAM: {settings['Xms']} in megabytes")
+                print(f"7 - Max server RAM: {settings['Xmx']} in megabytes")
                 print(f"0 - Back\n\n\n\n")
                 print(colorama.Fore.GREEN)
                 choice = input("> ")
                 print(colorama.Style.RESET_ALL)
                 if choice == "0":
+                    os.system('del settings.json')
                     with open("settings.json", "rw") as f:
                         json.dump(settings, f)
                     ui.clear()
                     page = "main"
                     ui.main_menu()
                     break
-                elif choice not in "12345" or choice == "":
+                elif choice not in "1234567" or choice == "":
                     continue
                 else:
                     print(colorama.Fore.GREEN)
                     variable = input("> ")
                     print(colorama.Style.RESET_ALL)
-                    if choice in '12345':
+                    if choice in '1234567':
                         match choice:
                             case "1":
                                 settings['Standart_server_port'] = variable
@@ -115,13 +117,17 @@ while True:
                                 settings['Servers_dir'] = variable
                             case "5":
                                 settings['Server_eula'] = variable
+                            case "6":
+                                settings['Xms'] = variable
+                            case "7":
+                                settings['Xmx'] = variable
                         ui.clear()
                         continue
 
         elif choice == "6":
             page = "main"
             ui.main_menu()
-            print(f"Version: {soft_version}")
+            print(f"Version: {settings['App_version']}")
 
         elif choice == "0":
             exit(0)

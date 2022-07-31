@@ -3,5 +3,8 @@
     "Auto_start_FTP_server": "True",
     "FTP_port": 8021,
     "Servers_dir": "/storage/emulated/0/mcServer",
-    "Server_eula": "false"
+    "Server_eula": "false",
+    "App_version": "0.1",
+    "Xms": 1024,
+    "Xmx": 2048
 }
