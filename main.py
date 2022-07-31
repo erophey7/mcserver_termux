@@ -94,8 +94,7 @@ while True:
             ui.main_menu()
 
         elif choice == "4":
-            output = subprocess.run(["yes"], stdout=subprocess.PIPE, text=True, input="Hello from the other side")
-            print(output)
+            exec("yes")
 
         elif choice == "6":
             page = "main"
