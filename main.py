@@ -1,6 +1,11 @@
 import colorama
 import os
 import time
+import json
+import socket
+
+
+settings = {}
 
 
 page = "main"
@@ -41,16 +46,22 @@ class ui():
               "3 - Delete server\n",
               "4 - Settings\n",
               "5 - Setup required packages\n",
-              "0 - exit \n\n\n\n\n\n")
+              "6 - Check version\n",
+              "0 - Exit \n\n\n\n\n\n")
 
 
 
-class functions():
+class func():
     
+    def vanilaParser():
+        pass
 
-    def exit():
-        exit
-        
+
+    def getLocalIP():
+        hostname = socket.gethostname()
+        ip = socket.gethostbyname(hostname)
+        return ip
+
 
 
 ui.main_menu()
@@ -58,6 +69,7 @@ ui.main_menu()
 
 
 while True:
+    print(func.getLocalIP())
     choice = ""
     print(colorama.Fore.GREEN)
     choice = input("> ")
