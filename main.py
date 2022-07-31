@@ -107,7 +107,7 @@ while True:
             else:
                 os.system(f"mkdir {settings['Servers_dir']}")
 
-            os.system(f'cp ./ServerExample {settings["Servers_dir"]}/{name}')
+            os.system(f'cp ServerExample {settings["Servers_dir"]}/{name}')
             if choiceCore != "2":
                 os.system(f'wget -c {download_link} -o server.jar')
             else:
