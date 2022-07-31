@@ -58,12 +58,17 @@ class func():
 
 
     def getLocalIP():
-        hostname = socket.gethostname("wlan0")
-        ip = socket.gethostbyname(hostname)
+        #hostname = socket.gethostname("wlan0")
+        #ip = socket.gethostbyname(hostname)
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
         return ip
 
 
-
+ui.clear()
 ui.main_menu()
 
 
