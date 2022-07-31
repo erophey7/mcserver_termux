@@ -107,12 +107,14 @@ while True:
 
             os.system(f'cp -r ServerExample {settings["Servers_dir"]}/{name}')
             if choiceCore != "2":
-                print(download_link)
-                os.system(f'wget -c {download_link} -o server.jar')
+                print("Wait...")
+                os.system(f'wget -c {download_link} -o {settings["Servers_dir"]}/{name}/server.jar')
             else:
                 pass
 
-            break
+            page = "main"
+            ui.clear()
+            ui.main_menu()
 
 
 
