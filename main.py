@@ -1,3 +1,4 @@
+#!$PREFIX/bin/python
 import colorama
 import os
 import time
@@ -46,8 +47,7 @@ class ui():
               "2 - Create server\n",
               "3 - Delete server\n",
               "4 - Settings\n",
-              "5 - Setup required packages\n",
-              "6 - Check version\n",
+              "5 - Check version\n",
               "0 - Exit \n\n\n\n\n\n")
 
 

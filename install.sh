@@ -1,2 +1,4 @@
-#$PREFIX/bin/sh
-apt search ssh
+#!$PREFIX/bin/sh
+apt update && apt upgrade -y
+apt install busybox openjdk-17 wget net-tools
+ln -s 
