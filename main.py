@@ -76,9 +76,12 @@ while True:
             version = vanila[inputVersion][0]
             versionNumber = inputVersion
             print(colorama.Style.RESET_ALL)
-
+            vanila_link = vanila[versionNumber][1]
             ui.clear()
             ui.Core_menu()
+
+
+
 
             print(colorama.Fore.GREEN)
             choiceCore = input("> ")
@@ -86,13 +89,8 @@ while True:
 
             download_link = ''
 
-            if choiceCore in "123":
-                match choice:
-                    case "1":
-                        download_link = vanila[versionNumber][1]
-
-            print(version)
-            print(download_link)
+            if choiceCore == "1":
+                download_link = vanila_link
 
             ui.clear()
             ui.server_name()
