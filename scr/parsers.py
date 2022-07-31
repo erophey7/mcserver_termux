@@ -4,6 +4,7 @@ import asyncio
 import logging
 import pprint
 import re
+import json as js
 
 URLS = ['https://getbukkit.org/download/vanilla']
 
@@ -18,16 +19,21 @@ async def request(urls):
         return await asyncio.gather(*tasks)
 
 
-async def main():
-    soup = bs4.BeautifulSoup(str(await request(URLS)),'html.parser')
+async def vanilaParser():
+    soup = bs4.BeautifulSoup(str(await request(URLS)), 'html.parser')
     result = str(soup.find_all('div', class_='row vdivide'))
-    version = re.findall(r'\d\.\d+\.\d', result)
+    version = re.findall(r'\d\.\d+\.*\d*', result)[::2]
     gacha_urls = re.findall(r'https://getbukkit.org/get/[^"]*', result)
-    soup = bs4.BeautifulSoup(str(await request(gacha_urls)),'html.parser')
-    urls = re.findall( r'https://[^"]*',str(soup.find_all('h2')))
-    pprint.pprint(soup)
-    # urls = re.findall(r'https://\.jar')
-    # pprint.pprint(urls)
+    soup = bs4.BeautifulSoup(str(await request(gacha_urls)), 'html.parser')
+    urls = re.findall(r'https://[^"]*', str(soup.find_all('h2')))
+    # urls = re.findall(r'https://\.jar')[]
+    ad = list(zip(version, urls))
+    print(ad[5][1])
+
+
+async def main():
+    await vanilaParser()
+
 
 
     # soup = bs4.BeautifulSoup(str(soup.find_all('div', class_='row vdivide')))

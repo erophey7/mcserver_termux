@@ -65,7 +65,7 @@ class func():
 
     def readSettings():
         settings = {}
-        with open("../settings.json") as f:
+        with open("settings.json") as f:
             settings = json.load(f)
         return settings
 
