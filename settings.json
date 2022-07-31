@@ -4,7 +4,7 @@
     "FTP_port": 8021,
     "Servers_dir": "/storage/emulated/0/mcServer",
     "Server_eula": "false",
-    "App_version": "0.1",
+    "App_version": "0.3",
     "Xms": 1024,
     "Xmx": 2048
 }
