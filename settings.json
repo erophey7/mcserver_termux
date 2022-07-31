@@ -1,0 +1,7 @@
+{
+    "Standart_server_port": "25565",
+    "Auto_start_FTP_server": "True",
+    "FTP_port": 8021,
+    "Servers_dir": "/storage/emulated/0/mcServer"
+
+}
