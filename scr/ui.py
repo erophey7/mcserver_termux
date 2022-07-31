@@ -15,19 +15,19 @@ def clear():
 def main_menu():
     print()
     print(fr'''{colorama.Fore.GREEN}
-                             _________                                      
-              _____   ____  /   _____/ ______________  __ ___________       
-             /     \_/ ___\ \_____  \_/ __ \_  __ \  \/ // __ \_  __ \      
-            |  Y Y  \  \___ /        \  ___/|  | \/\   /\  ___/|  | \/      
-            |__|_|  /\___  >_______  /\___  >__|    \_/  \___  >__|         
-                  \/     \/        \/     \/                 \/ {colorama.Style.RESET_ALL}          
-         
-          1 - My servers
-          2 - Create server  
-          3 - Delete server  
-          4 - Settings  
-          5 - Check version   
-          0 - Exit''' + '\n'*6)
+                   _________                                      
+    _____   ____  /   _____/ ______________  __ ___________       
+   /     \_/ ___\ \_____  \_/ __ \_  __ \  \/ // __ \_  __ \      
+  |  Y Y  \  \___ /        \  ___/|  | \/\   /\  ___/|  | \/      
+  |__|_|  /\___  >_______  /\___  >__|    \_/  \___  >__|         
+        \/     \/        \/     \/                 \/ {colorama.Style.RESET_ALL}  
+                
+1 - My servers
+2 - Create server  
+3 - Delete server  
+4 - Settings  
+5 - Check version   
+0 - Exit''' + '\n'*3)
     return 
 
 
