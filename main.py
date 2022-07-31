@@ -5,7 +5,7 @@ import json
 import socket
 
 
-settings = {}
+
 
 
 page = "main"
@@ -58,15 +58,21 @@ class func():
 
 
     def getLocalIP():
-        #hostname = socket.gethostname("wlan0")
-        #ip = socket.gethostbyname(hostname)
-
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
         s.close()
         return ip
 
+
+    def readSettings():
+        settings = {}
+        with open("settings.json") as f:
+            settings = json.load(f)
+        return settings
+
+
+settings = func.readSettings()
 
 ui.clear()
 ui.main_menu()
@@ -75,6 +81,7 @@ ui.main_menu()
 
 while True:
     print(func.getLocalIP())
+    print(settings['FTP_port'])
     choice = ""
     print(colorama.Fore.GREEN)
     choice = input("> ")
@@ -86,6 +93,8 @@ while True:
         if choice == "":
             page = "main"
             ui.main_menu()
+
+        elif choice == ""
         
         elif choice == "0":
             exit(0)
