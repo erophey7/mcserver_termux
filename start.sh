@@ -1,1 +1,1 @@
-python main.py
+python3 -m ./scr/main.py

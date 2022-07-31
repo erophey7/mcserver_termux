@@ -22,9 +22,6 @@ colorama.init()
 class ui():
 
 
-
-
-
     def clear():
 
         if os.name == 'nt':
@@ -32,7 +29,7 @@ class ui():
 
 
         else:
-             _ = os.system('clear')
+             os.system('clear')
 
     def main_menu():
         print()
@@ -53,7 +50,7 @@ class ui():
 
 
 class func():
-    
+
     def vanilaParser():
         pass
 
@@ -68,7 +65,7 @@ class func():
 
     def readSettings():
         settings = {}
-        with open("settings.json") as f:
+        with open("../settings.json") as f:
             settings = json.load(f)
         return settings
 
@@ -77,7 +74,6 @@ settings = func.readSettings()
 
 ui.clear()
 ui.main_menu()
-
 
 
 while True:
@@ -108,7 +104,7 @@ while True:
             page = "main"
             ui.main_menu()
             print(f"Version: {soft_version}")
-        
+
         elif choice == "0":
             exit(0)
 
