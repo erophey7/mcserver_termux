@@ -48,6 +48,8 @@ ui.clear()
 ui.main_menu()
 
 
+
+
 while True:
     choice = ""
     print(colorama.Fore.GREEN)
@@ -61,22 +63,53 @@ while True:
             ui.main_menu()
 
         elif choice == "2":
+            page = "choice version"
             ui.clear()
             ui.VersionMenu()
             vanila = asyncio.run(parsers.vanilaParser())
             for j, i in enumerate(vanila):
-                print(f'{j} - {i[0]}')
-
+                print(f'{j+1} - {i[0]}')
 
 
             print(colorama.Fore.GREEN)
-            try:
-                version = vanila[int(input("> "))][1]
+            inputVersion = int(input("> "))-1
+            version = vanila[inputVersion][0]
+            versionNumber = inputVersion
+            print(colorama.Style.RESET_ALL)
 
-            except:
-                continue
-            finally:
-                print(colorama.Style.RESET_ALL)
+            ui.clear()
+            ui.Core_menu()
+
+            print(colorama.Fore.GREEN)
+            choiceCore = input("> ")
+            print(colorama.Style.RESET_ALL)
+
+            download_link = ''
+
+            if choiceCore in "123":
+                match choice:
+                    case "1":
+                        download_link = vanila[versionNumber][1]
+
+            print(version)
+            print(download_link)
+
+            ui.clear()
+            ui.server_name()
+
+            print(colorama.Fore.GREEN)
+            name = input("> ")
+            print(colorama.Style.RESET_ALL)
+
+
+            if os.path.exists(settings['Servers_dir']):
+                os.system(f'cp ./ServerExample {settings["Servers_dir"]}/{name}')
+                if choiceCore != "2":
+                    os.system(f'wget -c {download_link} -o server.jar')
+                else:
+                    pass
+
+
 
 
         elif choice == "4":

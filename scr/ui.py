@@ -62,9 +62,27 @@ def Core_menu():
  \     \___(  <_> )  | \/\  ___/ 
   \______  /\____/|__|    \___  >
          \/                   \/ 
-    {colorama.Style.RESET_ALL}''')
+    {colorama.Style.RESET_ALL}
+    Select server core 
+    
+1 - Vanila core
+2 - Forge
+3 - Spigot''' + '\n'*6)
     return
 
+def server_name():
+    print(fr'''{colorama.Fore.GREEN} 
+ _______                         
+ \      \ _____    _____   ____  
+ /   |   \\__  \  /     \_/ __ \ 
+/    |    \/ __ \|  Y Y  \  ___/ 
+\____|__  (____  /__|_|  /\___  >
+        \/     \/      \/     \/ 
+    {colorama.Style.RESET_ALL}
+    Type server name (a-Z 0-9 _ -) 
+
+''' + '\n' * 6)
+    return
 
 if __name__ == '__main__':
     settings_menu()
