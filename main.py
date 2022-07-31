@@ -66,9 +66,13 @@ while True:
             vanila = asyncio.run(parsers.vanilaParser())
             for j, i in enumerate(vanila):
                 print(f'{j} - {i[0]}')
+
+
+
             print(colorama.Fore.GREEN)
             try:
-                print(vanila[int(input("> "))][1])
+                version = vanila[int(input("> "))][1]
+
             except:
                 continue
             finally:
