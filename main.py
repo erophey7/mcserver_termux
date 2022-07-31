@@ -111,8 +111,16 @@ while True:
             ui.clear()
             ui.VersionMenu()
             vanila = asyncio.run(parsers.vanilaParser())
-            for i in vanila:
-                print(i[0])
+            for j, i in enumerate(vanila):
+                print(f'{j} - {i[0]}')
+            print(colorama.Fore.GREEN)
+            try:
+                print(vanila[int(input("> "))][1])
+            except:
+                continue
+            finally:
+                print(colorama.Style.RESET_ALL)
+
 
         elif choice == "4":
             page = "settings"
