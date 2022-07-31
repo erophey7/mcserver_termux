@@ -103,15 +103,15 @@ while True:
 
 
             if os.path.exists(settings['Servers_dir']):
-                pass
+                os.system(f'cp ServerExample {settings["Servers_dir"]}/{name}')
+                if choiceCore != "2":
+                    os.system(f'wget -c {download_link} -o server.jar')
+                else:
+                    pass
             else:
                 os.system(f"mkdir {settings['Servers_dir']}")
 
-            os.system(f'cp ServerExample {settings["Servers_dir"]}/{name}')
-            if choiceCore != "2":
-                os.system(f'wget -c {download_link} -o server.jar')
-            else:
-                pass
+
 
 
 
