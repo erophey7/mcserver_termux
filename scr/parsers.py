@@ -6,8 +6,6 @@ import pprint
 import re
 import json as js
 
-URLS = ['https://getbukkit.org/download/vanilla']
-
 async def get(url, sess):
     async with sess.get(url) as resp:
         return await resp.text()
@@ -20,15 +18,14 @@ async def request(urls):
 
 
 async def vanilaParser():
-    soup = bs4.BeautifulSoup(str(await request(URLS)), 'html.parser')
+    soup = bs4.BeautifulSoup(str(await request(['https://getbukkit.org/download/vanilla'])), 'html.parser')
     result = str(soup.find_all('div', class_='row vdivide'))
     version = re.findall(r'\d\.\d+\.*\d*', result)[::2]
     gacha_urls = re.findall(r'https://getbukkit.org/get/[^"]*', result)
     soup = bs4.BeautifulSoup(str(await request(gacha_urls)), 'html.parser')
     urls = re.findall(r'https://[^"]*', str(soup.find_all('h2')))
-    # urls = re.findall(r'https://\.jar')[]
-    ad = list(zip(version, urls))
-    print(ad[5][1])
+
+    return list(zip(version, urls))
 
 
 async def main():
