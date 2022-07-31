@@ -3,9 +3,10 @@ import os
 import time
 import json
 import socket
+import subprocess
 
 
-
+soft_version = 0.1
 
 
 page = "main"
@@ -80,8 +81,6 @@ ui.main_menu()
 
 
 while True:
-    print(func.getLocalIP())
-    print(settings['FTP_port'])
     choice = ""
     print(colorama.Fore.GREEN)
     choice = input("> ")
@@ -95,7 +94,12 @@ while True:
             ui.main_menu()
 
         elif choice == "4":
-            os.system('yes')
+            subprocess.run("yes")
+
+        elif choice == "6":
+            page = "main"
+            ui.main_menu()
+            print(f"Version: {soft_version}")
         
         elif choice == "0":
             exit(0)
