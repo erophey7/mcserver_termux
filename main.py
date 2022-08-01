@@ -66,7 +66,7 @@ while True:
                 print(f'{i+1} - {serversList[i]}')
 
             print(colorama.Fore.GREEN)
-            choice = input("> ")-1
+            choice = input("> ")
             print(colorama.Style.RESET_ALL)
 
 
