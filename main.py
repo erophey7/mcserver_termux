@@ -116,7 +116,10 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            subprocess.Popen(['python',  '-m', 'pyftpdlib', '-p', f'{settings["FTP_port"]}', f'--directory={serverDir}', '-w'], shell=False, stdout=subprocess.PIPE)
+                            with open(os.devnull, 'w') as f:
+                                 subprocess.Popen(['python',  '-m', 'pyftpdlib', '-p', f'{settings["FTP_port"]}', f'--directory={serverDir}', '-w'], stdout=f, stderr=subprocess.STDOUT)
+
+                            #subprocess.Popen(['python',  '-m', 'pyftpdlib', '-p', f'{settings["FTP_port"]}', f'--directory={serverDir}', '-w'], shell=False, stdout=subprocess.PIPE)
                             #FTPProc.start()
                             ftpStarted = True
                         else:
