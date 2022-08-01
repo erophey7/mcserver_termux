@@ -70,7 +70,7 @@ while True:
             print(colorama.Style.RESET_ALL)
 
 
-            serverDir = f'{settings["Servers_dir"]}/{serversList[choice]}'
+            serverDir = f'{settings["Servers_dir"]}/{serversList[int(choice)]}'
 
             while True:
                 page = 'server_menu'
