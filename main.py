@@ -63,7 +63,9 @@ while True:
             ui.main_menu()
 
         elif choice == "1":
-            pass
+            lsOut = os.system(f'ls settings["Servers_dir"]')
+            print(lsOut)
+
 
         elif choice == "2":
             page = "choice version"
