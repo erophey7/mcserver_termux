@@ -4,9 +4,9 @@ from pyftpdlib.servers import FTPServer
 from daemon import runner
 import sys
 
-ip = sys.argv[1]
-port = sys.argv[2]
-ftpDir = sys.argv[3]
+ip = sys.argv[2]
+port = sys.argv[3]
+ftpDir = sys.argv[4]
 
 class FTP():
     def __init__(self, ip, port, ftpDir):
