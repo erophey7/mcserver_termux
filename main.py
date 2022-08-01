@@ -7,6 +7,7 @@ import socket
 import subprocess
 import asyncio
 import scr.ui as ui
+import threading
 
 
 
@@ -37,8 +38,8 @@ class func:
         return settings
 
 
-#def runFTP(path):
-#    _ = os.system('exec {serverDir}/startFTP.sh')
+def runFTP(scr):
+    _ = os.system(f'./{scr}')
 
 
 settings = func.readSettings()
@@ -106,7 +107,8 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            _ = os.system(f'exec {serverDir}/startFTP.sh')
+                            FTPProc = threading.Thread(target=runFTP, args=(1,))
+                            FTPProc.start(serverDir)
                             ftpStarted = True
                         else:
                             os.system('pkill ftpd')
