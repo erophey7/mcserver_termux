@@ -102,7 +102,7 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            os.system(f'busybox tcpsvd -vE {func.getLocalIP} {settings["FTP_port"]} busybox ftpd -w {serverDir}')
+                            subprocess.Popen('busybox' 'tcpsvd' '-vE' f'{func.getLocalIP}' f'{settings["FTP_port"]}' 'busybox' 'ftpd -w' f'{serverDir}')
                             ftpStarted = True
                         else:
                             os.sytem('pkill ftpd')
