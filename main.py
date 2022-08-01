@@ -102,7 +102,7 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            _ = os.system('exec {serverDir}/startFTP.sh')
+                            _ = os.system('exec {serverDir}/startFTP.sh > /dev/null 2>&1 &')
                             ftpStarted = True
                         else:
                             os.system('pkill ftpd')
