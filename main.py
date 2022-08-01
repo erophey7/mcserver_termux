@@ -13,12 +13,7 @@ import scr.ui as ui
 
 page = "main"
 
-
-rowAni = (">", " ")
-rowAniFrame = 0
-
 colorama.init()
-
 
 
 class func:
@@ -48,8 +43,6 @@ ui.clear()
 ui.main_menu()
 
 
-
-
 while True:
     choice = ""
     print(colorama.Fore.GREEN)
@@ -63,7 +56,7 @@ while True:
             ui.main_menu()
 
         elif choice == "1":
-            lsOut = subprocess.check_output(f'ls {settings["Servers_dir"]}')
+            lsOut = subprocess.check_output('ls', 'settings["Servers_dir"]')
             print(str(lsOut).split(' '))
 
 
