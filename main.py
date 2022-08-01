@@ -77,12 +77,12 @@ while True:
                 ui.clear()
                 ui.Server_menu()
                 print(fr'''
-1 - {"Start" if serverStarted == True else "Stop"} minecraft server
-2 - {"Start" if serverStarted == True else "Stop"} ftp server
-3 - {"Start" if serverStarted == True else "Stop"} ngrok
+1 - {"Stop" if serverStarted == True else "Start"} minecraft server
+2 - {"Stop" if ftpStarted == True else "Start"} ftp server
+3 - {"Stop" if ngrokStarted == True else "Start"} ngrok
 0 - Exit
 
-{f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server"}
+{"" if ftpStarted else "{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server"}
 
                         ''')
 
