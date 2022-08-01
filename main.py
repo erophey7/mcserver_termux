@@ -57,7 +57,7 @@ while True:
 
         elif choice == "1":
             serversList = os.listdir(settings["Servers_dir"])
-            for i in range(0, len(serversList)-1):
+            for i in range(0, len(serversList)):
                 print(f'{i+1} - {serversList[i]}')
 
 
