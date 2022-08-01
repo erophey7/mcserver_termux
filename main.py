@@ -119,7 +119,7 @@ while True:
                 elif choice == '2':
                         if ftpStarted == False:
                             with daemon.DaemonContext():
-                                os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
+                                os.system(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             ui.clear()
                             ftpStarted = True
                         else:
