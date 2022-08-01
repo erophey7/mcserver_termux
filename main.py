@@ -41,9 +41,9 @@ class func:
         return settings
 
 
-def runFTP(ftpDir):
-    os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={ftpDir} -w')
-    ui.clear()
+#def runFTP(ftpDir):
+#    os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={ftpDir} -w')
+#    ui.clear()
     #authorizer = DummyAuthorizer()
     #authorizer.add_anonymous(ftpDir, perm=('r', 'w'))
     #handler = FTPHandler
@@ -51,6 +51,34 @@ def runFTP(ftpDir):
     #server = FTPServer((func.getLocalIP(), settings['FTP_port']), handler)
     #server.serve_forever()
 
+class FTP():
+    def __init__(self, ftpDir):
+        self.stdin_path = '/dev/null'
+        self.stdout_path = '/dev/null'
+        self.stderr_path = '/dev/null'
+        self.pidfile_path = '$PREFIX/tmp/foo.pid'
+        self.pidfile_timeout = 5
+        self.ftpDir = ftpDir
+    def run(self):
+
+        authorizer = DummyAuthorizer()
+        authorizer.add_anonymous(self.ftpDir, perm=('r', 'w'))
+        handler = FTPHandler
+        handler.authorizer = authorizer
+        server = FTPServer((func.getLocalIP(), settings['FTP_port']), handler)
+        server.serve_forever()
+
+class Ngrok():
+    def __init__(self):
+        self.stdin_path = '/dev/null'
+        self.stdout_path = '/dev/null'
+        self.stderr_path = '/dev/null'
+        self.pidfile_path = '/tmp/foo1.pid'
+        self.pidfile_timeout = 5
+    def run(self):
+        while True:
+            print("Howdy!  Gig'em!  Whoop!")
+            time.sleep(10)
 
 settings = func.readSettings()
 
@@ -106,7 +134,8 @@ while True:
                 print(colorama.Style.RESET_ALL)
                 ui.clear()
 
-                FTPProc = multiprocessing.Process(target=runFTP(serverDir), daemon=True)
+                FTPProc = FTP()
+                daemon_runner = daemon.runner.DaemonRunner(FTPProc)
 
                 if choice == '0':
                     os.system('pkill java && pkill ftpd && pkill ngrok')
@@ -119,7 +148,7 @@ while True:
                 elif choice == '2':
                         if ftpStarted == False:
                             FTPProc.start()
-
+                            daemon_runner.do_action()
                             #with daemon.DaemonContext():
                             #    os.system(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             ui.clear()
