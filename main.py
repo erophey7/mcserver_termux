@@ -57,8 +57,23 @@ while True:
 
         elif choice == "1":
             serversList = os.listdir(settings["Servers_dir"])
+            ui.my_servers()
             for i in range(0, len(serversList)):
                 print(f'{i+1} - {serversList[i]}')
+
+            print(colorama.Fore.GREEN)
+            choice = input("> ")-1
+            print(colorama.Style.RESET_ALL)
+
+
+            serverDir = f'{settings["Servers_dir"]}/{serversList[choice]}'
+            ngrokStarted = False
+            ftpStarted = False
+
+            while True:
+                ui.clear()
+                ui.Server_menu()
+
 
 
         elif choice == "2":
