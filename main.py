@@ -102,7 +102,7 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            os.system(f'busybox tcpsvd -vE {func.getLocalIP} {settings["FTP_port"]} busybox ftpd -w {serverDir}')
+                            os.system(f'{serverDir}/startFTP.sh')
                             ftpStarted = True
                         else:
                             os.system('pkill ftpd')
@@ -160,6 +160,11 @@ while True:
                 os.system(f'wget -c {download_link} -o {settings["Servers_dir"]}/{name}/server.jar')
             else:
                 pass
+
+            with open(f'{settings["Servers_dir"]}/{name}/startFTP.sh', 'w') as f:
+                f.write(f"busybox tcpsvd -vE 0.0.0.0 {settings['FTP_port']} busybox ftpd -w {settings['Servers_dir']}/{name}")
+
+            os.system(f'chmod +x {settings["Servers_dir"]}/{name}/startFTP.sh')
 
             page = "main"
             ui.clear()
