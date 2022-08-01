@@ -11,6 +11,7 @@ import multiprocessing
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
+import daemon
 
 
 
@@ -117,8 +118,8 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-
-                            os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w > /dev/null &')
+                            with daemon.DaemonContext():
+                                os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             ui.clear()
                             ftpStarted = True
                         else:
