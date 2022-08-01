@@ -117,7 +117,7 @@ while True:
                 elif choice == '2':
                         if ftpStarted == False:
 
-                            os.spawnl(os.P_DETACH, f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
+                            os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w &')
 
 
 
