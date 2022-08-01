@@ -105,7 +105,7 @@ while True:
                             os.system(f'busybox tcpsvd -vE {func.getLocalIP} {settings["FTP_port"]} busybox ftpd -w {serverDir}')
                             ftpStarted = True
                         else:
-                            os.sytem('pkill ftpd')
+                            os.system('pkill ftpd')
                             ftpStarted = False
 
 
