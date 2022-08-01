@@ -41,7 +41,7 @@ class func:
 
 
 def runFTP(ftpDir):
-    os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={ftpDir}')
+    os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={ftpDir} -w')
     #authorizer = DummyAuthorizer()
     #authorizer.add_anonymous(ftpDir, perm=('r', 'w'))
     #handler = FTPHandler
