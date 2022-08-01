@@ -11,7 +11,8 @@ import multiprocessing
 from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
-import daemon
+from daemon import runner
+
 
 
 
@@ -135,7 +136,7 @@ while True:
                 ui.clear()
 
                 FTPProc = FTP(serverDir)
-                daemon_runner = daemon.runner.DaemonRunner(FTPProc)
+                daemon_runner = runner.DaemonRunner(FTPProc)
 
                 if choice == '0':
                     os.system('pkill java && pkill ftpd && pkill ngrok')
@@ -147,16 +148,16 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            FTPProc.start()
+                            #FTPProc.start()
                             daemon_runner.do_action()
                             #with daemon.DaemonContext():
                             #    os.system(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             ui.clear()
                             ftpStarted = True
                         else:
-                            FTPProc.close()
-                            os.system(f'pkill python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
-                            ftpStarted = False
+                            #FTPProc.close()
+                            #os.system(f'pkill python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
+                            #ftpStarted = False
 
 
 
