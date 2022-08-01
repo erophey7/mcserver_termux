@@ -4,9 +4,9 @@ from pyftpdlib.servers import FTPServer
 from daemon import runner
 import sys
 
-ip = sys.argv[2]
-port = sys.argv[3]
-ftpDir = sys.argv[4]
+ip = '192.168.1.66' #sys.argv[2]
+port = '8021' #sys.argv[3]
+ftpDir = '/sdcard' #sys.argv[4]
 
 class FTP():
     def __init__(self, ip, port, ftpDir):
