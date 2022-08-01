@@ -63,8 +63,8 @@ while True:
             ui.main_menu()
 
         elif choice == "1":
-            lsOut = os.system(f'ls {settings["Servers_dir"]}').split(' ')
-            print(lsOut)
+            lsOut = os.system(f'ls {settings["Servers_dir"]}')
+            print(lsOut.text())
 
 
         elif choice == "2":
