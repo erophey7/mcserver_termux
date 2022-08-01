@@ -101,11 +101,13 @@ while True:
                     pass
 
                 elif choice == '2':
-                    match ftpStarted:
-                        case False:
+                        if ftpStarted == False:
                             os.system(f'busybox tcpsvd -vE {func.getLocalIP} {settings["FTP_port"]} busybox ftpd -w {serverDir}')
-                        case True:
+                            ftpStarted = True
+                        else:
                             os.sytem('pkill ftpd')
+                            ftpStarted = False
+
 
 
 
