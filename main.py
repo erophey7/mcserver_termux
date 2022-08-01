@@ -56,8 +56,8 @@ while True:
             ui.main_menu()
 
         elif choice == "1":
-            lsOut = subprocess.check_output('ls', 'settings["Servers_dir"]')
-            print(str(lsOut).split(' '))
+            serversList = os.listdir(settings["Servers_dir"])
+            print(serversList)
 
 
         elif choice == "2":
