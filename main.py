@@ -106,7 +106,7 @@ while True:
                 print(colorama.Style.RESET_ALL)
                 ui.clear()
 
-                #FTPProc = multiprocessing.Process(target=runFTP(serverDir))
+                FTPProc = multiprocessing.Process(target=runFTP(serverDir), daemon=True)
 
                 if choice == '0':
                     os.system('pkill java && pkill ftpd && pkill ngrok')
@@ -118,12 +118,14 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            with daemon.DaemonContext():
-                                os.system(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
+                            FTPProc.start()
+
+                            #with daemon.DaemonContext():
+                            #    os.system(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             ui.clear()
                             ftpStarted = True
                         else:
-                            #FTPProc.close()
+                            FTPProc.close()
                             os.system(f'pkill python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             ftpStarted = False
 
