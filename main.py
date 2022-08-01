@@ -100,8 +100,7 @@ while True:
                 print(colorama.Style.RESET_ALL)
                 ui.clear()
 
-                FTPProc = FTP(serverDir)
-                daemon_runner = runner.DaemonRunner(FTPProc)
+
 
                 if choice == '0':
                     os.system('pkill java && pkill ftpd && pkill ngrok')
@@ -113,17 +112,14 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            #FTPProc.start()
-                            #daemon_runner.do_action()
-                            #with daemon.DaemonContext():
-                            #    os.system(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
+                            os.system(f'sv up {name}-ftpd')
                             ui.clear()
                             ftpStarted = True
                         else:
-                            #FTPProc.close()
-                            #os.system(f'pkill python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
-                            #ftpStarted = False
-                            pass
+                            os.system(f'sv down {name}-ftpd')
+                            ftpStarted = False
+                        ui.clear()
+
 
 
 
