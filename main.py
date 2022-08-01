@@ -64,7 +64,7 @@ while True:
 
         elif choice == "1":
             lsOut = os.system(f'ls {settings["Servers_dir"]}')
-            print(lsOut.text())
+            print(str(lsOut).split(' '))
 
 
         elif choice == "2":
