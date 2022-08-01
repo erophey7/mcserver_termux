@@ -183,7 +183,7 @@ while True:
 
 
 
-            with open(f'$PREFIX/var/service/{name}-ftpd/run.sh', 'w') as f:
+            with open(f'/data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh', 'w') as f:
                 f.write(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w")
 
             os.system(f'mv $PREFIX/var/service/{name}-ftpd/run.sh $PREFIX/var/service/{name}-ftpd/run')
