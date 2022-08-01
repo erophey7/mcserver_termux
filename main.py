@@ -116,7 +116,7 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            subprocess.Popen(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={ftpDir} -w')
+                            subprocess.Popen(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             #FTPProc.start()
                             ftpStarted = True
                         else:
