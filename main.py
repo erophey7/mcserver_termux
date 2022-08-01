@@ -63,7 +63,7 @@ while True:
             ui.main_menu()
 
         elif choice == "1":
-            lsOut = os.system(f'ls {settings["Servers_dir"]}')
+            lsOut = subprocess.check_output(f'ls {settings["Servers_dir"]}')
             print(str(lsOut).split(' '))
 
 
