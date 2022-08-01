@@ -42,6 +42,7 @@ class func:
 
 def runFTP(ftpDir):
     os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={ftpDir} -w')
+    ui.clear()
     #authorizer = DummyAuthorizer()
     #authorizer.add_anonymous(ftpDir, perm=('r', 'w'))
     #handler = FTPHandler
@@ -118,19 +119,11 @@ while True:
                         if ftpStarted == False:
 
                             os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w &')
-
-
-
-
-                            #with open(os.devnull, 'w') as f:
-                            #     subprocess.Popen(['python',  '-m', 'pyftpdlib', '-p', f'{settings["FTP_port"]}', f'--directory={serverDir}', '-w'], stdout=f, stderr=subprocess.STDOUT)
-#
-                            #subprocess.Popen(['python',  '-m', 'pyftpdlib', '-p', f'{settings["FTP_port"]}', f'--directory={serverDir}', '-w'], shell=False, stdout=subprocess.PIPE)
-                            #FTPProc.start()
+                            ui.clear()
                             ftpStarted = True
                         else:
                             #FTPProc.close()
-                            os.system('pkill pyftpdlib')
+                            os.system(f'pkill python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             ftpStarted = False
 
 
