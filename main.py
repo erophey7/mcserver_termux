@@ -66,7 +66,7 @@ while True:
                 print(f'{i+1} - {serversList[i]}')
 
             print(colorama.Fore.GREEN)
-            choice = input("> ")
+            choice = input("> ")-1
             print(colorama.Style.RESET_ALL)
 
 
@@ -102,7 +102,7 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            _ = subprocess.Popen('exec', f'{serverDir}/startFTP.sh')
+                            _ = os.system('exec{serverDir}/startFTP.sh')
                             ftpStarted = True
                         else:
                             os.system('pkill ftpd')
