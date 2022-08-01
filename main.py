@@ -8,7 +8,9 @@ import subprocess
 import asyncio
 import scr.ui as ui
 import threading
-
+from pyftpdlib.authorizers import DummyAuthorizer
+from pyftpdlib.handlers import FTPHandler
+from pyftpdlib.servers import FTPServer
 
 
 
@@ -37,9 +39,15 @@ class func:
             settings = json.load(f)
         return settings
 
+ftpDir = ''
 
-def runFTP(scr):
-    _ = os.system(f'./{scr}')
+def runFTP(ftpDir):
+    authorizer = DummyAuthorizer()
+    authorizer.add_anonymous(ftpDir)
+    handler = FTPHandler
+    handler.authorizer = authorizer
+    server = FTPServer((func.getLocalIP(), settings['FTP_port']), handler)
+    server.serve_forever()
 
 
 settings = func.readSettings()
@@ -96,6 +104,8 @@ while True:
                 print(colorama.Style.RESET_ALL)
                 ui.clear()
 
+                FTPProc = threading.Thread(target=runFTP, args=[1])
+
 
                 if choice == '0':
                     os.system('pkill java && pkill ftpd && pkill ngrok')
@@ -107,11 +117,11 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            FTPProc = threading.Thread(target=runFTP, args=(2,))
-                            FTPProc.start(serverDir)
+
+                            FTPProc.start()
                             ftpStarted = True
                         else:
-                            os.system('pkill ftpd')
+                            FTPProc.do_run = False
                             ftpStarted = False
 
 
