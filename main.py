@@ -41,12 +41,13 @@ class func:
 
 
 def runFTP(ftpDir):
-    authorizer = DummyAuthorizer()
-    authorizer.add_anonymous(ftpDir, perm=('r', 'w'))
-    handler = FTPHandler
-    handler.authorizer = authorizer
-    server = FTPServer((func.getLocalIP(), settings['FTP_port']), handler)
-    server.serve_forever()
+    os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={ftpDir}')
+    #authorizer = DummyAuthorizer()
+    #authorizer.add_anonymous(ftpDir, perm=('r', 'w'))
+    #handler = FTPHandler
+    #handler.authorizer = authorizer
+    #server = FTPServer((func.getLocalIP(), settings['FTP_port']), handler)
+    #server.serve_forever()
 
 
 settings = func.readSettings()
