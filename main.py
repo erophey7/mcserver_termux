@@ -82,7 +82,7 @@ while True:
 3 - {"Stop" if ngrokStarted == True else "Start"} ngrok
 0 - Exit
 
-{"" if ftpStarted else "{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server"}
+{f" " if ftpStarted else f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server"}
 
                         ''')
 
