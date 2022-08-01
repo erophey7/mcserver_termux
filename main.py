@@ -102,7 +102,7 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            os.system(f'{serverDir}/startFTP.sh')
+                            _ = subprocess.Popen('exec', f'{serverDir}/startFTP.sh')
                             ftpStarted = True
                         else:
                             os.system('pkill ftpd')
