@@ -134,7 +134,7 @@ while True:
                 print(colorama.Style.RESET_ALL)
                 ui.clear()
 
-                FTPProc = FTP()
+                FTPProc = FTP(serverDir)
                 daemon_runner = daemon.runner.DaemonRunner(FTPProc)
 
                 if choice == '0':
