@@ -43,6 +43,10 @@ ui.clear()
 ui.main_menu()
 
 
+serverStarted = False
+ngrokStarted = False
+ftpStarted = False
+
 while True:
     choice = ""
     print(colorama.Fore.GREEN)
@@ -67,12 +71,20 @@ while True:
 
 
             serverDir = f'{settings["Servers_dir"]}/{serversList[choice]}'
-            ngrokStarted = False
-            ftpStarted = False
 
             while True:
                 ui.clear()
                 ui.Server_menu()
+                print(f'1 - {"Start" if serverStarted == True else "Stop"} minecraft server')
+                print(f'2 - {"Start" if serverStarted == True else "Stop"} ftp server')
+                print(f'3 - {"Start" if serverStarted == True else "Stop"} ngrok')
+                print(f'0 - Exit')
+                print(f'\n')
+
+                print(colorama.Fore.GREEN)
+                choice = input("> ")
+                print(colorama.Style.RESET_ALL)
+
 
 
 
