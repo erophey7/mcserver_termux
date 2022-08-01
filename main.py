@@ -37,6 +37,10 @@ class func:
         return settings
 
 
+#def runFTP(path):
+#    _ = os.system('exec {serverDir}/startFTP.sh')
+
+
 settings = func.readSettings()
 
 ui.clear()
@@ -102,7 +106,7 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            _ = os.system('exec {serverDir}/startFTP.sh > /dev/null 2>&1 &')
+                            _ = os.system(f'exec {serverDir}/startFTP.sh')
                             ftpStarted = True
                         else:
                             os.system('pkill ftpd')
