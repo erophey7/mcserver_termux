@@ -42,7 +42,7 @@ class func:
 
 def runFTP(ftpDir):
     authorizer = DummyAuthorizer()
-    authorizer.add_anonymous(ftpDir, perrm=('r', 'w'))
+    authorizer.add_anonymous(ftpDir, perm=('r', 'w'))
     handler = FTPHandler
     handler.authorizer = authorizer
     server = FTPServer((func.getLocalIP(), settings['FTP_port']), handler)
