@@ -180,10 +180,7 @@ while True:
 
             os.system(f'mkdir $PREFIX/var/service/{name}-ftpd')
 
-
-            with open(f'$PREFIX/var/service/{name}-ftpd/run', 'x') as f:
-                f.write(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w")
-
+            os.system(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w > $PREFIX/var/service/{name}-ftpd/run")
             os.system(f'chmod +x $PREFIX/var/service/{name}-ftpd/run')
 
             page = "main"
