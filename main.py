@@ -118,7 +118,7 @@ while True:
                 elif choice == '2':
                         if ftpStarted == False:
 
-                            os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w &')
+                            os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w > /dev/null &')
                             ui.clear()
                             ftpStarted = True
                         else:
