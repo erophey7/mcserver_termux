@@ -78,8 +78,8 @@ while True:
             choice = int(input("> "))-1
             print(colorama.Style.RESET_ALL)
 
-
-            serverDir = f'{settings["Servers_dir"]}/{serversList[int(choice)]}'
+            serverName = serversList[int(choice)]
+            serverDir = f'{settings["Servers_dir"]}/{serverName}'
 
             while True:
                 page = 'server_menu'
@@ -112,11 +112,11 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            os.system(f'sv up {name}-ftpd')
+                            os.system(f'sv up {serverName}-ftpd')
                             ui.clear()
                             ftpStarted = True
                         else:
-                            os.system(f'sv down {name}-ftpd')
+                            os.system(f'sv down {serverName}-ftpd')
                             ftpStarted = False
                         ui.clear()
 
