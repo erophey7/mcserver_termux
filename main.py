@@ -52,22 +52,22 @@ class func:
     #server = FTPServer((func.getLocalIP(), settings['FTP_port']), handler)
     #server.serve_forever()
 
-class FTP():
-    def __init__(self, ftpDir):
-        self.stdin_path = '/dev/null'
-        self.stdout_path = '/dev/null'
-        self.stderr_path = '/dev/null'
-        self.pidfile_path = '$PREFIX/tmp/foo.pid'
-        self.pidfile_timeout = 5
-        self.ftpDir = ftpDir
-    def run(self):
-
-        authorizer = DummyAuthorizer()
-        authorizer.add_anonymous(self.ftpDir, perm=('r', 'w'))
-        handler = FTPHandler
-        handler.authorizer = authorizer
-        server = FTPServer((func.getLocalIP(), settings['FTP_port']), handler)
-        server.serve_forever()
+#class FTP():
+#    def __init__(self, ftpDir):
+#        self.stdin_path = '/dev/null'
+#        self.stdout_path = '/dev/null'
+#        self.stderr_path = '/dev/null'
+#        self.pidfile_path = '$PREFIX/tmp/foo.pid'
+#        self.pidfile_timeout = 5
+#        self.ftpDir = ftpDir
+#    def run(self):
+#
+#        authorizer = DummyAuthorizer()
+#        authorizer.add_anonymous(self.ftpDir, perm=('r', 'w'))
+#        handler = FTPHandler
+#        handler.authorizer = authorizer
+#        server = FTPServer((func.getLocalIP(), settings['FTP_port']), handler)
+#        server.serve_forever()
 
 class Ngrok():
     def __init__(self):
@@ -149,7 +149,7 @@ while True:
                 elif choice == '2':
                         if ftpStarted == False:
                             #FTPProc.start()
-                            daemon_runner.do_action()
+                            #daemon_runner.do_action()
                             #with daemon.DaemonContext():
                             #    os.system(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             ui.clear()

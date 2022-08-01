@@ -2,7 +2,11 @@ from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 from daemon import runner
+import sys
 
+ip = sys.argv[1]
+port = sys.argv[2]
+ftpDir = sys.argv[3]
 
 class FTP():
     def __init__(self, ip, port, ftpDir):
@@ -23,6 +27,6 @@ class FTP():
         server = FTPServer(self.ip, self.port, handler)
         server.serve_forever()
 
-app = FTP()
+app = FTP(ip, port, ftpDir)
 daemon_runner = runner.DaemonRunner(app)
 daemon_runner.do_action()
