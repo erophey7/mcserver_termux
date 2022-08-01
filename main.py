@@ -171,6 +171,9 @@ while True:
             else:
                 os.system(f"mkdir {settings['Servers_dir']}")
 
+            os.system(f'mkdir $PREFIX/var/service/{name}-ftpd')
+            os.system(f'touch $PREFIX/var/service/{name}-ftpd/run')
+
             os.system(f'cp -r ServerExample {settings["Servers_dir"]}/{name}')
             if choiceCore != "2":
                 print("Wait...")
@@ -178,10 +181,9 @@ while True:
             else:
                 pass
 
-            os.system(f'mkdir $PREFIX/var/service/{name}-ftpd')
-            os.system(f'touch $PREFIX/var/service/{name}-ftpd/run')
 
-            with open(f'$PREFIX/var/service/{name}-ftpd/run', 'x') as f:
+
+            with open(f'$PREFIX/var/service/{name}-ftpd/run', 'w') as f:
                 f.write(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w")
 
 
