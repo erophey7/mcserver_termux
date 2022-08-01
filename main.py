@@ -107,8 +107,8 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            FTPProc = threading.Thread(target=runFTP, args=(1))
-                            FTPProc.start(serverDir, "")
+                            FTPProc = threading.Thread(target=runFTP, args=(2,))
+                            FTPProc.start(serverDir)
                             ftpStarted = True
                         else:
                             os.system('pkill ftpd')
