@@ -158,6 +158,7 @@ while True:
                             #FTPProc.close()
                             #os.system(f'pkill python -m pyftpdlib -p {settings["FTP_port"]} --directory={serverDir} -w')
                             #ftpStarted = False
+                            pass
 
 
 
