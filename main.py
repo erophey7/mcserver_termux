@@ -104,7 +104,7 @@ while True:
                 print(colorama.Style.RESET_ALL)
                 ui.clear()
 
-                FTPProc = multiprocessing.Process(target=runFTP(serverDir))
+                #FTPProc = multiprocessing.Process(target=runFTP(serverDir))
 
                 if choice == '0':
                     os.system('pkill java && pkill ftpd && pkill ngrok')
@@ -116,8 +116,8 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-
-                            FTPProc.start()
+                            subprocess.Popen(f'python -m pyftpdlib -p {settings["FTP_port"]} --directory={ftpDir} -w')
+                            #FTPProc.start()
                             ftpStarted = True
                         else:
                             FTPProc.close()
