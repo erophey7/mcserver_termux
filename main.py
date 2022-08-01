@@ -73,18 +73,39 @@ while True:
             serverDir = f'{settings["Servers_dir"]}/{serversList[choice]}'
 
             while True:
+                page = 'server_menu'
                 ui.clear()
                 ui.Server_menu()
-                print(f'1 - {"Start" if serverStarted == True else "Stop"} minecraft server')
-                print(f'2 - {"Start" if serverStarted == True else "Stop"} ftp server')
-                print(f'3 - {"Start" if serverStarted == True else "Stop"} ngrok')
-                print(f'0 - Exit')
-                print(f'\n')
+                print(fr'''
+1 - {"Start" if serverStarted == True else "Stop"} minecraft server
+2 - {"Start" if serverStarted == True else "Stop"} ftp server
+3 - {"Start" if serverStarted == True else "Stop"} ngrok
+0 - Exit
+
+{f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server"}
+
+                        ''')
 
                 print(colorama.Fore.GREEN)
                 choice = input("> ")
                 print(colorama.Style.RESET_ALL)
+                ui.clear()
 
+
+                if choice == '0':
+                    os.system('pkill java && pkill ftpd && pkill ngrok')
+                    page = 'main_manu'
+                    break
+
+                elif choice == '1':
+                    pass
+
+                elif choice == '2':
+                    match ftpStarted:
+                        case False:
+                            os.system(f'busybox tcpsvd -vE {func.getLocalIP} {settings["FTP_port"]} busybox ftpd -w {serverDir}')
+                        case True:
+                            os.sytem('pkill ftpd')
 
 
 
