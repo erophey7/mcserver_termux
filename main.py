@@ -13,9 +13,6 @@ from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 
 
-
-
-
 page = "main"
 
 colorama.init()
@@ -80,7 +77,7 @@ while True:
 
             serverName = serversList[int(choice)]
             serverDir = f'{settings["Servers_dir"]}/{serverName}'
-
+            os.system(f'$SVDIR="{serverDir}/services"')
             while True:
                 page = 'server_menu'
                 ui.clear()
@@ -102,31 +99,23 @@ while True:
 
 
 
-                # if choice == '0':
-                #     os.system('pkill java && pkill ftpd && pkill ngrok')
-                #     page = 'main_manu'
-                #     break
-                #
-                # elif choice == '1':
-                #     pass
+                if choice == '0':
+                    os.system('pkill java && pkill ftpd && pkill ngrok')
+                    page = 'main_manu'
+                    break
 
-                # elif choice == '2':
-                #         if ftpStarted == False:
-                #             os.system(f'sv up {serverName}-ftpd')
-                #             ui.clear()
-                #             ftpStarted = True
-                #         else:
-                #             os.system(f'sv down {serverName}-ftpd')
-                #             ftpStarted = False
-                #         ui.clear()
-                match choice:
-                    case '0':
-                        os.system('pkill java && pkill ftpd && pkill ngrok')
-                        page = 'main_manu'
-                        break
-                    case '1':
-                        pass
+                elif choice == '1':
+                    pass
 
+                elif choice == '2':
+                        if ftpStarted == False:
+                            os.system(f'sv up ftpd')
+                            ui.clear()
+                            ftpStarted = True
+                        else:
+                            os.system(f'sv down ftpd')
+                            ftpStarted = False
+                        ui.clear()
 
 
 
@@ -175,10 +164,16 @@ while True:
             else:
                 os.system(f"mkdir {settings['Servers_dir']}")
 
-            os.system(f'mkdir $PREFIX/var/service/{name}-ftpd')
-            os.system(f'touch $PREFIX/var/service/{name}-ftpd/run.sh')
-
             os.system(f'cp -r ServerExample {settings["Servers_dir"]}/{name}')
+
+            os.system(f"mkdir {settings['Servers_dir']}/{name}/services")
+
+            os.system(f"$SVDIR='{settings['Servers_dir']}/{name}/services'")
+
+            os.system(f'mkdir $SVDIR/ftpd')
+            os.system(f'touch $SVDIR/ftpd/run.sh')
+
+
             if choiceCore != "2":
                 print("Wait...")
                 os.system(f'wget -c {download_link} -o {settings["Servers_dir"]}/{name}/server.jar')
@@ -187,11 +182,10 @@ while True:
 
 
 
-            with open(f'/data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh', 'w') as f:
+            with open(f"{settings['Servers_dir']}/{name}/services/ftpd/run", 'w') as f:
                 f.write(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w")
 
-            os.system(f'mv $PREFIX/var/service/{name}-ftpd/run.sh $PREFIX/var/service/{name}-ftpd/run')
-            os.system(f'chmod +x $PREFIX/var/service/{name}-ftpd/run')
+            os.system(f"chmod +x {settings['Servers_dir']}/{name}/services/ftpd/run")
 
             page = "main"
             ui.clear()
