@@ -171,7 +171,7 @@ while True:
             os.system(f"$SVDIR='{settings['Servers_dir']}/{name}/services'")
 
             os.system(f'mkdir $SVDIR/ftpd')
-            os.system(f'touch $SVDIR/ftpd/run')
+            os.system(f'touch $SVDIR/ftpd/run.sh')
 
 
             if choiceCore != "2":
@@ -182,9 +182,10 @@ while True:
 
 
 
-            with open(f"{settings['Servers_dir']}/{name}/services/ftpd/run", 'w') as f:
+            with open(f"{settings['Servers_dir']}/{name}/services/ftpd/run.sh", 'w') as f:
                 f.write(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w")
 
+            os.system(f"mv {settings['Servers_dir']}/{name}/services/ftpd/run.sh {settings['Servers_dir']}/{name}/services/ftpd/run")
             os.system(f"chmod +x {settings['Servers_dir']}/{name}/services/ftpd/run")
 
             page = "main"
