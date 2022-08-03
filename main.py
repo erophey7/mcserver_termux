@@ -168,7 +168,7 @@ while True:
 
             os.system(f"mkdir {settings['Servers_dir']}/{name}/services")
 
-            os.system(f"$SVDIR='{settings['Servers_dir']}/{name}/services'")
+            os.system(f"export SVDIR='{settings['Servers_dir']}/{name}/services'")
 
             os.system(f'mkdir $SVDIR/ftpd')
             os.system(f'touch $SVDIR/ftpd/run.sh')
