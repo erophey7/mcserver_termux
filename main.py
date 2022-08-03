@@ -171,7 +171,7 @@ while True:
             os.system(f"$SVDIR='{settings['Servers_dir']}/{name}/services'")
 
             os.system(f'mkdir $SVDIR/ftpd')
-            os.system(f'touch $SVDIR/ftpd/run.sh')
+            os.system(f'touch $SVDIR/ftpd/run')
 
 
             if choiceCore != "2":
