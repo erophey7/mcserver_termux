@@ -109,7 +109,7 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            os.system(f'sv up ftpd')
+                            os.system(f'sv up ftpd SVDIR=')
                             ui.clear()
                             ftpStarted = True
                         else:
@@ -166,27 +166,30 @@ while True:
 
             os.system(f'cp -r ServerExample {settings["Servers_dir"]}/{name}')
 
-            os.system(f"mkdir {settings['Servers_dir']}/{name}/services")
+            #os.system(f"mkdir {settings['Servers_dir']}/{name}/services")
 
-            os.system(f"export SVDIR='{settings['Servers_dir']}/{name}/services'")
+            #os.system(f"export SVDIR='{settings['Servers_dir']}/{name}/services'")
 
-            os.system(f'mkdir $SVDIR/ftpd')
-            os.system(f'touch $SVDIR/ftpd/run.sh')
+            os.system(f'mkdir /data/data/com.termux/files/usr/var/services/{name}-ftpd')
+            os.system(f'touch /data/data/com.termux/files/usr/var/services/{name}-ftpd/run.sh')
 
 
             if choiceCore != "2":
                 print("Wait...")
                 os.system(f'wget -c {download_link} -o {settings["Servers_dir"]}/{name}/server.jar')
+                os.system('rm -rf server.jar')
             else:
                 pass
 
 
 
-            with open(f"{settings['Servers_dir']}/{name}/services/ftpd/run.sh", 'w') as f:
+            with open(f"/data/data/com.termux/files/usr/var/services/{name}-ftpd/run.sh", 'w') as f:
                 f.write(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w")
 
-            os.system(f"mv {settings['Servers_dir']}/{name}/services/ftpd/run.sh {settings['Servers_dir']}/{name}/services/ftpd/run")
-            os.system(f"chmod +x {settings['Servers_dir']}/{name}/services/ftpd/run")
+            os.system(f"mv /data/data/com.termux/files/usr/var/services/{name}-ftpd/run.sh /data/data/com.termux/files/usr/var/services/{name}-ftpd/run")
+            os.system(f"chmod +x /data/data/com.termux/files/usr/var/services/{name}-ftpd/run")
+            os.system(f'mkdir $PREFIX/var/service/{name}-ftpd/log')
+            os.system(f'ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/service/{name}-ftpd/log/run')
 
             page = "main"
             ui.clear()
