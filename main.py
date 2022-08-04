@@ -99,7 +99,8 @@ while True:
 
 
                 if choice == '0':
-                    os.system('pkill java && pkill ftpd && pkill ngrok')
+                    os.system(f'sv down {serverName}-ftpd')
+                    os.system("kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')")
                     page = 'main_manu'
                     break
 
@@ -108,10 +109,10 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            os.system(f'sv up {serverName}-ftpd')
+                            subprocess.run(['sv', 'up', f'{serverName}-ftpd'])
                             ftpStarted = True
                         else:
-                            os.system(f'sv down {serverName}-ftpd')
+                            subprocess.run(['sv', 'down', f'{serverName}-ftpd'])
                             os.system("kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')")
                             ftpStarted = False
                         input()
