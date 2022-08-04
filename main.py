@@ -109,11 +109,11 @@ while True:
 
                 elif choice == '2':
                         if ftpStarted == False:
-                            os.system(f'sv up ftpd SVDIR=')
+                            os.system(f'sv up {serverName}-ftpd')
                             ui.clear()
                             ftpStarted = True
                         else:
-                            os.system(f'sv down ftpd')
+                            os.system(f'sv down {serverName}-ftpd')
                             ftpStarted = False
                         ui.clear()
 
