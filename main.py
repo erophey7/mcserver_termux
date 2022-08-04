@@ -83,7 +83,7 @@ while True:
                 ui.clear()
                 ui.Server_menu()
                 print(fr'''
-1 - {"Stop" if serverStarted == True else "Start"} minecraft server
+"Start" minecraft server
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
 3 - {"Stop" if ngrokStarted == True else "Start"} ngrok
 0 - Exit
@@ -105,7 +105,7 @@ while True:
                     break
 
                 elif choice == '1':
-                    pass
+                    os.system(f"java -Xms{settings['Xms']} -Xmx{settings['Xmx']} -jar {serverDir}/server.jar nogui")
 
                 elif choice == '2':
                         if ftpStarted == False:
@@ -114,6 +114,7 @@ while True:
                             ftpStarted = True
                         else:
                             os.system(f'sv down {serverName}-ftpd')
+                            os.system("kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')")
                             ftpStarted = False
                         ui.clear()
 
