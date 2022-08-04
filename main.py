@@ -170,8 +170,8 @@ while True:
 
             #os.system(f"export SVDIR='{settings['Servers_dir']}/{name}/services'")
 
-            os.system(f'mkdir /data/data/com.termux/files/usr/var/services/{name}-ftpd')
-            os.system(f'touch /data/data/com.termux/files/usr/var/services/{name}-ftpd/run.sh')
+            os.system(f'mkdir /data/data/com.termux/files/usr/var/service/{name}-ftpd')
+            os.system(f'touch /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh')
 
 
             if choiceCore != "2":
@@ -183,13 +183,13 @@ while True:
 
 
 
-            with open(f"/data/data/com.termux/files/usr/var/services/{name}-ftpd/run.sh", 'w') as f:
+            with open(f"/data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh", 'w') as f:
                 f.write(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w")
 
-            os.system(f"mv /data/data/com.termux/files/usr/var/services/{name}-ftpd/run.sh /data/data/com.termux/files/usr/var/services/{name}-ftpd/run")
-            os.system(f"chmod +x /data/data/com.termux/files/usr/var/services/{name}-ftpd/run")
+            os.system(f"mv /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh /data/data/com.termux/files/usr/var/service/{name}-ftpd/run")
+            os.system(f"chmod +x /data/data/com.termux/files/usr/var/service/{name}-ftpd/run")
             os.system(f'mkdir $PREFIX/var/service/{name}-ftpd/log')
-            os.system(f'ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/service/{name}-ftpd/log/run')
+            os.system(f'ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/{name}-ftpd/log/run')
 
             page = "main"
             ui.clear()
