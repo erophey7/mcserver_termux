@@ -115,6 +115,7 @@ while True:
                             os.system(f'sv down {serverName}-ftpd')
                             os.system("kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')")
                             ftpStarted = False
+                        input()
                         ui.clear()
 
 
