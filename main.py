@@ -77,7 +77,6 @@ while True:
 
             serverName = serversList[int(choice)]
             serverDir = f'{settings["Servers_dir"]}/{serverName}'
-            os.system(f'$SVDIR="{serverDir}/services"')
             while True:
                 page = 'server_menu'
                 ui.clear()
