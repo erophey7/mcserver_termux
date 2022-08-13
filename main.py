@@ -202,7 +202,16 @@ while True:
             ui.main_menu()
 
         elif choice == "3":
-            pass
+            serversList = os.listdir(settings["Servers_dir"])
+            ui.Delete_menu()
+            for i in range(0, len(serversList)):
+                print(f'{i + 1} - {serversList[i]}')
+
+            print(colorama.Fore.GREEN)
+            choice = int(input("> ")) - 1
+            print(colorama.Style.RESET_ALL)
+
+            serverName = serversList[int(choice)]
 
         elif choice == "4":
             page = "settings"

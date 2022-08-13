@@ -109,6 +109,19 @@ def Server_menu():
     return
 
 
+def Delete_menu():
+    print(fr'''{colorama.Fore.GREEN} 
+________         .__          __          
+\______ \   ____ |  |   _____/  |_  ____  
+ |    |  \_/ __ \|  | _/ __ \   __\/ __ \ 
+ |    `   \  ___/|  |_\  ___/|  | \  ___/ 
+/_______  /\___  >____/\___  >__|  \___  >
+        \/     \/          \/          \/ 
+    {colorama.Style.RESET_ALL}
+''' + '\n' * 2)
+    return
+
+
 
 if __name__ == '__main__':
     settings_menu()
