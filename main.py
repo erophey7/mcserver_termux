@@ -213,6 +213,15 @@ while True:
 
             serverName = serversList[int(choice)]
 
+            if choice == "0":
+                ui.clear()
+                page = "main"
+                ui.main_menu()
+                break
+
+            else:
+                print(serverName)
+
         elif choice == "4":
             page = "settings"
             while True:
