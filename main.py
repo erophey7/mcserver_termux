@@ -220,7 +220,7 @@ while True:
                 print(colorama.Style.RESET_ALL)
 
                 if choice == "0":
-                    os.system('del settings.json')
+                    os.system('rm -rf settings.json')
                     with open("settings.json", "rw") as f:
                         json.dump(settings, f)
                     ui.clear()
