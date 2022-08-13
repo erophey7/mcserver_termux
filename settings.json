@@ -6,5 +6,5 @@
     "Server_eula": "false",
     "App_version": "0.3",
     "Xms": 1024,
-    "Xmx": 2048
+    "Xmx": 4096
 }
