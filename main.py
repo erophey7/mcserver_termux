@@ -291,4 +291,4 @@ while True:
             print(f"Version: {settings['App_version']}")
 
         elif choice == "0":
-            exit(0)
+            exit(1)
