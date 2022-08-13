@@ -82,7 +82,7 @@ while True:
                 ui.clear()
                 ui.Server_menu()
                 print(fr'''
-"Start" minecraft server
+1 - Start minecraft server
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
 3 - {"Stop" if ngrokStarted == True else "Start"} ngrok
 0 - Exit
@@ -101,7 +101,9 @@ while True:
                 if choice == '0':
                     os.system(f'sv down {serverName}-ftpd')
                     os.system("kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')")
-                    page = 'main_manu'
+                    ui.clear()
+                    page = "main"
+                    ui.main_menu()
                     break
 
                 elif choice == '1':
