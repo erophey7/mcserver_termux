@@ -105,7 +105,7 @@ while True:
                     break
 
                 elif choice == '1':
-                    subprocess.run(["cd", f"{serverDir}", "&&", f"java", f"-Xms{settings['Xms']}m", f"-Xmx{settings['Xmx']}m", "-jar", f"server.jar", "nogui"])
+                    subprocess.run([f"java", f"-Xms{settings['Xms']}m", f"-Xmx{settings['Xmx']}m", "-jar", f"{serverDir}server.jar", "nogui"], cwd=serverDir)
                     input()
 
                 elif choice == '2':
@@ -183,6 +183,7 @@ while True:
                 os.system('rm -rf server.jar')
             else:
                 pass
+
 
 
 
