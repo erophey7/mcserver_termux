@@ -221,7 +221,7 @@ while True:
 
                 if choice == "0":
                     os.system('rm -rf settings.json')
-                    with open("settings.json", "rw") as f:
+                    with open("settings.json", "w") as f:
                         json.dump(settings, f)
                     ui.clear()
                     page = "main"
