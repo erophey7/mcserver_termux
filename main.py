@@ -207,6 +207,8 @@ while True:
             for i in range(0, len(serversList)):
                 print(f'{i + 1} - {serversList[i]}')
 
+            print('0 - exit')
+
             print(colorama.Fore.GREEN)
             choice = int(input("> ")) - 1
             print(colorama.Style.RESET_ALL)
@@ -220,7 +222,8 @@ while True:
                 break
 
             else:
-                print(serverName)
+                os.system(f"rm -rf {serverDir}/{serverName}")
+                os.system(f"rm -rf $SVDIR/{serverName}")
 
         elif choice == "4":
             page = "settings"
