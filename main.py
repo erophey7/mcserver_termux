@@ -213,7 +213,10 @@ while True:
             choice = int(input("> ")) - 1
             print(colorama.Style.RESET_ALL)
 
-            serverName = serversList[int(choice)]
+            try:
+                serverName = serversList[int(choice)]
+            except:
+                continue
 
             if choice == "0":
                 ui.clear()
@@ -224,6 +227,10 @@ while True:
             else:
                 os.system(f"rm -rf {settings['Servers_dir']}/{serverName}")
                 os.system(f"rm -rf $SVDIR/{serverName}")
+                ui.clear()
+                page = "main"
+                ui.main_menu()
+                break
 
         elif choice == "4":
             page = "settings"
