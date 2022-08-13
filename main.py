@@ -105,7 +105,7 @@ while True:
                     break
 
                 elif choice == '1':
-                    subprocess.run([f"java", f"-Xms{settings['Xms']}", f"-Xmx{settings['Xmx']}", "-jar", f"{serverDir}/server.jar", "nogui"])
+                    subprocess.run([f"java", f"-Xms{settings['Xms']}m", f"-Xmx{settings['Xmx']}m", "-jar", f"{serverDir}/server.jar", "nogui"])
                     input()
 
                 elif choice == '2':
