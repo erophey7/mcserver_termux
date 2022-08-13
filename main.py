@@ -222,7 +222,7 @@ while True:
                 break
 
             else:
-                os.system(f"rm -rf {serverDir}/{serverName}")
+                os.system(f"rm -rf {settings['Servers_dir']}/{serverName}")
                 os.system(f"rm -rf $SVDIR/{serverName}")
 
         elif choice == "4":
