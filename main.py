@@ -167,7 +167,7 @@ while True:
             else:
                 os.system(f"mkdir {settings['Servers_dir']}")
 
-            os.system(f'cp -r ServerExample {settings["Servers_dir"]}/{name}')
+            os.system(f'mkdir {settings["Servers_dir"]}/{name}')
 
             #os.system(f"mkdir {settings['Servers_dir']}/{name}/services")
 
