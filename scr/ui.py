@@ -79,7 +79,7 @@ def server_name():
 \____|__  (____  /__|_|  /\___  >
         \/     \/      \/     \/ 
     {colorama.Style.RESET_ALL}
-    Type server name (a-Z 0-9 _ -) 
+    Type server name (a-Z 0-9 -) 
 
 ''' + '\n' * 6)
     return

@@ -105,10 +105,11 @@ while True:
                     break
 
                 elif choice == '1':
-                    os.system(f"java -Xms{settings['Xms']} -Xmx{settings['Xmx']} -jar {serverDir}/server.jar nogui")
+                    subprocess.run([f"java", f"-Xms{settings['Xms']}", f"-Xmx{settings['Xmx']}", "-jar", f"{serverDir}/server.jar", "nogui"])
 
                 elif choice == '2':
                         if ftpStarted == False:
+
                             subprocess.run(['sv', 'up', f'{serverName}-ftpd'])
                             ftpStarted = True
                         else:
