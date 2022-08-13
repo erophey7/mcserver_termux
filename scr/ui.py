@@ -3,13 +3,7 @@ import os
 
 
 def clear():
-    # for windows
-    if os.name == 'nt':
-        os.system('cls')
-
-    # for mac and linux(here, os.name is 'posix')
-    else:
-        os.system('clear')
+    os.system('clear')
 
 
 def main_menu():
@@ -66,8 +60,8 @@ def Core_menu():
     Select server core 
     
 1 - Vanila core
-2 - Forge
-3 - Spigot''' + '\n'*6)
+2 - Forge  (coming soon)
+3 - Spigot (coming soon)''' + '\n'*6)
     return
 
 def server_name():

@@ -84,7 +84,7 @@ while True:
                 print(fr'''
 1 - Start minecraft server
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
-3 - {"Stop" if ngrokStarted == True else "Start"} ngrok
+3 - {"Stop" if ngrokStarted == True else "Start"} ngrok (coming soon)
 0 - Exit
 
 {f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server" if ftpStarted else f" "}
@@ -238,7 +238,7 @@ while True:
                 ui.settings_menu()
                 ui.clear()
                 print(f"1 - Standart minecraft server port: {settings['Standart_server_port']}")
-                print(f"2 - Auto start FTP server after start minecraft server: {settings['Auto_start_FTP_server']}")
+                print(f"2 - Auto start FTP server after start minecraft server: {settings['Auto_start_FTP_server']} (coming soon)")
                 print(f"3 - FTP port: {settings['FTP_port']}")
                 print(f"4 - Servers dir: {settings['Servers_dir']}")
                 print(f"5 - Server eula: {settings['Server_eula']}")
@@ -291,4 +291,4 @@ while True:
             print(f"Version: {settings['App_version']}")
 
         elif choice == "0":
-            exit(1)
+            exit(0)
