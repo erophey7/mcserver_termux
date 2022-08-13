@@ -179,7 +179,7 @@ while True:
 
             if choiceCore != "2":
                 print("Wait...")
-                os.system(f'wget -c {download_link} -o {settings["Servers_dir"]}/{name}/server.jar')
+                os.system(f'wget {download_link} -O {settings["Servers_dir"]}/{name}/server.jar')
                 os.system('rm -rf server.jar')
             else:
                 pass
