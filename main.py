@@ -85,7 +85,7 @@ while True:
 0 - Exit
 
 {f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server" if ftpStarted else f" "}
-{f"Ngrok: {tcp_tunnel}" if ngrokStarted else f" "}
+{f"Ngrok: {tcp_tunnel.public_url}" if ngrokStarted else f" "}
 
                         ''')
 
@@ -126,9 +126,11 @@ while True:
                         ngrok.set_auth_token(settings['ngrok_authtoken'])
                         tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
                         print(tcp_tunnel)
+                        input()
                     else:
                         ngrokStarted = False
                         ngrok.kill()
+                        ngrok.disconnect(tcp_tunnel.public_url)
                     ui.clear()
 
 
