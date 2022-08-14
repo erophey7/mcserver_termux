@@ -128,7 +128,7 @@ while True:
                         tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
                         print(tcp_tunnel)
                         input()
-                        ngrokStarted == True
+                        ngrokStarted = True
                     else:
 
                         ngrok.kill()
