@@ -1,4 +1,4 @@
-# serverMC_termux
+# mcserver_termux
 Инструмент для создания сервера Java Minecraft в Termux с открытым исходным кодом.
 
  
@@ -12,6 +12,9 @@
     chmod +x install.sh
     ./install.sh
 
+Использование:
+
+    python main.py
     
 
 
