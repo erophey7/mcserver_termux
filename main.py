@@ -7,6 +7,7 @@ import subprocess
 import asyncio
 import scr.ui as ui
 from pyngrok import ngrok
+#import time
 
 
 page = "main"
@@ -87,7 +88,7 @@ while True:
 0 - Exit
 
 {f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server" if ftpStarted else f" "}
-{f"Ngrok: {tunnels}" if ngrokStarted else f" "}
+{f"Ngrok: {tunnels[0]}" if ngrokStarted else f" "}
 
                         ''')
 
@@ -128,9 +129,7 @@ while True:
                         ngrok.set_auth_token(settings['ngrok_authtoken'])
                         tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
                         tunnels = ngrok.get_tunnels()
-                        print(tcp_tunnel)
-                        print(tunnels)
-                        input()
+#                        time.sleep(5)
                         ngrokStarted = True
                     else:
 
