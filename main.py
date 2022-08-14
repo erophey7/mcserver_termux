@@ -129,7 +129,7 @@ while True:
                         tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
                         tunnels = ngrok.get_tunnels()
                         print(tcp_tunnel)
-                        print(tunnels)
+                        print(tunnels.public_url)
                         input()
                         ngrokStarted = True
                     else:
