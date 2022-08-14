@@ -87,7 +87,7 @@ while True:
 0 - Exit
 
 {f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server" if ftpStarted else f" "}
-{f"Ngrok: {tcp_tunnel}" if ngrokStarted else f" "}
+{f"Ngrok: {tunnels}" if ngrokStarted else f" "}
 
                         ''')
 
