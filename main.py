@@ -270,17 +270,17 @@ while True:
                             case "1":
                                 settings['Standart_server_port'] = variable
                             case "2":
-                                settings['Auto_start_FTP_server'] = variable
-                            case "3":
                                 settings['FTP_port'] = variable
-                            case "4":
+                            case "3":
                                 settings['Servers_dir'] = variable
-                            case "5":
+                            case "4":
                                 settings['Server_eula'] = variable
-                            case "6":
+                            case "5":
                                 settings['Xms'] = variable
-                            case "7":
+                            case "6":
                                 settings['Xmx'] = variable
+                            case "7":
+                                settings['ngrok_authtoken'] = variable
                         ui.clear()
                         continue
 
