@@ -29,24 +29,25 @@ async def vanillaParser() -> tuple:
     return tuple(zip(version_links, download_links))
 
 
-# async def forgeParser() -> tuple:
-#     async
-#
-#     # {version: [{version: y}, {url: z}]}
-#     return ()
+async def forgeParser() -> tuple:
+    async with http.ClientSession() as session:
+
+
+    # {version: [{version: y}, {url: z}]}
+    return ()
 
 
 def vanilla():
     return asyncio.run(vanillaParser())
 
 
-# def forge():
-#     return asyncio.run(forgeParser())
+def forge():
+    return asyncio.run(forgeParser())
 
 
 # Полигон испытаний
 
-pprint.pprint(vanilla())
+pprint.pprint(forge())
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(levelname)-12s %(asctime)s %(message)s')
