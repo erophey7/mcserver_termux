@@ -45,9 +45,7 @@ ui.clear()
 ui.main_menu()
 
 
-serverStarted = False
-ngrokStarted = False
-ftpStarted = False
+
 
 while True:
     choice = ""
@@ -73,6 +71,9 @@ while True:
 
             serverName = serversList[int(choice)]
             serverDir = f'{settings["Servers_dir"]}/{serverName}'
+
+            ngrokStarted = False
+            ftpStarted = False
             while True:
                 page = 'server_menu'
                 tcp_tunnel = ''
