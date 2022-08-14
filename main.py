@@ -74,6 +74,7 @@ while True:
 
             ngrokStarted = False
             ftpStarted = False
+            tunnels = ''
             while True:
                 page = 'server_menu'
                 tcp_tunnel = ''
@@ -126,13 +127,15 @@ while True:
 
                         ngrok.set_auth_token(settings['ngrok_authtoken'])
                         tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
+                        tunnels = ngrok.get_tunnels()
                         print(tcp_tunnel)
+                        print(tunnels)
                         input()
                         ngrokStarted = True
                     else:
 
                         ngrok.kill()
-                        ngrok.disconnect(tcp_tunnel.public_url)
+                        ngrok.disconnect(tcp_tunnel)
                         ngrokStarted = False
                     ui.clear()
 
