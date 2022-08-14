@@ -7,7 +7,6 @@ import subprocess
 import asyncio
 import scr.ui as ui
 from pyngrok import ngrok
-#import time
 
 
 page = "main"
@@ -37,7 +36,6 @@ class func:
 
 
 
-#    os.system(f' python -m pyftpdlib -p {settings["FTP_port"]} --directory={ftpDir} -w')
 
 
 settings = func.readSettings()
@@ -84,7 +82,7 @@ while True:
                 print(fr'''
 1 - Start minecraft server
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
-3 - {"Stop" if ngrokStarted == True else "Start"} ngrok (coming soon)
+3 - {"Stop" if ngrokStarted == True else "Start"} ngrok 
 0 - Exit
 
 {f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server" if ftpStarted else f" "}
@@ -129,7 +127,6 @@ while True:
                         ngrok.set_auth_token(settings['ngrok_authtoken'])
                         tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
                         tunnels = ngrok.get_tunnels()
-#                        time.sleep(5)
                         ngrokStarted = True
                     else:
 
@@ -137,10 +134,6 @@ while True:
                         ngrok.disconnect(tcp_tunnel)
                         ngrokStarted = False
                     ui.clear()
-
-
-
-
 
         elif choice == "2":
             page = "choice version"
@@ -160,9 +153,6 @@ while True:
             ui.clear()
             ui.Core_menu()
 
-
-
-
             print(colorama.Fore.GREEN)
             choiceCore = input("> ")
             print(colorama.Style.RESET_ALL)
@@ -179,7 +169,6 @@ while True:
             name = input("> ")
             print(colorama.Style.RESET_ALL)
 
-
             if os.path.exists(settings['Servers_dir']):
                 pass
             else:
@@ -187,10 +176,8 @@ while True:
 
             os.system(f'mkdir {settings["Servers_dir"]}/{name}')
 
-
             os.system(f'mkdir /data/data/com.termux/files/usr/var/service/{name}-ftpd')
             os.system(f'touch /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh')
-
 
             if choiceCore != "2":
                 print("Wait...")
@@ -198,9 +185,6 @@ while True:
                 os.system('rm -rf server.jar')
             else:
                 pass
-
-
-
 
             with open(f"/data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh", 'w') as f:
                 f.write(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w")
