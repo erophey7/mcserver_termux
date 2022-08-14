@@ -4,6 +4,6 @@ apt install -y python busybox openjdk-17 wget net-tools termux-services proot re
 pip install -r requirements.txt
 ngrok
 rm -rf ${PREFIX}/bin/mcserver
-chmod +x start.sh
-ln -sf ${PWD}/start.sh ${PREFIX}/bin/mcserver
+export EXECCOMMAND='cd '${PWD}' && python main.py'
+echo ${EXECCOMMAND} > ${PREFIX}/bin/mcserver
 chmod +x ${PREFIX}/bin/mcserver

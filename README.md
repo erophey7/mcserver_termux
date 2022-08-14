@@ -14,7 +14,16 @@
 
 Использование:
 
-    python main.py
-    
+    mcserver
+
+после установки неообходимо задать ngrok authtoken, получить его можно получить после регистрации не сайте
+https://dashboard.ngrok.com/get-started/your-authtoken.
+
+далее выполняем
+
+    mcserver
+
+и идём в настройки, там выбираем параметр Ngrok authtoken написав 7, после вставляя полученный токен.
+
 
 
