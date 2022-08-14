@@ -123,15 +123,17 @@ while True:
 
                 elif choice == '3':
                     if ngrokStarted == False:
-                        ngrokStarted == True
+
                         ngrok.set_auth_token(settings['ngrok_authtoken'])
                         tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
                         print(tcp_tunnel)
                         input()
+                        ngrokStarted == True
                     else:
-                        ngrokStarted = False
+
                         ngrok.kill()
                         ngrok.disconnect(tcp_tunnel.public_url)
+                        ngrokStarted = False
                     ui.clear()
 
 
