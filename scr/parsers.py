@@ -16,64 +16,35 @@ async def request(urls):
         tasks = [asyncio.create_task(get(i, session)) for i in urls]
         return await asyncio.gather(*tasks)
 
+async def vanillaParser():
+    SITE = "https://getbukkit.org/download/vanilla"
+    async with http.ClientSession() as session:
+        soup = bs4.BeautifulSoup(await get(SITE, session), 'html.parser')
+        download_links = [re.search(r'https://[^"]+', str(i)).group() for i in soup.select('a.btn-download')]
 
-async def vanilaParser():
-    soup = bs4.BeautifulSoup(str(await request(['https://getbukkit.org/download/vanilla'])), 'html.parser')
-    result = str(soup.find_all('div', class_='row vdivide'))
-    version = re.findall(r'\d\.\d+\.*\d*', result)[::2]
-    gacha_urls = re.findall(r'https://getbukkit.org/get/[^"]*', result)
-    soup = bs4.BeautifulSoup(str(await request(gacha_urls)), 'html.parser')
-    urls = re.findall(r'https://[^"]*', str(soup.find_all('h2')))
+        version_links = [re.search(r'\d\.[^<]+', str(i)).group() for i in soup.select('div.col-sm-3 h2')]
+        return list(zip(version_links, download_links))
 
-    return list(zip(version, urls))
+# Vanilla minecraft site parser
+
+# async def vanillaParser():
+#     soup = bs4.BeautifulSoup(str(await request(['https://getbukkit.org/download/vanilla'])), 'html.parser')
+#     result = str(soup.find_all('div', class_='row vdivide'))
+#     version = re.findall(r'\d\.\d+\.*\d*', result)[::2]
+#     gacha_urls = re.findall(r'https://getbukkit.org/get/[^"]*', result)
+#     soup = bs4.BeautifulSoup(str(await request(gacha_urls)), 'html.parser')
+#     urls = re.findall(r'https://[^"]*', str(soup.find_all('h2')))
+#
+#     return list(zip(version, urls))
 
 
-async def main():
-    await vanilaParser()
+def vanilla():
+    return asyncio.run(vanillaParser())
 
+# Полигон испытаний
 
+pprint.pprint(vanilla())
 
-    # soup = bs4.BeautifulSoup(str(soup.find_all('div', class_='row vdivide')))
-
-    return
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(levelname)-12s %(asctime)s %(message)s')
-
-# import aiohttp as http
-# import bs4
-# import asyncio
-# import logging
-# import pprint
-# import re
-# import json as js
-#
-# class Parser():
-#     def __init__(self, server):
-#         self.server = server
-#         match self.server:
-#             case vanila:
-#
-#     async def get(self, url, sess):
-#         async with sess.get(url) as resp:
-#             return await resp.text()
-#
-#     async def request(self, urls):
-#         async with http.ClientSession() as session:
-#             tasks = [asyncio.create_task(self.get(i, session)) for i in urls]
-#             return await asyncio.gather(*tasks)
-#
-#     async def vanilaParser(self):
-#         soup = bs4.BeautifulSoup(str(await self.request(['https://getbukkit.org/download/vanilla'])), 'html.parser')
-#         result = str(soup.find_all('div', class_='row vdivide'))
-#         version = re.findall(r'\d\.\d+\.*\d*', result)[::2]
-#         gacha_urls = re.findall(r'https://getbukkit.org/get/[^"]*', result)
-#         soup = bs4.BeautifulSoup(str(await self.request(gacha_urls)), 'html.parser')
-#         urls = re.findall(r'https://[^"]*', str(soup.find_all('h2')))
-#
-#         return list(zip(version, urls))
-#
-#
-#
-# if __name__ == "__main__":
-#     logging.basicConfig(level=logging.INFO, format='%(levelname)-12s %(asctime)s %(message)s')
