@@ -123,6 +123,7 @@ while True:
                         ngrok.set_auth_token(settings['ngrok_authtoken'])
                         tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
                         print(tcp_tunnel)
+                        input()
 
 
 
