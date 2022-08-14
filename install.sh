@@ -1,6 +1,6 @@
 termux-setup-storage
 apt update && apt upgrade -y
-apt install -y python busybox openjdk-17 wget net-tools termux-services proot resolv-conf openssl-tools
+apt install -y python busybox openjdk-17 wget net-tools termux-services proot resolv-conf openssl-tool
 pip install -r requirements.txt
 ngrok
 rm -rf ${PREFIX}/bin/mcserver
