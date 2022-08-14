@@ -29,25 +29,27 @@ async def vanillaParser() -> tuple:
     return tuple(zip(version_links, download_links))
 
 
-# async def forgeParser() -> tuple:
-#     async with http.ClientSession() as session:
-#
-#
-#     # {version: [{version: y}, {url: z}]}
-#     return ()
+async def forgeParser() -> tuple:
+    async with http.ClientSession() as session:
+        Start_Page = await get('https://files.minecraftforge.net/net/minecraftforge/forge/', session)
+        soup = bs4.BeautifulSoup(Start_Page, 'html.parser')
+        soup.select('a.')
+
+    # {version: [{version: y}, {url: z}]}
+    return (Start_Page)
 
 
 def vanilla():
     return asyncio.run(vanillaParser())
 
 
-# def forge():
-#     return asyncio.run(forgeParser())
+def forge():
+    return asyncio.run(forgeParser())
 
 
 # Полигон испытаний
 
-# pprint.pprint(forge())
+pprint.pprint(forge())
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(levelname)-12s %(asctime)s %(message)s')
