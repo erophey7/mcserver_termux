@@ -1,10 +1,10 @@
 {
     "Standart_server_port": "25565",
-    "Auto_start_FTP_server": "True",
     "FTP_port": 8021,
     "Servers_dir": "/storage/emulated/0/mcServer",
     "Server_eula": "false",
     "App_version": "1.0.0",
     "Xms": 1024,
-    "Xmx": 4096
+    "Xmx": 4096,
+    "ngrok_authtoken": ""
 }

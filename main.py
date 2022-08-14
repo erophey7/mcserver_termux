@@ -1,16 +1,12 @@
 import scr.parsers as parsers
 import colorama
 import os
-import time
 import json
 import socket
 import subprocess
 import asyncio
 import scr.ui as ui
-import multiprocessing
-from pyftpdlib.authorizers import DummyAuthorizer
-from pyftpdlib.handlers import FTPHandler
-from pyftpdlib.servers import FTPServer
+from pyngrok import ngrok
 
 
 page = "main"
@@ -79,6 +75,7 @@ while True:
             serverDir = f'{settings["Servers_dir"]}/{serverName}'
             while True:
                 page = 'server_menu'
+                tcp_tunnel = ''
                 ui.clear()
                 ui.Server_menu()
                 print(fr'''
@@ -119,8 +116,13 @@ while True:
                             subprocess.run(['sv', 'down', f'{serverName}-ftpd'])
                             os.system("kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')")
                             ftpStarted = False
-                        input()
                         ui.clear()
+
+                elif choice == '3':
+                    if ngrokStarted == False:
+                        ngrok.set_auth_token(settings['ngrok_authtoken'])
+                        tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
+                        print(tcp_tunnel)
 
 
 
@@ -171,9 +173,6 @@ while True:
 
             os.system(f'mkdir {settings["Servers_dir"]}/{name}')
 
-            #os.system(f"mkdir {settings['Servers_dir']}/{name}/services")
-
-            #os.system(f"export SVDIR='{settings['Servers_dir']}/{name}/services'")
 
             os.system(f'mkdir /data/data/com.termux/files/usr/var/service/{name}-ftpd')
             os.system(f'touch /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh')
@@ -238,12 +237,12 @@ while True:
                 ui.settings_menu()
                 ui.clear()
                 print(f"1 - Standart minecraft server port: {settings['Standart_server_port']}")
-                print(f"2 - Auto start FTP server after start minecraft server: {settings['Auto_start_FTP_server']} (coming soon)")
-                print(f"3 - FTP port: {settings['FTP_port']}")
-                print(f"4 - Servers dir: {settings['Servers_dir']}")
-                print(f"5 - Server eula: {settings['Server_eula']}")
-                print(f"6 - Min server RAM: {settings['Xms']} in megabytes")
-                print(f"7 - Max server RAM: {settings['Xmx']} in megabytes")
+                print(f"2 - FTP port: {settings['FTP_port']}")
+                print(f"3 - Servers dir: {settings['Servers_dir']}")
+                print(f"4 - Server eula: {settings['Server_eula']}")
+                print(f"5 - Min server RAM: {settings['Xms']} in megabytes")
+                print(f"6 - Max server RAM: {settings['Xmx']} in megabytes")
+                print(f"7 - Ngrok authtoken(see in README.md): {settings['ngrok_authtoken']}")
                 print(f"0 - Back\n\n\n\n")
 
                 print(colorama.Fore.GREEN)

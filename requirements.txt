@@ -2,4 +2,5 @@
 beautifulsoup4==4.11.1
 colorama==0.4.4
 pyftpdlib==1.5.6
+pyngrok==5.1.0
 
