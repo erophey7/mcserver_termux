@@ -1,7 +1,4 @@
-import aiohttp as http
-import bs4
-import asyncio
-import logging
+import aiohttp as http; import bs4; import asyncio; import logging
 import pprint
 import re
 import json as js
@@ -29,27 +26,32 @@ async def vanillaParser() -> tuple:
     return tuple(zip(version_links, download_links))
 
 
-async def forgeParser() -> tuple:
+async def forgeParser(version: str='1.17.1'):
     async with http.ClientSession() as session:
-        Start_Page = await get('https://files.minecraftforge.net/net/minecraftforge/forge/', session)
+        Start_Page = await get('https://files.minecraftforge.net/net/minecraftforge/forge/index_%s.html' % version, session)
         soup = bs4.BeautifulSoup(Start_Page, 'html.parser')
-        soup.select('a.')
+        trs = soup.select('tbody tr')
+        versions = [re.search(r'\d+\.\d+\.\d+', str(i)).group() for i in trs]
+        urls = [f'https://maven.minecraftforge.net/net/minecraftforge/forge/{version}-{i}/forge-{version}-{i}-installer.jar' for i in versions]
+
+        return tuple(zip(versions, urls))
+
 
     # {version: [{version: y}, {url: z}]}
-    return (Start_Page)
+    # return (Start_Page)
 
 
 def vanilla():
     return asyncio.run(vanillaParser())
 
 
-def forge():
-    return asyncio.run(forgeParser())
+def forge(version):
+    return asyncio.run(forgeParser(version))
 
 
 # Полигон испытаний
 
-pprint.pprint(forge())
+pprint.pprint(forge('1.12.2'))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(levelname)-12s %(asctime)s %(message)s')
