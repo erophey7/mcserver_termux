@@ -28,8 +28,8 @@ async def vanillaParser() -> tuple:
 
 async def forgeParser(version: str='1.17.1'):
     async with http.ClientSession() as session:
-        Start_Page = await get('https://files.minecraftforge.net/net/minecraftforge/forge/index_%s.html' % version, session)
-        soup = bs4.BeautifulSoup(Start_Page, 'html.parser')
+        start_page = await get('https://files.minecraftforge.net/net/minecraftforge/forge/index_%s.html' % version, session)
+        soup = bs4.BeautifulSoup(start_page, 'html.parser')
         trs = soup.select('tbody tr')
         versions = [re.search(r'\d+\.\d+\.\d+', str(i)).group() for i in trs]
         urls = [f'https://maven.minecraftforge.net/net/minecraftforge/forge/{version}-{i}/forge-{version}-{i}-installer.jar' for i in versions]
