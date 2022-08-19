@@ -1,7 +1,7 @@
 import aiohttp as http; import bs4; import asyncio; import logging
 import pprint
 import re
-import json as js
+
 
 async def get(url, sess):
     async with sess.get(url) as resp:
@@ -14,22 +14,29 @@ async def request(urls):
         return await asyncio.gather(*tasks)
 
 
-async def vanillaParser() -> tuple:
-    _SITE = "https://getbukkit.org/download/vanilla"
-
+async def _getbukkit(url) -> zip:
     async with http.ClientSession() as session:
-        soup = bs4.BeautifulSoup(await get(_SITE, session), 'html.parser')
+        soup = bs4.BeautifulSoup(await get(url, session), 'html.parser')
         download_links = (re.search(r'https://[^"]+', str(i)).group() for i in soup.select('a.btn-download'))
         download_links = (re.search(r'https://[^"]+', str(bs4.BeautifulSoup(i, 'html.parser').select("h2 a"))).group() for i in await request(download_links))
         version_links = (re.search(r'\d\.[^<]+', str(i)).group() for i in soup.select('div.col-sm-3 h2'))
+    return zip(version_links, download_links)
 
-    return tuple(zip(version_links, download_links))
+
+async def _vanillaParser() -> tuple:
+    _SITE = "https://getbukkit.org/download/vanilla"
+    return tuple(await _getbukkit(_SITE))
 
 
-async def forgeParser(version: str='1.17.1'):
+async def _spigotParser(version):
+    _SITE = "https://getbukkit.org/download/spigot"
+    return dict(await _getbukkit(_SITE))[version]
+
+
+async def _forgeParser(version: str):
     async with http.ClientSession() as session:
-        start_page = await get('https://files.minecraftforge.net/net/minecraftforge/forge/index_%s.html' % version, session)
-        soup = bs4.BeautifulSoup(start_page, 'html.parser')
+        Start_Page = await get('https://files.minecraftforge.net/net/minecraftforge/forge/index_%s.html' % version, session)
+        soup = bs4.BeautifulSoup(Start_Page, 'html.parser')
         trs = soup.select('tbody tr')
         versions = [re.search(r'\d+\.\d+\.\d+', str(i)).group() for i in trs]
         urls = [f'https://maven.minecraftforge.net/net/minecraftforge/forge/{version}-{i}/forge-{version}-{i}-installer.jar' for i in versions]
@@ -37,21 +44,21 @@ async def forgeParser(version: str='1.17.1'):
         return tuple(zip(versions, urls))
 
 
-    # {version: [{version: y}, {url: z}]}
-    # return (Start_Page)
-
-
 def vanilla():
-    return asyncio.run(vanillaParser())
+    return asyncio.run(_vanillaParser())
 
 
 def forge(version):
-    return asyncio.run(forgeParser(version))
+    return asyncio.run(_forgeParser(version))
+
+
+def spigot(version):
+    return asyncio.run(_spigotParser(version))
 
 
 # Полигон испытаний
 
-pprint.pprint(forge('1.12.2'))
+pprint.pprint(spigot('1.12.2'))
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format='%(levelname)-12s %(asctime)s %(message)s')
