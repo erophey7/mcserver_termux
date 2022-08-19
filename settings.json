@@ -3,7 +3,7 @@
     "FTP_port": 8021,
     "Servers_dir": "/storage/emulated/0/mcServer",
     "Server_eula": "false",
-    "App_version": "1.1.0",
+    "App_version": "1.2.0",
     "Xms": 1024,
     "Xmx": 4096,
     "ngrok_authtoken": ""

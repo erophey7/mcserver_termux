@@ -60,8 +60,8 @@ def Core_menu():
     Select server core 
     
 1 - Vanila core
-2 - Forge  (coming soon)
-3 - Spigot (coming soon)''' + '\n'*6)
+2 - Forge
+3 - Spigot''' + '\n'*6)
     return
 
 def server_name():
@@ -111,6 +111,18 @@ ________         .__          __
  |    `   \  ___/|  |_\  ___/|  | \  ___/ 
 /_______  /\___  >____/\___  >__|  \___  >
         \/     \/          \/          \/ 
+    {colorama.Style.RESET_ALL}
+''' + '\n' * 2)
+    return
+
+def Forge_menu():
+    print(fr'''{colorama.Fore.GREEN} 
+___________                         
+\_   _____/__________  ____   ____  
+ |    __)/  _ \_  __ \/ ___\_/ __ \ 
+ |     \(  <_> )  | \/ /_/  >  ___/ 
+ \___  / \____/|__|  \___  / \___  >
+     \/             /_____/      \/ 
     {colorama.Style.RESET_ALL}
 ''' + '\n' * 2)
     return
