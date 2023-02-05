@@ -163,6 +163,10 @@ while True:
 
                 elif choice == '4':
                     ui.settings_menu()
+                    print(f"1 - Min server RAM: {instant_settings['Xms']} in megabytes")
+                    print(f"2 - Max server RAM: {instant_settings['Xmx']} in megabytes")
+                    print(f"2 - OpenJDK version: {instant_settings['jdkver']}")
+                    print(f"0 - Back\n\n\n\n")
 
                     print(colorama.Fore.GREEN)
                     choice = input("> ")
@@ -176,6 +180,25 @@ while True:
                         page = "main"
                         ui.main_menu()
                         break
+
+                    elif choice not in "123" or choice == "":
+                        continue
+
+                    else:
+                        print(colorama.Fore.GREEN)
+                        variable = input("> ")
+                        print(colorama.Style.RESET_ALL)
+                        if choice in '12':
+                            match choice:
+                                case "1":
+                                    instant_settings['Xms'] = variable
+                                case "2":
+                                    instant_settings['Xmx'] = variable
+                                case "":
+                                    instant_settings['jdkver'] = variable
+
+                            ui.clear()
+                            continue
 
 
         elif choice == "2":
@@ -235,10 +258,21 @@ while True:
 
             os.system(f'mkdir {settings["Servers_dir"]}/{name}')
 
+            jdkVer = ''
+
+            if version.split('.')[1] >= '16':
+                jdkVer = 8
+            elif version.split('.')[1] == '17':
+                jdkVer = 16
+            elif version.split('.')[1] <= '18':
+                jdkVer = 17
+
+
+
             instant_settings = {
                 "Xmx": settings['Xmx'],
                 "xms": settings['Xms'],
-                "version": version
+                "jdkver": jdkVer
             }
 
             os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
@@ -304,13 +338,11 @@ while True:
             while True:
                 ui.settings_menu()
                 ui.clear()
-                print(f"1 - Standart minecraft server port: {settings['Standart_server_port']}")
-                print(f"2 - FTP port: {settings['FTP_port']}")
-                print(f"3 - Servers dir: {settings['Servers_dir']}")
-                print(f"4 - Server eula: {settings['Server_eula']} (coming soon)")
-                print(f"5 - Min server RAM: {settings['Xms']} in megabytes")
-                print(f"6 - Max server RAM: {settings['Xmx']} in megabytes")
-                print(f"7 - Ngrok authtoken(see in README.md): {settings['ngrok_authtoken']}")
+                print(f"1 - FTP port: {settings['FTP_port']}")
+                print(f"2 - Servers dir: {settings['Servers_dir']}")
+                print(f"3 - Min server RAM: {settings['Xms']} in megabytes")
+                print(f"4 - Max server RAM: {settings['Xmx']} in megabytes")
+                print(f"5 - Ngrok authtoken(see in README.md): {settings['ngrok_authtoken']}")
                 print(f"0 - Back\n\n\n\n")
 
                 print(colorama.Fore.GREEN)
@@ -326,28 +358,26 @@ while True:
                     ui.main_menu()
                     break
 
-                elif choice not in "1234567" or choice == "":
+
+
+                elif choice not in "12345" or choice == "":
                     continue
 
                 else:
                     print(colorama.Fore.GREEN)
                     variable = input("> ")
                     print(colorama.Style.RESET_ALL)
-                    if choice in '1234567':
+                    if choice in '12345':
                         match choice:
                             case "1":
-                                settings['Standart_server_port'] = variable
-                            case "2":
                                 settings['FTP_port'] = variable
-                            case "3":
+                            case "2":
                                 settings['Servers_dir'] = variable
-                            case "4":
-                                settings['Server_eula'] = variable
-                            case "5":
+                            case "3":
                                 settings['Xms'] = variable
-                            case "6":
+                            case "4":
                                 settings['Xmx'] = variable
-                            case "7":
+                            case "5":
                                 settings['ngrok_authtoken'] = variable
                         ui.clear()
                         continue

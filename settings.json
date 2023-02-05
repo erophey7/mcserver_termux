@@ -1,8 +1,6 @@
 {
-    "Standart_server_port": "25565",
     "FTP_port": 8021,
     "Servers_dir": "${HOME}/minecrft_Servers",
-    "Server_eula": "false",
     "App_version": "1.2.0",
     "Xms": 1024,
     "Xmx": 4096,
