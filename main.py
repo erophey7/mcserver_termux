@@ -7,6 +7,7 @@ import subprocess
 import asyncio
 import scr.ui as ui
 from pyngrok import ngrok
+import random as rnd
 
 
 page = "main"
@@ -71,8 +72,17 @@ while True:
 
             ngrokStarted = False
             ftpStarted = False
+            mcStarted = False
             tunnels = ''
+
+            gid = rnd.randint(00000, 99999)
+
+
             while True:
+                if subprocess.check_output(["screen", "-list", "|", "grep", f'"{gid}"']) == "":
+                    mcStarted = True
+                else:
+                    mcStarted = False
                 page = 'server_menu'
                 tcp_tunnel = ''
                 ui.clear()
@@ -85,6 +95,8 @@ while True:
 
 {f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server" if ftpStarted else f" "}
 {f"Ngrok: {tunnels[0]}" if ngrokStarted else f" "}
+
+{"stop minecraft server: ctrl + a + k (in session)" if mcStarted == True else ""}
 
                         ''')
 
@@ -105,8 +117,11 @@ while True:
                     break
 
                 elif choice == '1':
-                    subprocess.run([f"java", f"-Xms{settings['Xms']}m", f"-Xmx{settings['Xmx']}m", "-jar", f"{serverDir}/server.jar", "nogui"], cwd=serverDir)
-                    input()
+                    if mcStarted == False:
+                        subprocess.run(["screen", "-S", f"mcServer_{gid}", f"java", f"-Xms{settings['Xms']}m", f"-Xmx{settings['Xmx']}m", "-jar", f"{serverDir}/server.jar", "nogui"], cwd=serverDir)
+                    else:
+                        subprocess.run(["screen", "-r", f"{gid}"])
+
 
                 elif choice == '2':
                         if ftpStarted == False:
