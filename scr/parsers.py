@@ -16,7 +16,7 @@ SPIGOT  = "https://getbukkit.org/download/spigot"
 
 def vanilla():
     with requests.Session() as session:
-        with open("data/urls.json", "r+") as f:
+        with open("scr/data/urls.json", "r+") as f: # так нада поняль?
             vanilla = json.load(f)["vanilla"]
             session.get(VANILLA)
             soup = bs4.BeautifulSoup(requests.request("get", VANILLA).text, "html.parser")
