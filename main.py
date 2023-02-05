@@ -8,6 +8,7 @@ import asyncio
 import scr.ui as ui
 from pyngrok import ngrok
 import random as rnd
+from pathlib import Path
 
 
 page = "main"
@@ -70,10 +71,18 @@ while True:
             serverName = serversList[int(choice)]
             serverDir = f'{settings["Servers_dir"]}/{serverName}'
 
+
+
             ngrokStarted = False
             ftpStarted = False
             mcStarted = False
             tunnels = ''
+
+            instant_settings = {}
+
+            with open(f"${serverDir}/settings.json") as f:
+                instant_settings = json.load(f)
+
 
             gid = rnd.randint(00000, 99999)
 
@@ -83,6 +92,9 @@ while True:
                     mcStarted = True
                 else:
                     mcStarted = False
+
+
+
                 page = 'server_menu'
                 tcp_tunnel = ''
                 ui.clear()
@@ -91,6 +103,7 @@ while True:
 1 - Start minecraft server
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
 3 - {"Stop" if ngrokStarted == True else "Start"} ngrok 
+4 - instant settings
 0 - Exit
 
 {f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server" if ftpStarted else f" "}
@@ -118,7 +131,7 @@ while True:
 
                 elif choice == '1':
                     if mcStarted == False:
-                        subprocess.run(["screen", "-S", f"mcServer_{gid}", f"java", f"-Xms{settings['Xms']}m", f"-Xmx{settings['Xmx']}m", "-jar", f"{serverDir}/server.jar", "nogui"], cwd=serverDir)
+                        subprocess.run(["screen", "-S", f"mcServer_{gid}", f"java", f"-Xms{instant_settings['Xms']}m", f"-Xmx{instant_settings['Xmx']}m", "-jar", f"{serverDir}/server.jar", "nogui"], cwd=serverDir)
                     else:
                         subprocess.run(["screen", "-r", f"{gid}"])
 
@@ -147,6 +160,23 @@ while True:
                         ngrok.disconnect(tcp_tunnel)
                         ngrokStarted = False
                     ui.clear()
+
+                elif choice == '4':
+                    ui.settings_menu()
+
+                    print(colorama.Fore.GREEN)
+                    choice = input("> ")
+                    print(colorama.Style.RESET_ALL)
+
+                    if choice == "0":
+                        os.system(f"rm -rf {serverDir}/settings.json")
+                        with open(f"{serverDir}/settings.json", "w") as f:
+                            json.dump(settings, f)
+                        ui.clear()
+                        page = "main"
+                        ui.main_menu()
+                        break
+
 
         elif choice == "2":
             page = "choice version"
@@ -187,7 +217,6 @@ while True:
 
                 download_link = forgeVersions[choiceVersion][1]
 
-                version =
             elif choiceCore == "3":
                 download_link = parsers.spigot(version)
 
@@ -203,7 +232,19 @@ while True:
             else:
                 os.system(f"mkdir {settings['Servers_dir']}")
 
+
             os.system(f'mkdir {settings["Servers_dir"]}/{name}')
+
+            instant_settings = {
+                "Xmx": settings['Xmx'],
+                "xms": settings['Xms'],
+                "version": version
+            }
+
+            os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
+            with open(f'{settings["Servers_dir"]}/{name}/settings.json', 'w'):
+                json.dump(instant_settings, f)
+
 
             os.system(f'mkdir /data/data/com.termux/files/usr/var/service/{name}-ftpd')
             os.system(f'touch /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh')
@@ -266,7 +307,7 @@ while True:
                 print(f"1 - Standart minecraft server port: {settings['Standart_server_port']}")
                 print(f"2 - FTP port: {settings['FTP_port']}")
                 print(f"3 - Servers dir: {settings['Servers_dir']}")
-                print(f"4 - Server eula: {settings['Server_eula']}")
+                print(f"4 - Server eula: {settings['Server_eula']} (coming soon)")
                 print(f"5 - Min server RAM: {settings['Xms']} in megabytes")
                 print(f"6 - Max server RAM: {settings['Xmx']} in megabytes")
                 print(f"7 - Ngrok authtoken(see in README.md): {settings['ngrok_authtoken']}")
