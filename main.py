@@ -122,7 +122,6 @@ while True:
                 print(colorama.Fore.GREEN)
                 choice = input("> ")
                 print(colorama.Style.RESET_ALL)
-                input()
                 ui.clear()
 
 
@@ -141,6 +140,7 @@ while True:
                         subprocess.run(["screen", "-S", f"mcServer_{gid}", f"java", f"-Xms{instant_settings['Xms']}m", f"-Xmx{instant_settings['Xmx']}m", "-jar", f"{serverDir}/server.jar", "nogui"], cwd=serverDir)
                     else:
                         subprocess.run(["screen", "-r", f"{gid}"])
+
 
 
                 elif choice == '2':
@@ -179,6 +179,8 @@ while True:
                         os.system(f"rm -rf {serverDir}/settings.json")
                         with open(f"{serverDir}/settings.json", "w") as f:
                             json.dump(settings, f)
+
+                        input()
                         ui.clear()
                         page = "main"
                         ui.main_menu()
