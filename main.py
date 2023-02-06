@@ -80,7 +80,7 @@ while True:
 
             instant_settings = {}
 
-            with open(f"${serverDir}/settings.json") as f:
+            with open(f"{serverDir}/settings.json") as f:
                 instant_settings = json.load(f)
 
 
