@@ -258,7 +258,7 @@ while True:
 
             instant_settings = {
                 "Xmx": settings['Xmx'],
-                "xms": settings['Xms'],
+                "Xms": settings['Xms'],
                 "version": version
             }
 
