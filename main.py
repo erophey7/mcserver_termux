@@ -199,7 +199,7 @@ while True:
 
             print(colorama.Fore.GREEN)
             inputVersion = int(input("> "))-1
-            version = vanila[inputVersion][0]
+            version = out[inputVersion]
 #            versionNumber = inputVersion
             print(colorama.Style.RESET_ALL)
             vanila_link = parsers.vanilla(version)
