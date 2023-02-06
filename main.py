@@ -182,9 +182,19 @@ while True:
             page = "choice version"
             ui.clear()
             ui.VersionMenu()
-            vanila = parsers.vanilla('')
+            vanila = parsers.vanilla()
+            out = []
+
             for j, i in enumerate(vanila):
-                print(f'{j+1} - {i[0]}')
+                ass = i.split('.')
+                if int(ass[1]) >= 5:
+                    # print(f"{j+1} - {vanila[int(j)]}")
+                    out.append(vanila[int(j)])
+
+            out = list(reversed(out))
+
+            for j, i in enumerate(out):
+                print(f"{j + 1} - {out[int(j)]}")
 
 
             print(colorama.Fore.GREEN)
