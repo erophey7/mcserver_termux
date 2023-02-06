@@ -89,7 +89,7 @@ while True:
 
             while True:
 
-                try:
+                """try:
                     check_procces = subprocess.check_output(["screen", "-list", "|", "grep", f'"mcServer_{gid}"'])
                 except:
                     check_procces = ''
@@ -97,7 +97,7 @@ while True:
                 if check_procces == "":
                     mcStarted = False
                 else:
-                    mcStarted = True
+                    mcStarted = True"""
 
 
 
@@ -139,6 +139,7 @@ while True:
                     if mcStarted == False:
                         #os.system(f"cd {serverDir} && screen -S mcServer_{gid} java -Xms{instant_settings['Xms']}m -Xmx{instant_settings['Xmx']}m -jar server.jar nogui")
                         subprocess.run(["screen", "-S", f"mcServer_{gid}", "java", f"-Xms{instant_settings['Xms']}m", f"-Xmx{instant_settings['Xmx']}m", "-jar", "server.jar", "nogui"], cwd=serverDir)
+                        mcStarted = True
                     else:
                         #os.system(f'screen -r mcServer_{gid}')
                         subprocess.run(["screen", "-r", f"mcServer_{gid}"])
