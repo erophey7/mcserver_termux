@@ -90,7 +90,7 @@ while True:
             while True:
 
                 try:
-                    check_procces = subprocess.check_output(["screen", "-list", "|", "grep", f'"{gid}"'])
+                    check_procces = subprocess.check_output(["screen", "-list", "|", "grep", f'"mcServer_{gid}"'])
                 except:
                     check_procces = ''
 
