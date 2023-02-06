@@ -122,6 +122,7 @@ while True:
                 print(colorama.Fore.GREEN)
                 choice = input("> ")
                 print(colorama.Style.RESET_ALL)
+                input()
                 ui.clear()
 
 
