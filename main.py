@@ -88,7 +88,13 @@ while True:
 
 
             while True:
-                if subprocess.check_output(["screen", "-list", "|", "grep", f'"{gid}"']) == "":
+
+                try:
+                    check_procces = subprocess.check_output(["screen", "-list", "|", "grep", f'"{gid}"'])
+                except:
+                    check_procces = ''
+
+                if check_procces == "":
                     mcStarted = True
                 else:
                     mcStarted = False
