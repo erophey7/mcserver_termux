@@ -182,7 +182,7 @@ while True:
             page = "choice version"
             ui.clear()
             ui.VersionMenu()
-            vanila = parsers.vanilla()
+            vanila = parsers.vanilla('')
             for j, i in enumerate(vanila):
                 print(f'{j+1} - {i[0]}')
 
