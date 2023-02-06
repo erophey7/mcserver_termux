@@ -202,7 +202,7 @@ while True:
             version = vanila[inputVersion][0]
             versionNumber = inputVersion
             print(colorama.Style.RESET_ALL)
-            vanila_link = vanila[versionNumber]
+            vanila_link = parsers.vanilla(versionNumber)
             ui.clear()
             ui.Core_menu()
 
