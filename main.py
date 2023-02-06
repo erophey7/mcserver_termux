@@ -202,7 +202,7 @@ while True:
             version = out[inputVersion]
 #            versionNumber = inputVersion
             print(colorama.Style.RESET_ALL)
-            vanila_link = parsers.vanilla(version)
+
             ui.clear()
             ui.Core_menu()
 
@@ -213,7 +213,7 @@ while True:
             download_link = ''
 
             if choiceCore == "1":
-                download_link = vanila_link
+                download_link = parsers.vanilla(version)
             elif choiceCore == "2":
                 ui.clear()
                 ui.Forge_menu()
