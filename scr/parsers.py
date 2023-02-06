@@ -52,8 +52,8 @@ def vanilla(version: str):
                     versions[i] : downloadLinks[i]
                     for i in range(len(versions))
             }]}
-            json.dump(dumpsLinks, f)
-            pprint.pprint(dumpsLinks)
+            # Эт пока не работает, можешь доделать
+            # json.dump(dumpsLinks, f)
 
             #
             #     for i in session.get(download_links[i])
