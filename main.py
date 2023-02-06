@@ -273,6 +273,7 @@ while True:
             os.system(f"chmod +x /data/data/com.termux/files/usr/var/service/{name}-ftpd/run")
             os.system(f'mkdir $PREFIX/var/service/{name}-ftpd/log')
             os.system(f'ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/{name}-ftpd/log/run')
+            input()
 
             page = "main"
             ui.clear()
