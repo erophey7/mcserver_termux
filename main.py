@@ -137,9 +137,11 @@ while True:
 
                 elif choice == '1':
                     if mcStarted == False:
-                        subprocess.run(["screen", "-S", f"mcServer_{gid}", f"java", f"-Xms{instant_settings['Xms']}m", f"-Xmx{instant_settings['Xmx']}m", "-jar", f"{serverDir}/server.jar", "nogui"], cwd=serverDir)
+                        os.system(f"cd {serverDir} && screen -S mcServer_{gid} java -Xms{instant_settings['Xms']}m -Xmx{instant_settings['Xmx']}m -jar server.jar nogui")
+                        #subprocess.run(["screen", "-S", f"mcServer_{gid}", "java", f"-Xms{instant_settings['Xms']}m", f"-Xmx{instant_settings['Xmx']}m", "-jar", "server.jar", "nogui"], cwd=serverDir)
                     else:
-                        subprocess.run(["screen", "-r", f"{gid}"])
+                        os.system(f'screen -r mcServer_{gid}')
+                        #subprocess.run(["screen", "-r", f"mcServer_{gid}"])
 
 
 
