@@ -252,7 +252,7 @@ while True:
             }
 
             os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
-            with open(f'{settings["Servers_dir"]}/{name}/settings.json', 'w'):
+            with open(f'{settings["Servers_dir"]}/{name}/settings.json', 'w') as f:
                 json.dump(instant_settings, f)
 
 
