@@ -7,6 +7,7 @@ import json
 import bs4
 import re
 import os
+
 # import ujson as json
 
 # Constants
@@ -17,58 +18,55 @@ FORGE = "https://files.minecraftforge.net/net/minecraftforge/forge/index_%s.html
 SPIGOT = "https://getbukkit.org/download/spigot"
 
 
-def vanilla(version: str):
+def vanilla(version: str = None):
     with requests.Session() as session:
-        with open("data/urls.json", "r+") as f:
 
-            vanilla = json.load(f)["vanilla"][0]
-            html = session.get(VANILLA).text
-            soup = bs4.BeautifulSoup(html, "html.parser")
+        with open("{}/data/vanilla.json".format(DIRPATH), "r") as f:
+            vanilla = json.load(f)
 
-            versions = [
-                str(i)[4:-5]
-                for i in soup.select("div > h2")
-            ]
+        html = session.get(VANILLA).text
+        soup = bs4.BeautifulSoup(html, "html.parser")
 
-            if versions[0] in vanilla:
-                return vanilla[version]
+        versions = [str(i)[4:-5] for i in soup.select("div > h2")]
 
-            tempDownloadsLinks = [
-                re.search(r'https://[^"]+', str(i)).group()
-                for i in soup.select("a.btn-download")
-                ]
+        if version is None:
+            return versions
 
-            downloadLinks = []
+        elif versions[0] in vanilla:
+            return vanilla[version]
 
-            for j, i in enumerate(tempDownloadsLinks):
-                downloadLinks.append(
+        elif version not in versions:
+            return False
+
+        tempDownloadsLinks = [
+            re.search(r'https://[^"]+', str(i)).group()
+            for i in soup.select("a.btn-download")
+        ]
+
+        downloadLinks = []
+
+        for j, i in enumerate(tempDownloadsLinks):
+            downloadLinks.append(
                 re.search(
                     r'https://[^"]+',
-                    str(bs4.BeautifulSoup(session.get(tempDownloadsLinks[j]).text, "html.parser").select("h2 a")),
-                ).group())
+                    str(
+                        bs4.BeautifulSoup(
+                            session.get(tempDownloadsLinks[j]).text, "html.parser"
+                        ).select("h2 a")
+                    ),
+                ).group()
+            )
 
-            dumpsLinks = {
-                "vanilla" :[{
-                    versions[i] : downloadLinks[i]
-                    for i in range(len(versions))
-            }]}
-            # Эт пока не работает, можешь доделать
-            # json.dump(dumpsLinks, f)
+        dumpsLinks = {versions[i]: downloadLinks[i] for i in range(len(versions))}
 
-            #
-            #     for i in session.get(download_links[i])
-            #
-            # pprint.pprint(download_links)
-            #
-            # version_links = (
-            #     re.search(r"\d\.[^<]+", str(i)).group()
-            #     for i in soup.select("div.col-sm-3 h2")
-            # )
+        with open("{}/data/vanilla.json".format(DIRPATH), "w") as f:
+            json.dump(dumpsLinks, f)
 
+        return dumpsLinks[version]
 
 
 #
-# def urls.json() -> tuple:
+# def vanilla.json() -> tuple:
 #
 #     soup = bs4.BeautifulSoup(requests.request("get", VANILLA).text, "html.parser")
 #     download_links = (
@@ -136,7 +134,7 @@ def vanilla(version: str):
 #     # return (Start_Page)
 #
 #
-# def urls.json():
+# def vanilla.json():
 #     return asyncio.run(_vanillaParser())
 #
 #
@@ -156,4 +154,3 @@ if __name__ == "__main__":
     logging.basicConfig(
         level=logging.INFO, format="%(levelname)-12s %(asctime)s %(message)s"
     )
-    vanilla("1.19.3")
