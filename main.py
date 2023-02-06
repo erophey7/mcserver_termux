@@ -89,7 +89,7 @@ while True:
 
             while True:
 
-                """try:
+                try:
                     check_procces = subprocess.check_output(["screen", "-list", "|", "grep", f'"mcServer_{gid}"'])
                 except:
                     check_procces = ''
@@ -97,7 +97,7 @@ while True:
                 if check_procces == "":
                     mcStarted = False
                 else:
-                    mcStarted = True"""
+                    mcStarted = True
 
 
 
@@ -106,7 +106,7 @@ while True:
                 ui.clear()
                 ui.Server_menu()
                 print(fr'''
-1 - Start minecraft server
+1 - {'Return to' if mcStarted == True else "Start"} minecraft server
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
 3 - {"Stop" if ngrokStarted == True else "Start"} ngrok 
 4 - instant settings
