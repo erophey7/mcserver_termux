@@ -10,7 +10,7 @@ import os
 
 # import ujson as json
 
-# Constants
+# Constants мда...
 DIRPATH = os.path.dirname(__file__)
 
 VANILLA = "https://getbukkit.org/download/vanilla"
@@ -154,4 +154,4 @@ if __name__ == "__main__":
     logging.basicConfig(
         level=logging.INFO, format="%(levelname)-12s %(asctime)s %(message)s"
     )
-    vanilla()
+    vanilla())
