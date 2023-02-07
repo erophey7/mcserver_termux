@@ -87,7 +87,7 @@ while True:
                     mcStarted = True"""
 
                 page = "server_menu"
-                tcp_tunnel =
+                tcp_tunnel = ""
                 ui.clear()
                 ui.Server_menu()
                 print(
