@@ -224,6 +224,21 @@ while True:
                     # print(f"{j+1} - {vanila[int(j)]}")
                     out.append(vanila[int(j)])
 
+            out = list(reversed(out))
+
+            ui.clear()
+            ui.VersionMenu()
+            for j, i in enumerate(out):
+                print(f"{j + 1} - {out[int(j)]}")
+
+
+            print(colorama.Fore.GREEN)
+            inputVersion = int(input("> "))-1
+            version = out[inputVersion]
+#            versionNumber = inputVersion
+            print(colorama.Style.RESET_ALL)
+
+            ui.clear()
             ui.Core_menu()
 
             print(colorama.Fore.GREEN)
@@ -242,7 +257,7 @@ while True:
                     print(f'{j + 1} - {i[0]}')
 
                 print(colorama.Fore.GREEN)
-                choiceVersion = int(input("> ")) - 1
+                choiceVersion = int(input("> "))-1
                 print(colorama.Style.RESET_ALL)
 
                 download_link = forgeVersions[choiceVersion][1]
@@ -251,23 +266,6 @@ while True:
                 download_link = parsers.spigot(version)
 
             ui.clear()
-
-            out = list(reversed(out))
-
-            ui.clear()
-            ui.VersionMenu()
-            for j, i in enumerate(out):
-                print(f"{j + 1} - {out[int(j)]}")
-
-
-            print(colorama.Fore.GREEN)
-            inputVersion = int(input("> "))-1
-            version = out[inputVersion]
-#            versionNumber = inputVersion
-            print(colorama.Style.RESET_ALL)
-
-            ui.clear()
-
             ui.server_name()
 
             print(colorama.Fore.GREEN)
