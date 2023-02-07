@@ -300,7 +300,11 @@ while True:
                 )
                 os.system("rm -rf server.jar")
             else:
-                pass
+                os.system(
+                    f'wget {download_link} -O {settings["Servers_dir"]}/{name}/forge_installer.jar'
+                )
+                os.system(f'java -jar {settings["Servers_dir"]}/{name}/forge_installer.jar --installServer')
+                os.system(f'rm -rf {settings["Servers_dir"]}/{name}/forge_installer.jar')
 
             with open(
                 f"/data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh", "w"
