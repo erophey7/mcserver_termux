@@ -354,7 +354,7 @@ while True:
                 ui.clear()
                 page = "main"
                 ui.main_menu()
-                break
+
 
         elif choice == "4":
             page = "settings"
