@@ -215,6 +215,14 @@ while True:
         elif choice == "2":
             page = "choice version"
 
+            ui.clear()
+            ui.Core_menu()
+
+            print(colorama.Fore.GREEN)
+            choiceCore = input("> ")
+            print(colorama.Style.RESET_ALL)
+            ui.clear()
+
             vanila = parsers.vanilla()
             out = []
 
