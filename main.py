@@ -293,13 +293,13 @@ while True:
                 f"touch /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh"
             )
 
-            if choiceCore != "2":
+            if choiceCore == "1" and choiceCore == "3":
                 print("Wait...")
                 os.system(
                     f'wget {download_link} -O {settings["Servers_dir"]}/{name}/server.jar'
                 )
                 os.system("rm -rf server.jar")
-            else:
+            elif choiceCore == "2":
                 os.system(
                     f'wget {download_link} -O {settings["Servers_dir"]}/{name}/forge_installer.jar'
                 )
@@ -354,7 +354,7 @@ while True:
 
             else:
                 os.system(f"rm -rf {settings['Servers_dir']}/{serverName}")
-                os.system(f"rm -rf $SVDIR/{serverName}")
+                os.system(f"rm -rf $SVDIR/{serverName}-ftpd")
                 ui.clear()
                 page = "main"
                 ui.main_menu()
