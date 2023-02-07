@@ -170,4 +170,4 @@ def spigot(version: str = None):
 # Полигон испытаний
 
 if __name__ == "__main__":
-    print(spigot("1.8.6"))
+    print(forge('1.12.2'))
