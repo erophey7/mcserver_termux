@@ -173,6 +173,10 @@ while True:
 
                 elif choice == '4':
                     ui.settings_menu()
+                    print(f"1 - Min server RAM: {instant_settings['Xms']} in megabytes")
+                    print(f"2 - Max server RAM: {instant_settings['Xmx']} in megabytes")
+                    print(f"3 - OpenJDK version: {instant_settings['jdkver']}")
+                    print(f"0 - Back\n\n\n\n")
 
                     print(colorama.Fore.GREEN)
                     choice = input("> ")
@@ -188,6 +192,24 @@ while True:
                         page = "main"
                         ui.main_menu()
                         break
+                    elif choice not in "123" or choice == "":
+                        continue
+
+                    else:
+                        print(colorama.Fore.GREEN)
+                        variable = input("> ")
+                        print(colorama.Style.RESET_ALL)
+                        if choice in '123':
+                            match choice:
+                                case "1":
+                                    instant_settings['Xms'] = variable
+                                case "2":
+                                    instant_settings['Xmx'] = variable
+                                case "3":
+                                    instant_settings['jdkver'] = variable
+
+                            ui.clear()
+                            continue
 
 
         elif choice == "2":
@@ -257,10 +279,20 @@ while True:
 
             os.system(f'mkdir {settings["Servers_dir"]}/{name}')
 
+            jdkVer = ''
+
+            if version.split('.')[1] >= '16':
+                jdkVer = 8
+            elif version.split('.')[1] == '17':
+                jdkVer = 16
+            elif version.split('.')[1] <= '18':
+                jdkVer = 17
+
+
             instant_settings = {
                 "Xmx": settings['Xmx'],
                 "Xms": settings['Xms'],
-                "version": version
+                "jdkVer": jdkVer
             }
 
             os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
