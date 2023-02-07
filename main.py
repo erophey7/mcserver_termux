@@ -247,11 +247,7 @@ while True:
             print(colorama.Style.RESET_ALL)
 
             ui.clear()
-            ui.Core_menu()
 
-            print(colorama.Fore.GREEN)
-            choiceCore = input("> ")
-            print(colorama.Style.RESET_ALL)
 
             download_link = ''
 
@@ -273,7 +269,6 @@ while True:
             elif choiceCore == "3":
                 download_link = parsers.spigot(version)
 
-            ui.clear()
             ui.server_name()
 
             print(colorama.Fore.GREEN)
