@@ -293,7 +293,7 @@ while True:
                 f"touch /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh"
             )
 
-            if choiceCore == "1" and choiceCore == "3":
+            if choiceCore == "1" or choiceCore == "3":
                 print("Wait...")
                 os.system(
                     f'wget {download_link} -O {settings["Servers_dir"]}/{name}/server.jar'
