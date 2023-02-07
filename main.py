@@ -243,7 +243,6 @@ while True:
             print(colorama.Fore.GREEN)
             inputVersion = int(input("> ")) - 1
             version = out[inputVersion]
-            #            versionNumber = inputVersion
             print(colorama.Style.RESET_ALL)
 
             ui.clear()
@@ -253,18 +252,7 @@ while True:
             if choiceCore == "1":
                 download_link = parsers.vanilla(version)
             elif choiceCore == "2":
-                ui.clear()
-                ui.Forge_menu()
-                forgeVersions = parsers.forge(version)
-                for j, i in enumerate(forgeVersions):
-                    print(f"{j + 1} - {i[0]}")
-
-                print(colorama.Fore.GREEN)
-                choiceVersion = int(input("> ")) - 1
-                print(colorama.Style.RESET_ALL)
-
-                download_link = forgeVersions[choiceVersion][1]
-
+                download_link = parsers.forge(version)
             elif choiceCore == "3":
                 download_link = parsers.spigot(version)
 
