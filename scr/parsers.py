@@ -1,14 +1,9 @@
 # Some libraries
-import pprint
-
 import requests
 import json
 import bs4
 import re
 import os
-import pickle
-
-# import ujson as json
 
 # Constants
 DIRPATH = os.path.dirname(__file__)
@@ -107,8 +102,6 @@ def forge(version: str = None):
             for j, i in enumerate(versions)
         }
 
-        pprint.pprint(downloadLinks)
-
         with open("{}/data/forge.json".format(DIRPATH), "w") as f:
             json.dump(downloadLinks, f)
 
@@ -170,4 +163,4 @@ def spigot(version: str = None):
 # Полигон испытаний
 
 if __name__ == "__main__":
-    print(spigot("1.8.6"))
+    print(forge('1.12.2'))
