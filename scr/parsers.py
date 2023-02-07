@@ -1,14 +1,9 @@
 # Some libraries
-import pprint
-
 import requests
 import json
 import bs4
 import re
 import os
-import pickle
-
-# import ujson as json
 
 # Constants
 DIRPATH = os.path.dirname(__file__)
@@ -106,8 +101,6 @@ def forge(version: str = None):
             if tempDownloadLinks[j] != [] else None
             for j, i in enumerate(versions)
         }
-
-        pprint.pprint(downloadLinks)
 
         with open("{}/data/forge.json".format(DIRPATH), "w") as f:
             json.dump(downloadLinks, f)
