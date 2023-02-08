@@ -75,7 +75,7 @@ while True:
             gid = rnd.randint(00000, 99999)
 
             while True:
-                ls_screen_dir = subprocess.check_output(['ls', '-l', '$HOME/.screen'], stderr=subprocess.STDOUT)
+                ls_screen_dir = subprocess.check_output(['ls', '-l', '$HOME/.screen'], shell=True, stderr=subprocess.STDOUT)
                 screen_files = ls_screen_dir.split('\n')[::-1][:-1]
                 screen_gid = ''
                 if screen_files == []:
