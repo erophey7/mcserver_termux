@@ -141,11 +141,14 @@ while True:
                         print('Press enter to continue')
                         input()
 
-                        subprocess.run([
+                        subprocess.run(
+                            [
                             "screen",
                             "-dmS",
                             f"mcServer_{gid}"
-                        ])
+                            ],
+                            cwd=serverDir,
+                        )
 
                         subprocess.run(
                             [
