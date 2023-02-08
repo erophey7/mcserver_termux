@@ -209,6 +209,7 @@ while True:
                         print(f"1 - Min server RAM: {instant_settings['Xms']} in megabytes")
                         print(f"2 - Max server RAM: {instant_settings['Xmx']} in megabytes")
                         print(f"3 - OpenJDK version: {instant_settings['jdkver']}")
+                        print(f"4 - Server port: {instant_settings['Port']}")
                         print(f"0 - Back\n\n\n\n")
 
                         print(colorama.Fore.GREEN)
@@ -221,14 +222,14 @@ while True:
                                 json.dump(settings, f)
                             ui.clear()
                             break
-                        elif choice not in "123" or choice == "":
+                        elif choice not in "1234" or choice == "":
                             continue
 
                         else:
                             print(colorama.Fore.GREEN)
                             variable = input("> ")
                             print(colorama.Style.RESET_ALL)
-                            if choice in "123":
+                            if choice in "1234":
                                 match choice:
                                     case "1":
                                         instant_settings["Xms"] = variable
@@ -236,6 +237,8 @@ while True:
                                         instant_settings["Xmx"] = variable
                                     case "3":
                                         instant_settings["jdkver"] = variable
+                                    case "4":
+                                        instant_settings["Port"] = variable
 
                                 ui.clear()
                                 continue
@@ -249,6 +252,8 @@ while True:
                                   '     input: id value\n')
                             for i, j in enumerate(server_properties):
                                 print(f'{i + 1} - {j}={server_properties[j]}')
+
+                            print('\n0 - exit')
 
                             inp = input('>')
                             if inp == '0':
@@ -343,6 +348,7 @@ while True:
                 "Xmx": settings["Xmx"],
                 "Xms": settings["Xms"],
                 "jdkVer": jdkVer,
+                "Port": settings["Standart_server_port"]
             }
 
             os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
