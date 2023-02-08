@@ -159,7 +159,7 @@ while True:
                                 f"-Xmx{instant_settings['Xmx']}m",
                                 "-jar",
                                 "server.jar",
-                                r'nogui\n"',
+                                'nogui"',
                             ],
                             cwd=serverDir,
                         )
