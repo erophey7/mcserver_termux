@@ -117,7 +117,7 @@ while True:
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
 3 - {"Stop" if ngrokStarted == True else "Start"} ngrok 
 4 - Instant settings
-{"5  - Eula true" if os.path.exists(f'{serverDir}/eula.txt') else ''}
+{"5 - Eula true" if os.path.exists(f'{serverDir}/eula.txt') else ''}
 {"6 - server.properties editor" if os.path.exists(f'{serverDir}/server.properties') else ''}
 {"7 - Apply settings to server.properties" if os.path.exists(f'{serverDir}/server.properties') else ''}
 0 - Exit
@@ -210,6 +210,7 @@ while True:
                         print(f"2 - Max server RAM: {instant_settings['Xmx']} in megabytes")
                         print(f"3 - OpenJDK version: {instant_settings['jdkver']}")
                         print(f"4 - Server port: {instant_settings['Port']}")
+                        print(f"5 - Server port: {instant_settings['Online_mode']}")
                         print(f"0 - Back\n\n\n\n")
 
                         print(colorama.Fore.GREEN)
@@ -222,14 +223,14 @@ while True:
                                 json.dump(settings, f)
                             ui.clear()
                             break
-                        elif choice not in "1234" or choice == "":
+                        elif choice not in "12345" or choice == "":
                             continue
 
                         else:
                             print(colorama.Fore.GREEN)
                             variable = input("> ")
                             print(colorama.Style.RESET_ALL)
-                            if choice in "1234":
+                            if choice in "12345":
                                 match choice:
                                     case "1":
                                         instant_settings["Xms"] = variable
@@ -239,9 +240,20 @@ while True:
                                         instant_settings["jdkver"] = variable
                                     case "4":
                                         instant_settings["Port"] = variable
+                                    case "5":
+                                        instant_settings["Online_mode"] = variable
 
                                 ui.clear()
                                 continue
+
+                elif choice == "5":
+                    if settings["Server_eula"] == True:
+                        eula = f"#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://aka.ms/MinecraftEULA).\n#Wed Feb 08 08:56:25 GMT 2023\neula=true"
+                        with open(f'{serverDir}/eula.txt', 'w') as file:
+                            file.write(eula)
+                    else:
+                        print('Set eula to True in settings')
+
 
                 elif choice == "6":
                     if os.path.exists(f'{serverDir}/server.properties'):
@@ -261,10 +273,8 @@ while True:
                                 out = f''
                                 for i, j in enumerate(server_properties):
                                     out += f'{j}={server_properties[j]}\n'
-                                input()
                                 with open(f'{serverDir}/server.properties', 'w') as f:
                                     f.write(out[:-1])
-                                input()
                                 break
 
                             inp = inp.split(' ')
@@ -279,6 +289,14 @@ while True:
                             server_properties_args_ids.append(j)
                         else:
                             print('server.properties doesn`t exists')
+
+                elif choice == "7":
+                    server_properties['query.port'] = instant_settings["Port"]
+                    server_properties['online-mode'] = instant_settings["Online_mode"]
+                    for i, j in enumerate(server_properties):
+                        out += f'{j}={server_properties[j]}\n'
+                    with open(f'{serverDir}/server.properties', 'w') as f:
+                        f.write(out[:-1])
 
         elif choice == "2":
             page = "choice version"
@@ -348,7 +366,8 @@ while True:
                 "Xmx": settings["Xmx"],
                 "Xms": settings["Xms"],
                 "jdkVer": jdkVer,
-                "Port": settings["Standart_server_port"]
+                "Port": settings["Standart_server_port"],
+                "Online_mode": settings['default_online_mode']
             }
 
             os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
@@ -428,7 +447,6 @@ while True:
                 page = "main"
                 ui.main_menu()
 
-
         elif choice == "4":
             page = "settings"
             while True:
@@ -445,6 +463,7 @@ while True:
                 print(
                     f"7 - Ngrok authtoken(see in README.md): {settings['ngrok_authtoken']}"
                 )
+                print(f"8 - Default online mode: {settings['default_online_mode']}")
                 print(f"0 - Back\n\n\n\n")
 
                 print(colorama.Fore.GREEN)
@@ -460,14 +479,14 @@ while True:
                     ui.main_menu()
                     break
 
-                elif choice not in "1234567" or choice == "":
+                elif choice not in "12345678" or choice == "":
                     continue
 
                 else:
                     print(colorama.Fore.GREEN)
                     variable = input("> ")
                     print(colorama.Style.RESET_ALL)
-                    if choice in "1234567":
+                    if choice in "12345678":
                         match choice:
                             case "1":
                                 settings["Standart_server_port"] = variable
@@ -483,6 +502,8 @@ while True:
                                 settings["Xmx"] = variable
                             case "7":
                                 settings["ngrok_authtoken"] = variable
+                            case "8":
+                                settings['default_online_mode'] = variable
                         ui.clear()
                         continue
 

@@ -6,5 +6,6 @@
     "App_version": "1.2.0",
     "Xms": 1024,
     "Xmx": 4096,
-    "ngrok_authtoken": ""
+    "ngrok_authtoken": "",
+    "default_online_mode": "true"
 }
