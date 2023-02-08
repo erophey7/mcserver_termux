@@ -77,9 +77,12 @@ while True:
             while True:
                 ls_screen_dir = subprocess.check_output(['ls', '-l', '$HOME/.screen'], shell=True, stderr=subprocess.STDOUT)
                 print(ls_screen_dir)
-                screen_files = ls_screen_dir.split('\n')[::-1][:-1]
+                try:
+                    screen_files = ls_screen_dir.split('\n')[::-1][:-1]
+                except:
+                    screen_files = ''
                 screen_gid = ''
-                if screen_files == []:
+                if screen_files == '':
                     screen_gid = 'sosi'
                 else:
                     for i in screen_files:
