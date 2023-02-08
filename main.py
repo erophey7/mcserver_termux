@@ -247,7 +247,7 @@ while True:
                                 continue
 
                 elif choice == "5":
-                    if settings["Server_eula"] == True:
+                    if settings["Server_eula"] == "True":
                         eula = f"#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://aka.ms/MinecraftEULA).\n#Wed Feb 08 08:56:25 GMT 2023\neula=true"
                         with open(f'{serverDir}/eula.txt', 'w') as file:
                             file.write(eula)
