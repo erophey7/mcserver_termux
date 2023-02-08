@@ -150,22 +150,7 @@ while True:
                             cwd=serverDir,
                         )
 
-                        subprocess.run(
-                            [
-                                "screen",
-                                "-S",
-                                f"mcServer_{gid}",
-                                "-X",
-                                "stuff",
-                                '"java',
-                                f"-Xms{instant_settings['Xms']}m",
-                                f"-Xmx{instant_settings['Xmx']}m",
-                                "-jar",
-                                "server.jar",
-                                'nogui"',
-                            ],
-                            cwd=serverDir,
-                        )
+                        os.system(f'screen -S mcServer_{gid} -X stuff "java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m -jar -server.jar novid"')
                         subprocess.run([
                             "screen",
                             "-r",
