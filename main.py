@@ -75,7 +75,7 @@ while True:
             gid = rnd.randint(00000, 99999)
 
             while True:
-                ls_screen_dir = subprocess.check_output(['ls', '-l', '$HOME/.screen'])
+                ls_screen_dir = subprocess.check_output(['ls', '-l', '$HOME/.screen'], stderr=subprocess.STDOUT)
                 screen_files = ls_screen_dir.split('\n')[::-1][:-1]
                 screen_gid = ''
                 if screen_files == []:
@@ -350,7 +350,10 @@ while True:
             print("0 - exit")
 
             print(colorama.Fore.GREEN)
-            choice = int(input("> ")) - 1
+            try:
+                choice = int(input("> ")) - 1
+            except:
+                continue
             print(colorama.Style.RESET_ALL)
 
             try:
