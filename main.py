@@ -76,6 +76,7 @@ while True:
 
             while True:
                 ls_screen_dir = subprocess.check_output(['ls', '-l', '$HOME/.screen'], shell=True, stderr=subprocess.STDOUT)
+                print(ls_screen_dir)
                 screen_files = ls_screen_dir.split('\n')[::-1][:-1]
                 screen_gid = ''
                 if screen_files == []:
