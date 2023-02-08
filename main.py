@@ -261,10 +261,10 @@ while True:
                                 out = f''
                                 for i, j in enumerate(server_properties):
                                     out += f'{j}={server_properties[j]}\n'
-
+                                input()
                                 with open('server.properties', 'w') as f:
                                     f.write(out[:-1])
-
+                                input()
                                 break
 
                             inp = inp.split(' ')
