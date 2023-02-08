@@ -78,14 +78,13 @@ while True:
                 ls_screen_dir = os.listdir('/data/data/com.termux/files/home/.screen') #subprocess.check_output(['ls', '-l', '$HOME/.screen'], shell=True, stderr=subprocess.STDOUT)
                 print(ls_screen_dir)
 
-                screen_files = ls_screen_dir.split('\n')[::-1][:-1]
 
 
                 if ls_screen_dir == []:
                     screen_gid = ''
 
                 else:
-                    for i in screen_files:
+                    for i in ls_screen_dir:
                         file_name = ''.join(i.split(' ')[-1:])
                         print(file_name.split('.'))
 
