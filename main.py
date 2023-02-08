@@ -75,15 +75,15 @@ while True:
             gid = rnd.randint(00000, 99999)
 
             while True:
-                ls_screen_dir = subprocess.check_output(['ls', '-l', '$HOME/.screen'], shell=True, stderr=subprocess.STDOUT)
+                ls_screen_dir = os.listdir('/data/data/com.termux/files/home/.screen') #subprocess.check_output(['ls', '-l', '$HOME/.screen'], shell=True, stderr=subprocess.STDOUT)
                 print(ls_screen_dir)
-                try:
-                    screen_files = ls_screen_dir.split('\n')[::-1][:-1]
-                except:
-                    screen_files = ''
-                screen_gid = ''
-                if screen_files == '':
-                    screen_gid = 'sosi'
+
+                screen_files = ls_screen_dir.split('\n')[::-1][:-1]
+
+
+                if ls_screen_dir == []:
+                    screen_gid = ''
+
                 else:
                     for i in screen_files:
                         file_name = ''.join(i.split(' ')[-1:])
