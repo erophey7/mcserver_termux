@@ -75,16 +75,25 @@ while True:
             gid = rnd.randint(00000, 99999)
 
             while True:
-
-                """try:
-                    check_procces = subprocess.check_output(["screen", "-list", "|", "grep", f'"mcServer_{gid}"'])
-                except:
-                    check_procces = ''
-
-                if check_procces == "":
-                    mcStarted = False
+                ls_screen_dir = subprocess.check_output(['ls', '-l', '$HOME/.screen'])
+                screen_files = ls_screen_dir.split('\n')[::-1][:-1]
+                screen_gid = ''
+                if screen_files == []:
+                    screen_gid = 'sosi'
                 else:
-                    mcStarted = True"""
+                    for i in screen_files:
+                        file_name = ''.join(i.split(' ')[-1:])
+                        print(file_name.split('.'))
+
+                        if file_name.split('.')[1] == f'mcServer_{gid}':
+                            screen_gid = file_name.split('.')[0]
+                            mcStarted = True
+                        else:
+                            mcStarted = False
+
+                print(screen_gid)
+
+
 
                 page = "server_menu"
                 tcp_tunnel = ""
@@ -116,6 +125,8 @@ while True:
                     os.system(
                         "kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')"
                     )
+                    if mcStarted == True:
+                        os.system(f'kill {screen_gid}')
                     ngrok.kill()
                     ui.clear()
                     page = "main"
@@ -124,7 +135,11 @@ while True:
 
                 elif choice == "1":
                     if mcStarted == False:
-                        # os.system(f"cd {serverDir} && screen -S mcServer_{gid} java -Xms{instant_settings['Xms']}m -Xmx{instant_settings['Xmx']}m -jar server.jar nogui")
+                        ui.clear()
+                        print('Stop server: ctrl a + k')
+                        print('Minimize server: ctrl a + d')
+                        print('Press enter to continue')
+                        input()
                         subprocess.run(
                             [
                                 "screen",
@@ -139,7 +154,6 @@ while True:
                             ],
                             cwd=serverDir,
                         )
-                        mcStarted = True
                     else:
                         # os.system(f'screen -r mcServer_{gid}')
                         subprocess.run(["screen", "-r", f"mcServer_{gid}"])
@@ -189,7 +203,7 @@ while True:
                         with open(f"{serverDir}/settings.json", "w") as f:
                             json.dump(settings, f)
 
-                        input()
+
                         ui.clear()
                         page = "main"
                         ui.main_menu()
@@ -230,7 +244,6 @@ while True:
             for j, i in enumerate(vanila):
                 ass = i.split(".")
                 if int(ass[1]) >= 5:
-                    # print(f"{j+1} - {vanila[int(j)]}")
                     out.append(vanila[int(j)])
 
             out = list(reversed(out))
@@ -323,7 +336,6 @@ while True:
             os.system(
                 f"ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/{name}-ftpd/log/run"
             )
-            input()
 
             page = "main"
             ui.clear()
