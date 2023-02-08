@@ -262,7 +262,7 @@ while True:
                                 for i, j in enumerate(server_properties):
                                     out += f'{j}={server_properties[j]}\n'
                                 input()
-                                with open('server.properties', 'w') as f:
+                                with open(f'{serverDir}/server.properties', 'w') as f:
                                     f.write(out[:-1])
                                 input()
                                 break
@@ -270,7 +270,7 @@ while True:
                             inp = inp.split(' ')
                             server_properties.update({server_properties_args_ids[int(inp[0]) - 1]: inp[1]})
 
-                        with open('server.properties', 'r') as f:
+                        with open(f'{serverDir}/server.properties', 'r') as f:
                             file = f.read().split('\n')
                             for i in file:
                                 server_properties[i.split('=')[0]] = i.split('=')[1]
