@@ -140,23 +140,34 @@ while True:
                         print('Minimize server: ctrl a + d')
                         print('Press enter to continue')
                         input()
+
+                        subprocess.run([
+                            "screen",
+                            "-dmS",
+                            f"mcServer_{gid}"
+                        ])
+
                         subprocess.run(
                             [
                                 "screen",
                                 "-S",
                                 f"mcServer_{gid}",
-                                "java",
+                                "-X",
+                                "stuff",
+                                '"java',
                                 f"-Xms{instant_settings['Xms']}m",
                                 f"-Xmx{instant_settings['Xmx']}m",
                                 "-jar",
                                 "server.jar",
-                                "nogui",
-                                "&&",
-                                "sleep",
-                                "5s"
+                                'nogui\n"',
                             ],
                             cwd=serverDir,
                         )
+                        subprocess.run([
+                            "screen",
+                            "-r",
+                            f"mcServer_{gid}"
+                        ])
                     else:
                         # os.system(f'screen -r mcServer_{gid}')
                         subprocess.run(["screen", "-r", f"mcServer_{gid}"])
