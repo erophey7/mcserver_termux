@@ -81,7 +81,10 @@ while True:
                 with open(f'{serverDir}/server.properties', 'r') as f:
                     file = f.read().split('\n')
                     for i in file:
-                         server_properties[i.split('=')[0]] = i.split('=')[1]
+                        try:
+                            server_properties[i.split('=')[0]] = i.split('=')[1]
+                        except:
+                            server_properties[i.split('=')[0]] = ''
 
                 for i, j in enumerate(server_properties):
                     server_properties_args_ids.append(j)
