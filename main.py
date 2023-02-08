@@ -82,6 +82,7 @@ while True:
 
                 if ls_screen_dir == []:
                     screen_gid = ''
+                    mcStarted = False
 
                 else:
                     for i in ls_screen_dir:
