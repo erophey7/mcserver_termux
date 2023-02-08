@@ -74,11 +74,21 @@ while True:
 
             gid = rnd.randint(00000, 99999)
 
+            server_properties = {}
+            server_properties_args_ids = []
+            with open('server.properties', 'r') as f:
+                file = f.read().split('\n')
+                for i in file:
+                    server_properties[i.split('=')[0]] = i.split('=')[1]
+
+            for i, j in enumerate(server_properties):
+                server_properties_args_ids.append(j)
+
             while True:
                 ls_screen_dir = os.listdir('/data/data/com.termux/files/home/.screen')
 
                 if ls_screen_dir == []:
-                    screen_gid = ''
+                    screen_pid = ''
                     mcStarted = False
 
                 else:
@@ -87,7 +97,7 @@ while True:
                         print(file_name.split('.'))
 
                         if file_name.split('.')[1] == f'mcServer_{gid}':
-                            screen_gid = file_name.split('.')[0]
+                            screen_pid = file_name.split('.')[0]
                             mcStarted = True
                         else:
                             mcStarted = False
@@ -126,7 +136,7 @@ while True:
                         "kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')"
                     )
                     if mcStarted == True:
-                        os.system(f'kill {screen_gid}')
+                        os.system(f'kill {screen_pid}')
                     ngrok.kill()
                     ui.clear()
                     page = "main"
@@ -157,7 +167,6 @@ while True:
                             f"mcServer_{gid}"
                         ])
                     else:
-                        # os.system(f'screen -r mcServer_{gid}')
                         subprocess.run(["screen", "-r", f"mcServer_{gid}"])
 
                 elif choice == "2":
@@ -228,6 +237,38 @@ while True:
 
                             ui.clear()
                             continue
+
+                elif choice == "5":
+                    while True:
+                        ui.clear()
+                        ui.Properties_menu()
+                        print('     {id} - {argument}={value}\n'
+                              '     input: id value\n')
+                        for i, j in enumerate(server_properties):
+                            print(f'{i + 1} - {j}={server_properties[j]}')
+
+                        inp = input('>')
+                        if inp == '0':
+
+                            out = f''
+                            for i, j in enumerate(server_properties):
+                                out += f'{j}={server_properties[j]}\n'
+
+                            with open('server.properties', 'w') as f:
+                                f.write(out[:-1])
+
+                            break
+
+                        inp = inp.split(' ')
+                        server_properties.update({server_properties_args_ids[int(inp[0]) - 1]: inp[1]})
+
+                    with open('server.properties', 'r') as f:
+                        file = f.read().split('\n')
+                        for i in file:
+                            server_properties[i.split('=')[0]] = i.split('=')[1]
+
+                    for i, j in enumerate(server_properties):
+                        server_properties_args_ids.append(j)
 
         elif choice == "2":
             page = "choice version"
