@@ -75,10 +75,7 @@ while True:
             gid = rnd.randint(00000, 99999)
 
             while True:
-                ls_screen_dir = os.listdir('/data/data/com.termux/files/home/.screen') #subprocess.check_output(['ls', '-l', '$HOME/.screen'], shell=True, stderr=subprocess.STDOUT)
-                print(ls_screen_dir)
-
-
+                ls_screen_dir = os.listdir('/data/data/com.termux/files/home/.screen')
 
                 if ls_screen_dir == []:
                     screen_gid = ''
@@ -95,7 +92,6 @@ while True:
                         else:
                             mcStarted = False
 
-                print(screen_gid)
 
 
 
@@ -155,6 +151,9 @@ while True:
                                 "-jar",
                                 "server.jar",
                                 "nogui",
+                                "&&",
+                                "sleep",
+                                "5s"
                             ],
                             cwd=serverDir,
                         )
