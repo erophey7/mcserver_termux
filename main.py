@@ -65,6 +65,7 @@ while True:
             ngrokStarted = False
             ftpStarted = False
             mcStarted = False
+            firstLaunch = False
             tunnels = ""
 
             instant_settings = {}
@@ -76,13 +77,14 @@ while True:
 
             server_properties = {}
             server_properties_args_ids = []
-            with open('server.properties', 'r') as f:
-                file = f.read().split('\n')
-                for i in file:
-                    server_properties[i.split('=')[0]] = i.split('=')[1]
+            if os.path.exists(f'{serverDir}/server.properties'):
+                with open(f'{serverDir}/server.properties', 'r') as f:
+                    file = f.read().split('\n')
+                    for i in file:
+                         server_properties[i.split('=')[0]] = i.split('=')[1]
 
-            for i, j in enumerate(server_properties):
-                server_properties_args_ids.append(j)
+                for i, j in enumerate(server_properties):
+                    server_properties_args_ids.append(j)
 
             while True:
                 ls_screen_dir = os.listdir('/data/data/com.termux/files/home/.screen')
@@ -103,8 +105,6 @@ while True:
                             mcStarted = False
 
 
-
-
                 page = "server_menu"
                 tcp_tunnel = ""
                 ui.clear()
@@ -114,7 +114,10 @@ while True:
 1 - {'Return to' if mcStarted == True else "Start"} minecraft server
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
 3 - {"Stop" if ngrokStarted == True else "Start"} ngrok 
-4 - instant settings
+4 - Instant settings
+{"5  - Eula true" if os.path.exists(f'{serverDir}/eula.txt') else ''}
+{"6 - server.properties editor" if os.path.exists(f'{serverDir}/server.properties') else ''}
+{"7 - Apply settings to server.properties" if os.path.exists(f'{serverDir}/server.properties') else ''}
 0 - Exit
 
 {f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server" if ftpStarted else f" "}
@@ -199,76 +202,76 @@ while True:
                     ui.clear()
 
                 elif choice == "4":
-                    ui.settings_menu()
-                    print(f"1 - Min server RAM: {instant_settings['Xms']} in megabytes")
-                    print(f"2 - Max server RAM: {instant_settings['Xmx']} in megabytes")
-                    print(f"3 - OpenJDK version: {instant_settings['jdkver']}")
-                    print(f"0 - Back\n\n\n\n")
+                    while True:
+                        ui.settings_menu()
+                        print(f"1 - Min server RAM: {instant_settings['Xms']} in megabytes")
+                        print(f"2 - Max server RAM: {instant_settings['Xmx']} in megabytes")
+                        print(f"3 - OpenJDK version: {instant_settings['jdkver']}")
+                        print(f"0 - Back\n\n\n\n")
 
-                    print(colorama.Fore.GREEN)
-                    choice = input("> ")
-                    print(colorama.Style.RESET_ALL)
-
-                    if choice == "0":
-                        os.system(f"rm -rf {serverDir}/settings.json")
-                        with open(f"{serverDir}/settings.json", "w") as f:
-                            json.dump(settings, f)
-
-
-                        ui.clear()
-                        page = "main"
-                        ui.main_menu()
-                        break
-                    elif choice not in "123" or choice == "":
-                        continue
-
-                    else:
                         print(colorama.Fore.GREEN)
-                        variable = input("> ")
+                        choice = input("> ")
                         print(colorama.Style.RESET_ALL)
-                        if choice in "123":
-                            match choice:
-                                case "1":
-                                    instant_settings["Xms"] = variable
-                                case "2":
-                                    instant_settings["Xmx"] = variable
-                                case "3":
-                                    instant_settings["jdkver"] = variable
 
+                        if choice == "0":
+                            os.system(f"rm -rf {serverDir}/settings.json")
+                            with open(f"{serverDir}/settings.json", "w") as f:
+                                json.dump(settings, f)
                             ui.clear()
+                            break
+                        elif choice not in "123" or choice == "":
                             continue
 
-                elif choice == "5":
-                    while True:
-                        ui.clear()
-                        ui.Properties_menu()
-                        print('     {id} - {argument}={value}\n'
-                              '     input: id value\n')
-                        for i, j in enumerate(server_properties):
-                            print(f'{i + 1} - {j}={server_properties[j]}')
+                        else:
+                            print(colorama.Fore.GREEN)
+                            variable = input("> ")
+                            print(colorama.Style.RESET_ALL)
+                            if choice in "123":
+                                match choice:
+                                    case "1":
+                                        instant_settings["Xms"] = variable
+                                    case "2":
+                                        instant_settings["Xmx"] = variable
+                                    case "3":
+                                        instant_settings["jdkver"] = variable
 
-                        inp = input('>')
-                        if inp == '0':
+                                ui.clear()
+                                continue
 
-                            out = f''
+                elif choice == "6":
+                    if os.path.exists(f'{serverDir}/server.properties'):
+                        while True:
+                            ui.clear()
+                            ui.Properties_menu()
+                            print('     {id} - {argument}={value}\n'
+                                  '     input: id value\n')
                             for i, j in enumerate(server_properties):
-                                out += f'{j}={server_properties[j]}\n'
+                                print(f'{i + 1} - {j}={server_properties[j]}')
 
-                            with open('server.properties', 'w') as f:
-                                f.write(out[:-1])
+                            inp = input('>')
+                            if inp == '0':
 
-                            break
+                                out = f''
+                                for i, j in enumerate(server_properties):
+                                    out += f'{j}={server_properties[j]}\n'
 
-                        inp = inp.split(' ')
-                        server_properties.update({server_properties_args_ids[int(inp[0]) - 1]: inp[1]})
+                                with open('server.properties', 'w') as f:
+                                    f.write(out[:-1])
 
-                    with open('server.properties', 'r') as f:
-                        file = f.read().split('\n')
-                        for i in file:
-                            server_properties[i.split('=')[0]] = i.split('=')[1]
+                                break
 
-                    for i, j in enumerate(server_properties):
-                        server_properties_args_ids.append(j)
+                            inp = inp.split(' ')
+                            server_properties.update({server_properties_args_ids[int(inp[0]) - 1]: inp[1]})
+
+                        with open('server.properties', 'r') as f:
+                            file = f.read().split('\n')
+                            for i in file:
+                                server_properties[i.split('=')[0]] = i.split('=')[1]
+
+                        for i, j in enumerate(server_properties):
+                            server_properties_args_ids.append(j)
+                        else:
+                            print('server.properties doesn`t exists')
 
         elif choice == "2":
             page = "choice version"
