@@ -389,7 +389,7 @@ while True:
                 os.system(
                     f'wget {download_link} -O {settings["Servers_dir"]}/{name}/forge_installer.jar'
                 )
-                os.system(f'java -jar {settings["Servers_dir"]}/{name}/forge_installer.jar --installServer')
+                os.system(f'cd {settings["Servers_dir"]}/{name} && java -jar forge_installer.jar --installServer')
                 os.system(f'rm -rf {settings["Servers_dir"]}/{name}/forge_installer.jar')
 
             with open(
