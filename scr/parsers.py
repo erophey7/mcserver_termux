@@ -13,8 +13,8 @@ FORGE = "https://files.minecraftforge.net/net/minecraftforge/forge/"
 FORGE_TEMPLATE = "https://maven.minecraftforge.net/net/minecraftforge/forge/{}/forge-{}-installer.jar"
 SPIGOT = "https://getbukkit.org/download/spigot"
 
-# Vanilla
 
+# Vanilla
 
 def vanilla(version: str = None):
     with requests.Session() as session:
