@@ -17,16 +17,12 @@ colorama.init()
 
 
 class func:
-
-
-
     def getLocalIP():
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(("8.8.8.8", 80))
         ip = s.getsockname()[0]
         s.close()
         return ip
-
 
     def readSettings():
         settings = {}
@@ -35,15 +31,10 @@ class func:
         return settings
 
 
-
-
-
 settings = func.readSettings()
 
 ui.clear()
 ui.main_menu()
-
-
 
 
 while True:
@@ -62,54 +53,73 @@ while True:
             serversList = os.listdir(settings["Servers_dir"])
             ui.my_servers()
             for i in range(0, len(serversList)):
-                print(f'{i+1} - {serversList[i]}')
+                print(f"{i+1} - {serversList[i]}")
 
             print(colorama.Fore.GREEN)
-            choice = int(input("> "))-1
+            choice = int(input("> ")) - 1
             print(colorama.Style.RESET_ALL)
 
             serverName = serversList[int(choice)]
             serverDir = f'{settings["Servers_dir"]}/{serverName}'
 
-
-
             ngrokStarted = False
             ftpStarted = False
             mcStarted = False
-            tunnels = ''
+            firstLaunch = False
+            tunnels = ""
 
             instant_settings = {}
 
             with open(f"{serverDir}/settings.json") as f:
                 instant_settings = json.load(f)
 
-
             gid = rnd.randint(00000, 99999)
 
+            server_properties = {}
+            server_properties_args_ids = []
+            if os.path.exists(f'{serverDir}/server.properties'):
+                with open(f'{serverDir}/server.properties', 'r') as f:
+                    file = f.read().split('\n')
+                    for i in file:
+                        if '=' in i:
+                            server_properties[i.split('=')[0]] = i.split('=')[1]
+
+
+                for i, j in enumerate(server_properties):
+                    server_properties_args_ids.append(j)
 
             while True:
+                ls_screen_dir = os.listdir('/data/data/com.termux/files/home/.screen')
 
-                """try:
-                    check_procces = subprocess.check_output(["screen", "-list", "|", "grep", f'"mcServer_{gid}"'])
-                except:
-                    check_procces = ''
-
-                if check_procces == "":
+                if ls_screen_dir == []:
+                    screen_pid = ''
                     mcStarted = False
+
                 else:
-                    mcStarted = True"""
+                    for i in ls_screen_dir:
+                        file_name = ''.join(i.split(' ')[-1:])
+                        print(file_name.split('.'))
+
+                        if file_name.split('.')[1] == f'mcServer_{gid}':
+                            screen_pid = file_name.split('.')[0]
+                            mcStarted = True
+                        else:
+                            mcStarted = False
 
 
-
-                page = 'server_menu'
-                tcp_tunnel = ''
+                page = "server_menu"
+                tcp_tunnel = ""
                 ui.clear()
                 ui.Server_menu()
-                print(fr'''
+                print(
+                    rf"""
 1 - {'Return to' if mcStarted == True else "Start"} minecraft server
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
 3 - {"Stop" if ngrokStarted == True else "Start"} ngrok 
-4 - instant settings
+4 - Instant settings
+{"5 - Eula true" if os.path.exists(f'{serverDir}/eula.txt') else ''}
+{"6 - server.properties editor" if os.path.exists(f'{serverDir}/server.properties') else ''}
+{"7 - Apply settings to server.properties" if os.path.exists(f'{serverDir}/server.properties') else ''}
 0 - Exit
 
 {f"{func.getLocalIP()}:{settings['FTP_port']} to connect to ftp server" if ftpStarted else f" "}
@@ -117,51 +127,73 @@ while True:
 
 {"stop minecraft server: ctrl + a + k (in session)" if mcStarted == True else ""}
 
-                        ''')
+                        """
+                )
 
                 print(colorama.Fore.GREEN)
                 choice = input("> ")
                 print(colorama.Style.RESET_ALL)
                 ui.clear()
 
-
-
-                if choice == '0':
-                    os.system(f'sv down {serverName}-ftpd')
-                    os.system("kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')")
+                if choice == "0":
+                    os.system(f"sv down {serverName}-ftpd")
+                    os.system(
+                        "kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')"
+                    )
+                    if mcStarted == True:
+                        os.system(f'kill {screen_pid}')
                     ngrok.kill()
                     ui.clear()
                     page = "main"
                     ui.main_menu()
                     break
 
-                elif choice == '1':
+                elif choice == "1":
                     if mcStarted == False:
-                        #os.system(f"cd {serverDir} && screen -S mcServer_{gid} java -Xms{instant_settings['Xms']}m -Xmx{instant_settings['Xmx']}m -jar server.jar nogui")
-                        subprocess.run(["screen", "-S", f"mcServer_{gid}", "java", f"-Xms{instant_settings['Xms']}m", f"-Xmx{instant_settings['Xmx']}m", "-jar", "server.jar", "nogui"], cwd=serverDir)
-                        mcStarted = True
+                        ui.clear()
+                        print('Stop server: ctrl a + k')
+                        print('Minimize server: ctrl a + d')
+                        print('Press enter to continue')
+                        input()
+
+                        subprocess.run(
+                            [
+                            "screen",
+                            "-dmS",
+                            f"mcServer_{gid}"
+                            ],
+                            cwd=serverDir,
+                        )
+
+                        os.system(fr'screen -S mcServer_{gid} -X stuff "java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m -jar server.jar novid\n"')
+                        subprocess.run([
+                            "screen",
+                            "-r",
+                            f"mcServer_{gid}"
+                        ])
                     else:
-                        #os.system(f'screen -r mcServer_{gid}')
                         subprocess.run(["screen", "-r", f"mcServer_{gid}"])
 
+                elif choice == "2":
+                    if ftpStarted == False:
 
+                        subprocess.run(["sv", "up", f"{serverName}-ftpd"])
+                        ftpStarted = True
+                    else:
+                        subprocess.run(["sv", "down", f"{serverName}-ftpd"])
+                        os.system(
+                            "kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')"
+                        )
+                        ftpStarted = False
+                    ui.clear()
 
-                elif choice == '2':
-                        if ftpStarted == False:
-
-                            subprocess.run(['sv', 'up', f'{serverName}-ftpd'])
-                            ftpStarted = True
-                        else:
-                            subprocess.run(['sv', 'down', f'{serverName}-ftpd'])
-                            os.system("kill $(ps aux | grep '[p]ython -m pyftpdlib' | awk '{print $2}')")
-                            ftpStarted = False
-                        ui.clear()
-
-                elif choice == '3':
+                elif choice == "3":
                     if ngrokStarted == False:
 
-                        ngrok.set_auth_token(settings['ngrok_authtoken'])
-                        tcp_tunnel = ngrok.connect(settings['Standart_server_port'], "tcp")
+                        ngrok.set_auth_token(settings["ngrok_authtoken"])
+                        tcp_tunnel = ngrok.connect(
+                            settings["Standart_server_port"], "tcp"
+                        )
                         tunnels = ngrok.get_tunnels()
                         ngrokStarted = True
                     else:
@@ -171,46 +203,100 @@ while True:
                         ngrokStarted = False
                     ui.clear()
 
-                elif choice == '4':
-                    ui.settings_menu()
-                    print(f"1 - Min server RAM: {instant_settings['Xms']} in megabytes")
-                    print(f"2 - Max server RAM: {instant_settings['Xmx']} in megabytes")
-                    print(f"3 - OpenJDK version: {instant_settings['jdkver']}")
-                    print(f"0 - Back\n\n\n\n")
+                elif choice == "4":
+                    while True:
+                        ui.settings_menu()
+                        print(f"1 - Min server RAM: {instant_settings['Xms']} in megabytes")
+                        print(f"2 - Max server RAM: {instant_settings['Xmx']} in megabytes")
+                        print(f"3 - OpenJDK version: {instant_settings['jdkver']}")
+                        print(f"4 - Server port: {instant_settings['Port']}")
+                        print(f"5 - Server port: {instant_settings['Online_mode']}")
+                        print(f"0 - Back\n\n\n\n")
 
-                    print(colorama.Fore.GREEN)
-                    choice = input("> ")
-                    print(colorama.Style.RESET_ALL)
-
-                    if choice == "0":
-                        os.system(f"rm -rf {serverDir}/settings.json")
-                        with open(f"{serverDir}/settings.json", "w") as f:
-                            json.dump(settings, f)
-
-                        input()
-                        ui.clear()
-                        page = "main"
-                        ui.main_menu()
-                        break
-                    elif choice not in "123" or choice == "":
-                        continue
-
-                    else:
                         print(colorama.Fore.GREEN)
-                        variable = input("> ")
+                        choice = input("> ")
                         print(colorama.Style.RESET_ALL)
-                        if choice in '123':
-                            match choice:
-                                case "1":
-                                    instant_settings['Xms'] = variable
-                                case "2":
-                                    instant_settings['Xmx'] = variable
-                                case "3":
-                                    instant_settings['jdkver'] = variable
 
+                        if choice == "0":
+                            os.system(f"rm -rf {serverDir}/settings.json")
+                            with open(f"{serverDir}/settings.json", "w") as f:
+                                json.dump(settings, f)
                             ui.clear()
+                            break
+                        elif choice not in "12345" or choice == "":
                             continue
 
+                        else:
+                            print(colorama.Fore.GREEN)
+                            variable = input("> ")
+                            print(colorama.Style.RESET_ALL)
+                            if choice in "12345":
+                                match choice:
+                                    case "1":
+                                        instant_settings["Xms"] = variable
+                                    case "2":
+                                        instant_settings["Xmx"] = variable
+                                    case "3":
+                                        instant_settings["jdkver"] = variable
+                                    case "4":
+                                        instant_settings["Port"] = variable
+                                    case "5":
+                                        instant_settings["Online_mode"] = variable
+
+                                ui.clear()
+                                continue
+
+                elif choice == "5":
+                    if settings["Server_eula"] == "True":
+                        eula = f"#By changing the setting below to TRUE you are indicating your agreement to our EULA (https://aka.ms/MinecraftEULA).\n#Wed Feb 08 08:56:25 GMT 2023\neula=true"
+                        with open(f'{serverDir}/eula.txt', 'w') as file:
+                            file.write(eula)
+                    else:
+                        print('Set eula to True in settings')
+
+
+                elif choice == "6":
+                    if os.path.exists(f'{serverDir}/server.properties'):
+                        while True:
+                            ui.clear()
+                            ui.Properties_menu()
+                            print('     {id} - {argument}={value}\n'
+                                  '     input: id value\n')
+                            for i, j in enumerate(server_properties):
+                                print(f'{i + 1} - {j}={server_properties[j]}')
+
+                            print('\n0 - exit')
+
+                            inp = input('>')
+                            if inp == '0':
+
+                                out = f''
+                                for i, j in enumerate(server_properties):
+                                    out += f'{j}={server_properties[j]}\n'
+                                with open(f'{serverDir}/server.properties', 'w') as f:
+                                    f.write(out[:-1])
+                                break
+
+                            inp = inp.split(' ')
+                            server_properties.update({server_properties_args_ids[int(inp[0]) - 1]: inp[1]})
+
+                        with open(f'{serverDir}/server.properties', 'r') as f:
+                            file = f.read().split('\n')
+                            for i in file:
+                                server_properties[i.split('=')[0]] = i.split('=')[1]
+
+                        for i, j in enumerate(server_properties):
+                            server_properties_args_ids.append(j)
+                        else:
+                            print('server.properties doesn`t exists')
+
+                elif choice == "7":
+                    server_properties['query.port'] = instant_settings["Port"]
+                    server_properties['online-mode'] = instant_settings["Online_mode"]
+                    for i, j in enumerate(server_properties):
+                        out += f'{j}={server_properties[j]}\n'
+                    with open(f'{serverDir}/server.properties', 'w') as f:
+                        f.write(out[:-1])
 
         elif choice == "2":
             page = "choice version"
@@ -227,9 +313,8 @@ while True:
             out = []
 
             for j, i in enumerate(vanila):
-                ass = i.split('.')
+                ass = i.split(".")
                 if int(ass[1]) >= 5:
-                    # print(f"{j+1} - {vanila[int(j)]}")
                     out.append(vanila[int(j)])
 
             out = list(reversed(out))
@@ -239,33 +324,19 @@ while True:
             for j, i in enumerate(out):
                 print(f"{j + 1} - {out[int(j)]}")
 
-
             print(colorama.Fore.GREEN)
-            inputVersion = int(input("> "))-1
+            inputVersion = int(input("> ")) - 1
             version = out[inputVersion]
-#            versionNumber = inputVersion
             print(colorama.Style.RESET_ALL)
 
             ui.clear()
 
-
-            download_link = ''
+            download_link = ""
 
             if choiceCore == "1":
                 download_link = parsers.vanilla(version)
             elif choiceCore == "2":
-                ui.clear()
-                ui.Forge_menu()
-                forgeVersions = parsers.forge(version)
-                for j, i in enumerate(forgeVersions):
-                    print(f'{j + 1} - {i[0]}')
-
-                print(colorama.Fore.GREEN)
-                choiceVersion = int(input("> "))-1
-                print(colorama.Style.RESET_ALL)
-
-                download_link = forgeVersions[choiceVersion][1]
-
+                download_link = parsers.forge(version)
             elif choiceCore == "3":
                 download_link = parsers.spigot(version)
 
@@ -275,53 +346,69 @@ while True:
             name = input("> ")
             print(colorama.Style.RESET_ALL)
 
-            if os.path.exists(settings['Servers_dir']):
+            if os.path.exists(settings["Servers_dir"]):
                 pass
             else:
                 os.system(f"mkdir {settings['Servers_dir']}")
 
-
             os.system(f'mkdir {settings["Servers_dir"]}/{name}')
 
-            jdkVer = ''
+            jdkVer = ""
 
-            if version.split('.')[1] >= '16':
+            if version.split(".")[1] >= "16":
                 jdkVer = 8
-            elif version.split('.')[1] == '17':
+            elif version.split(".")[1] == "17":
                 jdkVer = 16
-            elif version.split('.')[1] <= '18':
+            elif version.split(".")[1] <= "18":
                 jdkVer = 17
 
-
             instant_settings = {
-                "Xmx": settings['Xmx'],
-                "Xms": settings['Xms'],
-                "jdkVer": jdkVer
+                "Xmx": settings["Xmx"],
+                "Xms": settings["Xms"],
+                "jdkVer": jdkVer,
+                "Port": settings["Standart_server_port"],
+                "Online_mode": settings['default_online_mode']
             }
 
             os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
-            with open(f'{settings["Servers_dir"]}/{name}/settings.json', 'w') as f:
+            with open(f'{settings["Servers_dir"]}/{name}/settings.json', "w") as f:
                 json.dump(instant_settings, f)
 
+            os.system(f"mkdir /data/data/com.termux/files/usr/var/service/{name}-ftpd")
+            os.system(
+                f"touch /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh"
+            )
 
-            os.system(f'mkdir /data/data/com.termux/files/usr/var/service/{name}-ftpd')
-            os.system(f'touch /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh')
-
-            if choiceCore != "2":
+            if choiceCore == "1" or choiceCore == "3":
                 print("Wait...")
-                os.system(f'wget {download_link} -O {settings["Servers_dir"]}/{name}/server.jar')
-                os.system('rm -rf server.jar')
-            else:
-                pass
+                os.system(
+                    f'wget {download_link} -O {settings["Servers_dir"]}/{name}/server.jar'
+                )
+                os.system("rm -rf server.jar")
+            elif choiceCore == "2":
+                os.system(
+                    f'wget {download_link} -O {settings["Servers_dir"]}/{name}/forge_installer.jar'
+                )
+                os.system(f'java -jar {settings["Servers_dir"]}/{name}/forge_installer.jar --installServer')
+                os.system(f'rm -rf {settings["Servers_dir"]}/{name}/forge_installer.jar')
 
-            with open(f"/data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh", 'w') as f:
-                f.write(f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w")
+            with open(
+                f"/data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh", "w"
+            ) as f:
+                f.write(
+                    f"#!/data/data/com.termux/files/usr/bin/sh \npython -m pyftpdlib -p {settings['FTP_port']} -d {settings['Servers_dir']}/{name} -w"
+                )
 
-            os.system(f"mv /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh /data/data/com.termux/files/usr/var/service/{name}-ftpd/run")
-            os.system(f"chmod +x /data/data/com.termux/files/usr/var/service/{name}-ftpd/run")
-            os.system(f'mkdir $PREFIX/var/service/{name}-ftpd/log')
-            os.system(f'ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/{name}-ftpd/log/run')
-            input()
+            os.system(
+                f"mv /data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh /data/data/com.termux/files/usr/var/service/{name}-ftpd/run"
+            )
+            os.system(
+                f"chmod +x /data/data/com.termux/files/usr/var/service/{name}-ftpd/run"
+            )
+            os.system(f"mkdir $PREFIX/var/service/{name}-ftpd/log")
+            os.system(
+                f"ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/{name}-ftpd/log/run"
+            )
 
             page = "main"
             ui.clear()
@@ -331,12 +418,15 @@ while True:
             serversList = os.listdir(settings["Servers_dir"])
             ui.Delete_menu()
             for i in range(0, len(serversList)):
-                print(f'{i + 1} - {serversList[i]}')
+                print(f"{i + 1} - {serversList[i]}")
 
-            print('0 - exit')
+            print("0 - exit")
 
             print(colorama.Fore.GREEN)
-            choice = int(input("> ")) - 1
+            try:
+                choice = int(input("> ")) - 1
+            except:
+                continue
             print(colorama.Style.RESET_ALL)
 
             try:
@@ -352,24 +442,28 @@ while True:
 
             else:
                 os.system(f"rm -rf {settings['Servers_dir']}/{serverName}")
-                os.system(f"rm -rf $SVDIR/{serverName}")
+                os.system(f"rm -rf $SVDIR/{serverName}-ftpd")
                 ui.clear()
                 page = "main"
                 ui.main_menu()
-                break
 
         elif choice == "4":
             page = "settings"
             while True:
                 ui.settings_menu()
                 ui.clear()
-                print(f"1 - Standart minecraft server port: {settings['Standart_server_port']}")
+                print(
+                    f"1 - Standart minecraft server port: {settings['Standart_server_port']}"
+                )
                 print(f"2 - FTP port: {settings['FTP_port']}")
                 print(f"3 - Servers dir: {settings['Servers_dir']}")
                 print(f"4 - Server eula: {settings['Server_eula']} (coming soon)")
                 print(f"5 - Min server RAM: {settings['Xms']} in megabytes")
                 print(f"6 - Max server RAM: {settings['Xmx']} in megabytes")
-                print(f"7 - Ngrok authtoken(see in README.md): {settings['ngrok_authtoken']}")
+                print(
+                    f"7 - Ngrok authtoken(see in README.md): {settings['ngrok_authtoken']}"
+                )
+                print(f"8 - Default online mode: {settings['default_online_mode']}")
                 print(f"0 - Back\n\n\n\n")
 
                 print(colorama.Fore.GREEN)
@@ -377,7 +471,7 @@ while True:
                 print(colorama.Style.RESET_ALL)
 
                 if choice == "0":
-                    os.system('rm -rf settings.json')
+                    os.system("rm -rf settings.json")
                     with open("settings.json", "w") as f:
                         json.dump(settings, f)
                     ui.clear()
@@ -385,29 +479,31 @@ while True:
                     ui.main_menu()
                     break
 
-                elif choice not in "1234567" or choice == "":
+                elif choice not in "12345678" or choice == "":
                     continue
 
                 else:
                     print(colorama.Fore.GREEN)
                     variable = input("> ")
                     print(colorama.Style.RESET_ALL)
-                    if choice in '1234567':
+                    if choice in "12345678":
                         match choice:
                             case "1":
-                                settings['Standart_server_port'] = variable
+                                settings["Standart_server_port"] = variable
                             case "2":
-                                settings['FTP_port'] = variable
+                                settings["FTP_port"] = variable
                             case "3":
-                                settings['Servers_dir'] = variable
+                                settings["Servers_dir"] = variable
                             case "4":
-                                settings['Server_eula'] = variable
+                                settings["Server_eula"] = variable
                             case "5":
-                                settings['Xms'] = variable
+                                settings["Xms"] = variable
                             case "6":
-                                settings['Xmx'] = variable
+                                settings["Xmx"] = variable
                             case "7":
-                                settings['ngrok_authtoken'] = variable
+                                settings["ngrok_authtoken"] = variable
+                            case "8":
+                                settings['default_online_mode'] = variable
                         ui.clear()
                         continue
 
