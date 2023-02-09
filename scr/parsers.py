@@ -81,7 +81,7 @@ def forge(version: str = None):
         if version is None:
             return versions
         if version in forge:
-            return forge[version]
+            return forge[version].split('url=')[1]
         if version not in versions:
             return None
 
@@ -105,7 +105,7 @@ def forge(version: str = None):
         with open("{}/data/forge.json".format(DIRPATH), "w") as f:
             json.dump(downloadLinks, f)
 
-        return downloadLinks[version]
+        return downloadLinks[version].split('url=')[1]
 
 
 # Spigot
@@ -154,7 +154,7 @@ def spigot(version: str = None):
         with open("{}/data/spigot.json".format(DIRPATH), "w") as f:
             json.dump(dumpsLinks, f)
 
-        return dumpsLinks[version]
+        return dumpsLinks[version].split('url=')[1]
 
     # {version: [{version: y}, {url: z}]}
     # return (Start_Page)
