@@ -61,7 +61,8 @@ def Core_menu():
     
 1 - Vanila core
 2 - Forge
-3 - Spigot''' + '\n'*6)
+3 - Spigot
+4 - Fabric''' + '\n'*5)
     return
 
 def server_name():

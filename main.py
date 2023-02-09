@@ -339,6 +339,8 @@ while True:
                 download_link = parsers.forge(version)
             elif choiceCore == "3":
                 download_link = parsers.spigot(version)
+            elif choiceCore == "4":
+                download_link = 'https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.11.1/fabric-installer-0.11.1.jar'
 
             ui.server_name()
 
@@ -367,7 +369,9 @@ while True:
                 "Xms": settings["Xms"],
                 "jdkVer": jdkVer,
                 "Port": settings["Standart_server_port"],
-                "Online_mode": settings['default_online_mode']
+                "Online_mode": settings['default_online_mode'],
+                "Core": choiceCore,
+                "Version": version
             }
 
             os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
