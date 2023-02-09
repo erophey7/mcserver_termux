@@ -101,19 +101,10 @@ def forge(version: str = None):
             versions[j]:    FORGE_TEMPLATE.format(i, i)
             for j, i in enumerate(tempDownloadLinks)
         }
-        #
-        # tempDownLink = {
-        #     i:  bs4.BeautifulSoup(session.get(
-        #                 downloadLinks[j]
-        #         ).text, "html.parser"
-        #     ).select("div.skipBtn")
-        #     if downloadLinks[j] is not None else None
-        #     for j, i in enumerate(versions)
-        # }
-
 
         with open("{}/data/forge.json".format(DIRPATH), "w") as f:
             json.dump(downloadLinks, f)
+
         if version == '-':
             return
         return downloadLinks[version]
@@ -168,11 +159,9 @@ def spigot(version: str = None):
             return
         return dumpsLinks[version]
 
-    # {version: [{version: y}, {url: z}]}
-    # return (Start_Page)
 
 
 # Полигон испытаний
 
 if __name__ == "__main__":
-    print(forge('1.19.3'))
+    print(forge('-'))
