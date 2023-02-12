@@ -340,8 +340,7 @@ while True:
             elif choiceCore == "3":
                 download_link = parsers.spigot(version)
             elif choiceCore == "4":
-                download_link = 'https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.11.1/fabric-installer-0.11.1.jar'
-
+                download_link = parsers.fabric()
             ui.server_name()
 
             print(colorama.Fore.GREEN)
@@ -395,6 +394,14 @@ while True:
                 )
                 os.system(f'cd {settings["Servers_dir"]}/{name} && java -jar forge_installer.jar --installServer')
                 os.system(f'rm -rf {settings["Servers_dir"]}/{name}/forge_installer.jar')
+            elif choiceCore == "4":
+                os.system(
+                    f'wget {download_link} -O {settings["Servers_dir"]}/{name}/fabric_installer.jar'
+                )
+                subprocess.run(['java', '-jar', f'{settings["Servers_dir"]}/{name}/fabric_installer.jar', '-mcversion', version, '-downloadMinecraft'], cwd=f'{settings["Servers_dir"]}/{name}')
+                os.system(f'rm -rf {settings["Servers_dir"]}/{name}/fabric_installer.jar')
+                os.system(f'mv {settings["Servers_dir"]}/{name}/server.jar {settings["Servers_dir"]}/{name}/vanilla.jar')
+                os.system(f'echo "serverJar=vanilla.jar" > {settings["Servers_dir"]}/{name}/fabric-server-launcher.properties')
 
             with open(
                 f"/data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh", "w"
