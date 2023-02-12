@@ -162,23 +162,35 @@ def spigot(version: str = None):
 
 def fabric(version: str = None):
     with requests.Session() as session:
+        iteration = 0
+        max = 0
+        maxToo = 0
         html = session.get(FABRIC).text
         versions = [
             i.text[:-1]
             for i in bs4.BeautifulSoup(html, "html.parser").find_all("a")[1:-5]
         ]
-        if version is None:
-            return versions
 
         links = {
             i: "{}{}/fabric-installer-{}.jar".format(FABRIC, i, i)
             for i in versions
         }
+        if version is None:
+            for i in range(len(versions)):
+                if max <= int(str(versions[i]).split('.')[1]):
+                    max = int(str(versions[i]).split('.')[1])
+                    iteration = i
+                    if maxToo < int(str(versions[i]).split('.')[2]):
+                        maxToo = int(str(versions[i]).split('.')[2])
+                        iteration = i
+            return versions[iteration]
+
         if version in versions:
             return links[version]
+
     return
 
 # Полигон испытаний
 
 if __name__ == "__main__":
-    print(fabric("0.1.0.1"))
+    print(fabric())
