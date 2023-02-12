@@ -12,6 +12,7 @@ VANILLA = "https://getbukkit.org/download/vanilla"
 FORGE = "https://files.minecraftforge.net/net/minecraftforge/forge/"
 FORGE_TEMPLATE = "https://maven.minecraftforge.net/net/minecraftforge/forge/{}/forge-{}-installer.jar"
 SPIGOT = "https://getbukkit.org/download/spigot"
+FABRIC = "https://maven.fabricmc.net/net/fabricmc/fabric-installer/"
 
 
 # Vanilla
@@ -67,7 +68,6 @@ def vanilla(version: str = None):
 # Forge
 
 def forge(version: str = None):
-
     with requests.Session() as session:
 
         with open("{}/data/forge.json".format(DIRPATH), "r") as f:
@@ -160,8 +160,25 @@ def spigot(version: str = None):
         return dumpsLinks[version]
 
 
+def fabric(version: str = None):
+    with requests.Session() as session:
+        html = session.get(FABRIC).text
+        versions = [
+            i.text[:-1]
+            for i in bs4.BeautifulSoup(html, "html.parser").find_all("a")[1:-5]
+        ]
+        if version is None:
+            return versions
+
+        links = {
+            i: "{}{}/fabric-installer-{}.jar".format(FABRIC, i, i)
+            for i in versions
+        }
+        if version in versions:
+            return links[version]
+    return
 
 # Полигон испытаний
 
 if __name__ == "__main__":
-    print(forge('-'))
+    print(fabric("0.1.0.1"))
