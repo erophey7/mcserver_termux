@@ -420,7 +420,7 @@ while True:
             os.system(
                 f"ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/{name}-ftpd/log/run"
             )
-
+            input()
             page = "main"
             ui.clear()
             ui.main_menu()
