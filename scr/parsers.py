@@ -12,6 +12,7 @@ VANILLA = "https://getbukkit.org/download/vanilla"
 FORGE = "https://files.minecraftforge.net/net/minecraftforge/forge/"
 FORGE_TEMPLATE = "https://maven.minecraftforge.net/net/minecraftforge/forge/{}/forge-{}-installer.jar"
 SPIGOT = "https://getbukkit.org/download/spigot"
+FABRIC = "https://maven.fabricmc.net/net/fabricmc/fabric-installer/"
 
 
 # Vanilla
@@ -67,7 +68,6 @@ def vanilla(version: str = None):
 # Forge
 
 def forge(version: str = None):
-
     with requests.Session() as session:
 
         with open("{}/data/forge.json".format(DIRPATH), "r") as f:
@@ -101,19 +101,10 @@ def forge(version: str = None):
             versions[j]:    FORGE_TEMPLATE.format(i, i)
             for j, i in enumerate(tempDownloadLinks)
         }
-        #
-        # tempDownLink = {
-        #     i:  bs4.BeautifulSoup(session.get(
-        #                 downloadLinks[j]
-        #         ).text, "html.parser"
-        #     ).select("div.skipBtn")
-        #     if downloadLinks[j] is not None else None
-        #     for j, i in enumerate(versions)
-        # }
-
 
         with open("{}/data/forge.json".format(DIRPATH), "w") as f:
             json.dump(downloadLinks, f)
+
         if version == '-':
             return
         return downloadLinks[version]
@@ -168,11 +159,26 @@ def spigot(version: str = None):
             return
         return dumpsLinks[version]
 
-    # {version: [{version: y}, {url: z}]}
-    # return (Start_Page)
 
+def fabric(version: str = None):
+    with requests.Session() as session:
+        html = session.get(FABRIC).text
+        versions = [
+            i.text[:-1]
+            for i in bs4.BeautifulSoup(html, "html.parser").find_all("a")[1:-5]
+        ]
+        if version is None:
+            return versions
+
+        links = {
+            i: "{}{}/fabric-installer-{}.jar".format(FABRIC, i, i)
+            for i in versions
+        }
+        if version in versions:
+            return links[version]
+    return
 
 # Полигон испытаний
 
 if __name__ == "__main__":
-    print(forge('1.19.3'))
+    print(fabric("0.1.0.1"))
