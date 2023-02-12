@@ -402,6 +402,7 @@ while True:
                 os.system(f'java -jar {settings["Servers_dir"]}/{name}/fabric_installer.jar server -dir {settings["Servers_dir"]}/{name} -mcversion {version} -downloadMinecraft')
                 os.system(f'rm -rf {settings["Servers_dir"]}/{name}/fabric_installer.jar')
                 os.system(f'mv {settings["Servers_dir"]}/{name}/server.jar {settings["Servers_dir"]}/{name}/vanilla.jar')
+                os.system(f'mv {settings["Servers_dir"]}/{name}/fabric-server-launch.jar {settings["Servers_dir"]}/{name}/server.jar')
                 os.system(f'echo "serverJar=vanilla.jar" > {settings["Servers_dir"]}/{name}/fabric-server-launcher.properties')
 
             with open(
