@@ -183,7 +183,7 @@ def fabric(version: str = None):
                     if maxToo < int(str(versions[i]).split('.')[2]):
                         maxToo = int(str(versions[i]).split('.')[2])
                         iteration = i
-            return versions[iteration]
+            return "{}{}/fabric-installer-{}.jar".format(FABRIC, versions[iteration], versions[iteration])
 
         if version in versions:
             return links[version]
