@@ -165,7 +165,7 @@ while True:
                             cwd=serverDir,
                         )
 
-                        os.system(fr'screen -S mcServer_{gid} -X stuff "java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m -jar {instant_settings["Exec"]}\n"')
+                        os.system(fr'screen -S mcServer_{gid} -X stuff "java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m {instant_settings["Exec"]}\n"')
 
                         subprocess.run([
                             "screen",
@@ -396,7 +396,7 @@ while True:
                 os.system(f'mv {settings["Servers_dir"]}/{name}/fabric-server-launch.jar {settings["Servers_dir"]}/{name}/server.jar')
                 os.system(f'echo "serverJar=vanilla.jar" > {settings["Servers_dir"]}/{name}/fabric-server-launcher.properties')
 
-            Exec = 'server.jar'
+            Exec = '-jar server.jar'
             ls_server_dir = os.listdir(f'{settings["Servers_dir"]}/{name}')
 
             if choiceCore == '2':
