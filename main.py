@@ -117,7 +117,7 @@ while True:
 2 - {"Stop" if ftpStarted == True else "Start"} ftp server
 3 - {"Stop" if ngrokStarted == True else "Start"} ngrok 
 4 - Instant settings
-{"5 - Eula true" if os.path.exists(f'{serverDir}/eula.txt') else ''}
+{"5 - Eula true (coming soon)" if os.path.exists(f'{serverDir}/eula.txt') else ''}
 {"6 - server.properties editor" if os.path.exists(f'{serverDir}/server.properties') else ''}
 {"7 - Apply settings to server.properties" if os.path.exists(f'{serverDir}/server.properties') else ''}
 0 - Exit
