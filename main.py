@@ -402,7 +402,7 @@ while True:
             for i in ls_server_dir:
                 if i == 'run.sh':
                     with open(f'{settings["Servers_dir"]}/{name}/run.sh', 'r') as f:
-                        for i in f.read().split('\n'):
+                        for i in f.read()[:-1].split('\n'):
                             if i[0] != '#':
                                 Exec = i.split(' ')[2]
                 else:
