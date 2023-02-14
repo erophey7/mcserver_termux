@@ -165,7 +165,8 @@ while True:
                             cwd=serverDir,
                         )
 
-                        os.system(fr'screen -S mcServer_{gid} -X stuff "java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m -jar server.jar novid\n"')
+                        os.system(fr'screen -S mcServer_{gid} -X stuff "java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m -jar {instant_settings["Exec"]}\n"')
+
                         subprocess.run([
                             "screen",
                             "-r",
@@ -363,19 +364,7 @@ while True:
             elif version.split(".")[1] <= "18":
                 jdkVer = 17
 
-            instant_settings = {
-                "Xmx": settings["Xmx"],
-                "Xms": settings["Xms"],
-                "jdkVer": jdkVer,
-                "Port": settings["Standart_server_port"],
-                "Online_mode": settings['default_online_mode'],
-                "Core": choiceCore,
-                "Version": version
-            }
 
-            os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
-            with open(f'{settings["Servers_dir"]}/{name}/settings.json', "w") as f:
-                json.dump(instant_settings, f)
 
             os.system(f"mkdir /data/data/com.termux/files/usr/var/service/{name}-ftpd")
             os.system(
@@ -393,6 +382,7 @@ while True:
                     f'wget {download_link} -O {settings["Servers_dir"]}/{name}/forge_installer.jar'
                 )
                 os.system(f'cd {settings["Servers_dir"]}/{name} && java -jar forge_installer.jar --installServer')
+                os.system(f'mv {settings["Servers_dir"]}/{name}/forge*.jar {settings["Servers_dir"]}/{name}/server.jar')
                 os.system(f'rm -rf {settings["Servers_dir"]}/{name}/forge_installer.jar')
             elif choiceCore == "4":
                 os.system(
@@ -404,6 +394,36 @@ while True:
                 os.system(f'mv {settings["Servers_dir"]}/{name}/server.jar {settings["Servers_dir"]}/{name}/vanilla.jar')
                 os.system(f'mv {settings["Servers_dir"]}/{name}/fabric-server-launch.jar {settings["Servers_dir"]}/{name}/server.jar')
                 os.system(f'echo "serverJar=vanilla.jar" > {settings["Servers_dir"]}/{name}/fabric-server-launcher.properties')
+
+            Exec = ''
+            ls_server_dir = os.listdir(f'{settings["Servers_dir"]}/{name}')
+
+
+            for i in ls_server_dir:
+                if i == 'run.sh':
+                    with open('run.sh', 'r') as f:
+                        for i in f.read().split('\n'):
+                            if i[0] != '#':
+                                Exec = i.split(' ')[2]
+                else:
+                    Exec = 'server.jar'
+
+
+
+            instant_settings = {
+                "Xmx": settings["Xmx"],
+                "Xms": settings["Xms"],
+                "jdkVer": jdkVer,
+                "Port": settings["Standart_server_port"],
+                "Online_mode": settings['default_online_mode'],
+                "Core": choiceCore,
+                "Version": version,
+                "Exec": Exec
+            }
+
+            os.system(f'touch {settings["Servers_dir"]}/{name}/settings.json')
+            with open(f'{settings["Servers_dir"]}/{name}/settings.json', "w") as f:
+                json.dump(instant_settings, f)
 
             with open(
                 f"/data/data/com.termux/files/usr/var/service/{name}-ftpd/run.sh", "w"
