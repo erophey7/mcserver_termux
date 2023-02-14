@@ -396,7 +396,7 @@ while True:
                 os.system(f'mv {settings["Servers_dir"]}/{name}/fabric-server-launch.jar {settings["Servers_dir"]}/{name}/server.jar')
                 os.system(f'echo "serverJar=vanilla.jar" > {settings["Servers_dir"]}/{name}/fabric-server-launcher.properties')
 
-            Exec = ''
+            Exec = 'server.jar'
             ls_server_dir = os.listdir(f'{settings["Servers_dir"]}/{name}')
 
             if choiceCore == '2':
@@ -407,8 +407,6 @@ while True:
                                 if i[0] != '#':
                                     Exec = i.split(' ')[2]
                                     break
-                    else:
-                        Exec = 'server.jar'
 
 
 
