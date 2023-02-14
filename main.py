@@ -382,8 +382,9 @@ while True:
                     f'wget {download_link} -O {settings["Servers_dir"]}/{name}/forge_installer.jar'
                 )
                 os.system(f'cd {settings["Servers_dir"]}/{name} && java -jar forge_installer.jar --installServer')
-                os.system(f'mv {settings["Servers_dir"]}/{name}/forge*.jar {settings["Servers_dir"]}/{name}/server.jar')
                 os.system(f'rm -rf {settings["Servers_dir"]}/{name}/forge_installer.jar')
+                os.system(f'mv {settings["Servers_dir"]}/{name}/forge*.jar {settings["Servers_dir"]}/{name}/server.jar')
+
             elif choiceCore == "4":
                 os.system(
                     f'wget {download_link} -O {settings["Servers_dir"]}/{name}/fabric_installer.jar'
@@ -398,15 +399,16 @@ while True:
             Exec = ''
             ls_server_dir = os.listdir(f'{settings["Servers_dir"]}/{name}')
 
-
-            for i in ls_server_dir:
-                if i == 'run.sh':
-                    with open(f'{settings["Servers_dir"]}/{name}/run.sh', 'r') as f:
-                        for i in f.read()[:-1].split('\n'):
-                            if i[0] != '#':
-                                Exec = i.split(' ')[2]
-                else:
-                    Exec = 'server.jar'
+            if choiceCore == '2':
+                for i in ls_server_dir:
+                    if i == 'run.sh':
+                        with open(f'{settings["Servers_dir"]}/{name}/run.sh', 'r') as f:
+                            for i in f.read()[:-1].split('\n'):
+                                if i[0] != '#':
+                                    Exec = i.split(' ')[2]
+                                    break
+                    else:
+                        Exec = 'server.jar'
 
 
 
