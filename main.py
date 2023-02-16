@@ -155,17 +155,21 @@ while True:
                         print('Minimize server: ctrl a + d')
                         print('Press enter to continue')
                         input()
+                        javaExec = ''
+                        if instant_settings["jdkver"] == 8:
+                            javaExec = '/usr/lib/jvm/java-8-openjdk-arm64/jre/bin/java'
+                        elif instant_settings["jdkver"] == 17:
+                            javaExec = '/usr/lib/jvm/java-17-openjdk-arm64/bin/java'
 
                         subprocess.run(
                             [
                             "screen",
                             "-dmS",
                             f"mcServer_{gid}"
-                            ],
-                            cwd=serverDir,
+                            ]
                         )
-
-                        os.system(fr'screen -S mcServer_{gid} -X stuff "java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m {instant_settings["Exec"]}\n"')
+                        os.system(fr'screen -S mcServer_{gid} -X stuff "proot-distro login ubuntu --bind {settings["Servers_dir"]}:/root/servers\n"')
+                        os.system(fr'screen -S mcServer_{gid} -X stuff "update-alternatives --set java {javaExec} && cd /root/servers/{serverDir} && java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m {instant_settings["Exec"]}\n"')
 
                         subprocess.run([
                             "screen",
@@ -359,9 +363,7 @@ while True:
 
             if version.split(".")[1] >= "16":
                 jdkVer = 8
-            elif version.split(".")[1] == "17":
-                jdkVer = 16
-            elif version.split(".")[1] <= "18":
+            elif version.split(".")[1] <= "17":
                 jdkVer = 17
 
 
