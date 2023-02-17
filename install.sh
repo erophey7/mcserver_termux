@@ -32,4 +32,4 @@ rm -rf ${PREFIX}/bin/mcserver
 export EXECCOMMAND='cd '${PWD}' && python main.py'
 echo ${EXECCOMMAND} > ${PREFIX}/bin/mcserver
 chmod +x ${PREFIX}/bin/mcserver
-clear && printf "\033[0;32m$(toilet "install")\n\033[1;32m $(toilet "complete")\n"
+clear && printf "\033[0;32m$(toilet "install")\n\033[1;32m $(toilet "complete")\n\n\033[0;32mTo run use mcserver\n"

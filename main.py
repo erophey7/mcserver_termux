@@ -391,7 +391,6 @@ while True:
                 os.system(
                     f'wget {download_link} -O {settings["Servers_dir"]}/{name}/fabric_installer.jar'
                 )
-                #subprocess.run(['java', '-jar', f'{settings["Servers_dir"]}/{name}/fabric_installer.jar', '-mcversion', version, '-downloadMinecraft'], cwd=f'{settings["Servers_dir"]}/{name}')
                 os.system(f'java -jar {settings["Servers_dir"]}/{name}/fabric_installer.jar server -dir {settings["Servers_dir"]}/{name} -mcversion {version} -downloadMinecraft')
                 os.system(f'rm -rf {settings["Servers_dir"]}/{name}/fabric_installer.jar')
                 os.system(f'mv {settings["Servers_dir"]}/{name}/server.jar {settings["Servers_dir"]}/{name}/vanilla.jar')
@@ -444,7 +443,6 @@ while True:
             os.system(
                 f"ln -sf $PREFIX/share/termux-services/svlogger $PREFIX/var/service/{name}-ftpd/log/run"
             )
-            input()
             page = "main"
             ui.clear()
             ui.main_menu()
