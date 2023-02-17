@@ -3,7 +3,7 @@
     "FTP_port": 8021,
     "Servers_dir": "/data/data/com.termux/files/home/minecrft_Servers",
     "Server_eula": "false",
-    "App_version": "1.5.0",
+    "App_version": "1.6.0",
     "Xms": 1024,
     "Xmx": 4096,
     "ngrok_authtoken": "",
