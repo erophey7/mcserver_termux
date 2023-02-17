@@ -545,5 +545,12 @@ while True:
             ui.main_menu()
             print(f"Version: {settings['App_version']}")
 
+        elif choice == "6":
+            ui.clear()
+            os.system('screen -dmS mcserver_install')
+            os.system('screen -S mcserver_install -X stuff "proot-distro login ubuntu --bind "${PWD}"/proot_scr:/root; exit\n"')
+            os.system('screen -S mcserver_install -X stuff "chmod 777 update_java.sh && ./update_java.sh; exit\n"')
+            os.system('screen -r mcserver_install')
+
         elif choice == "0":
             exit(1)

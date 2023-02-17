@@ -20,8 +20,9 @@ def main_menu():
 2 - Create server  
 3 - Delete server  
 4 - Settings  
-5 - Check version   
-0 - Exit''' + '\n'*3)
+5 - Check version
+6 - Update Java   
+0 - Exit''' + '\n'*2)
     return 
 
 
