@@ -213,7 +213,7 @@ while True:
                         ui.settings_menu()
                         print(f"1 - Min server RAM: {instant_settings['Xms']} in megabytes")
                         print(f"2 - Max server RAM: {instant_settings['Xmx']} in megabytes")
-                        print(f"3 - OpenJDK version: {instant_settings['jdkver']}")
+                        print(f"3 - OpenJDK version: {instant_settings['jdkVer']}")
                         print(f"4 - Server port: {instant_settings['Port']}")
                         print(f"5 - Server port: {instant_settings['Online_mode']}")
                         print(f"0 - Back\n\n\n\n")
@@ -242,7 +242,7 @@ while True:
                                     case "2":
                                         instant_settings["Xmx"] = variable
                                     case "3":
-                                        instant_settings["jdkver"] = variable
+                                        instant_settings["jdkVer"] = variable
                                     case "4":
                                         instant_settings["Port"] = variable
                                     case "5":
