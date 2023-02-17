@@ -1,6 +1,2 @@
 #!/bin/sh
-apt update
-apt -y upgrade
-apt install -y git openjdk-8* openjdk-17*
-mkdir /root/servers
-exit
+apt update && apt -y upgrade && apt install -y git openjdk-8-jdk openjdk-17-jdk && mkdir /root/servers
