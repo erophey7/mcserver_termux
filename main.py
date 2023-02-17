@@ -169,7 +169,7 @@ while True:
                             ]
                         )
                         os.system(fr'screen -S mcServer_{gid} -X stuff "proot-distro login ubuntu --bind {settings["Servers_dir"]}:/root/servers\n"')
-                        os.system(fr'screen -S mcServer_{gid} -X stuff "update-alternatives --set java {javaExec} && cd /root/servers{serverDir} && java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m {instant_settings["Exec"]}\n"')
+                        os.system(fr'screen -S mcServer_{gid} -X stuff "update-alternatives --set java {javaExec} && cd /root/servers/{serverName} && java -Xms{instant_settings["Xms"]}m -Xmx{instant_settings["Xmx"]}m {instant_settings["Exec"]}\n"')
 
                         subprocess.run([
                             "screen",
