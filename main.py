@@ -156,9 +156,9 @@ while True:
                         print('Press enter to continue')
                         input()
                         javaExec = ''
-                        if instant_settings["jdkver"] == 8:
+                        if instant_settings["jdkVer"] == 8:
                             javaExec = '/usr/lib/jvm/java-8-openjdk-arm64/jre/bin/java'
-                        elif instant_settings["jdkver"] == 17:
+                        elif instant_settings["jdkVer"] == 17:
                             javaExec = '/usr/lib/jvm/java-17-openjdk-arm64/bin/java'
 
                         subprocess.run(
