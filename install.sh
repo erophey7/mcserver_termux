@@ -20,7 +20,7 @@ then
                 ;;
         esac
 else
-        echo ""
+        proot-distro install ubuntu
 fi
 
 ngrok
