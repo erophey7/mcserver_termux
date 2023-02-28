@@ -361,9 +361,9 @@ while True:
 
             jdkVer = ""
 
-            if version.split(".")[1] >= "16":
+            if version.split(".")[1] <= "16":
                 jdkVer = 8
-            elif version.split(".")[1] <= "17":
+            elif version.split(".")[1] >= "17":
                 jdkVer = 17
 
 
