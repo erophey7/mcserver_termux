@@ -36,6 +36,8 @@ settings = func.readSettings()
 ui.clear()
 ui.main_menu()
 
+os.system('termux-wake-lock')
+
 
 while True:
     choice = ""
@@ -553,4 +555,5 @@ while True:
             os.system('screen -r mcserver_install')
 
         elif choice == "0":
+            os.system('termux-wake-unlock')
             exit(1)
