@@ -318,6 +318,7 @@ while True:
 
             if choiceCore == "0":
                 page = "main"
+                break
 
 
             vanila = parsers.vanilla()
