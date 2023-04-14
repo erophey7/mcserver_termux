@@ -316,6 +316,10 @@ while True:
             print(colorama.Style.RESET_ALL)
             ui.clear()
 
+            if choiceCore == "0":
+                break
+
+
             vanila = parsers.vanilla()
             out = []
 
@@ -331,12 +335,18 @@ while True:
             for j, i in enumerate(out):
                 print(f"{j + 1} - {out[int(j)]}")
 
+            print("0 - Back to first screen")
+
             print(colorama.Fore.GREEN)
             inputVersion = int(input("> ")) - 1
+            if inputVersion == "0":
+                break
+
             version = out[inputVersion]
             print(colorama.Style.RESET_ALL)
 
             ui.clear()
+
 
             download_link = ""
 
