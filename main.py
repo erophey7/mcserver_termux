@@ -317,7 +317,7 @@ while True:
             ui.clear()
 
             if choiceCore == "0":
-                break
+                page = "main"
 
 
             vanila = parsers.vanilla()
